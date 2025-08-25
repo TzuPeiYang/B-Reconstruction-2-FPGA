@@ -1,0 +1,41 @@
+new_variables:
+  pf_mask: awkward.ones_like(Part_E)
+  log_B_E: np.log(B_E)
+  log_Bbar_E: np.log(Bbar_E)
+
+preprocess:
+  method: manual
+  data_fraction: 1.0
+
+inputs:
+  pf_points:
+    length: 51
+    vars:
+      - Part_vx
+      - Part_vy
+      - Part_vz
+    pad_mode: constant
+    pad_value: 0
+
+  pf_features:
+    length: 51
+    vars:
+      - Part_E
+      - Part_px
+      - Part_py
+      - Part_pz
+    pad_mode: constant
+    pad_value: 0
+
+  pf_mask:
+    length: 51
+    vars:
+      - pf_mask
+
+labels:
+  type: simple
+  value: [B_px, B_py, B_pz, B_E]
+  var_funcs: {}
+
+observers:
+  - pdg_id
