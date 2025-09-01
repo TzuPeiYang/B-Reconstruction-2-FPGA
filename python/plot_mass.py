@@ -21,9 +21,14 @@ if __name__ == "__main__":
     root_files = glob.glob(sub_dir + "training-log/particlenet*.root")
     tree_name = "Events"
 
-    plt.figure(figsize=(8, 6))
+    plt.figure(figsize=(8, 6), dpi=200)
     for file in root_files:
-    # Load the ROOT file
+    # Load the ROOT 
+        name = file.replace(sub_dir + "training-log/particlenet_predict_", "")
+        if name == file:
+            name = file.replace(sub_dir + "training-log/particlenet_predict", "")
+        name = name.replace(".root", "")
+        print(name)
         with uproot.open(f"{file}:{tree_name}") as tree:
             # Read 4-momentum branches
             data = tree.arrays(["score_B_E", "score_B_px", "score_B_py", "score_B_pz"])
@@ -43,12 +48,13 @@ if __name__ == "__main__":
         stdev = np.std(masses_np)
 
         # Plot the mass distribution
-        plt.hist(masses_np, bins=50, range=(5.27, 5.3), histtype='step', label='$m_B = %.4f \pm %.4f$ GeV' % (avg, stdev))
+        plt.hist(masses_np, bins=50, range=(5.26, 5.3), histtype='step', label='%s: $m_B = %.3f \pm %.3f$ GeV' % (name, avg, stdev))
     
     plt.xlabel('Reconstructed Mass [GeV]')
     plt.ylabel('Events')
     plt.title('Reconstructed B Mass')
     plt.grid(True)
     plt.legend()
+    plt.xlim(5.26, 5.3)
     plt.savefig(sub_dir + 'B_mass_distribution.png', transparent=True)
     plt.show()

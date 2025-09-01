@@ -57,15 +57,15 @@ while true; do
     esac
 done
 
-PREFIX='particlenet'
-SUFFIX='complete_with_mask'
+PREFIX='particlemask'
+SUFFIX='complete'
 ROOT_DIR='/home/tpyang/B-Reconstruction-2-FPGA/python/'
-SUB_DIR='complete-2-B/'
+SUB_DIR='gen_level_2B/'
 
-MODEL_CONFIG='config/particlenet_pf.py'
-DATA_CONFIG='config/data-config.yaml'
+MODEL_CONFIG='config/particlenet_pf_mask.py'
+DATA_CONFIG='config/data_config_mask.yaml'
 SAMPLES_DIR='data/'
-PATH_TO_LOG='training-log/'
+PATH_TO_LOG='training_log/'
 
 args=( --data-train ${ROOT_DIR}${SUB_DIR}${SAMPLES_DIR}'train*.root' \
     --data-val ${ROOT_DIR}${SUB_DIR}${SAMPLES_DIR}'test.root' \
