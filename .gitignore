@@ -1,3 +1,5 @@
 *.root
 *.hepmc3
 python/*/__pycache__/
+python/runs/
+*.npz
