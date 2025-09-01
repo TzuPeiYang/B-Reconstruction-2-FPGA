@@ -4,43 +4,6 @@ import torch.nn.functional as F
 from weaver.nn.model.ParticleNet import ParticleNet
 
 
-def scaled_dot_product_attention(Q, K, V, mask=None):
-    # Compute the dot products between Q and K, then scale by the square root of the key dimension
-    d_k = Q.size(-1)
-    scores = torch.matmul(Q, K.transpose(-2, -1)) / torch.sqrt(torch.tensor(d_k, dtype=torch.float32))
-
-    # Apply mask if provided (useful for masked self-attention in transformers)
-    if mask is not None:
-        scores = scores.masked_fill(mask == 0, float('-inf'))
-
-    # Softmax to normalize scores, producing attention weights
-    attention_weights = F.softmax(scores, dim=-1)
-    
-    # Compute the final output as weighted values
-    output = torch.matmul(attention_weights, V)
-    return output, attention_weights
-
-
-class SelfAttention(nn.Module):
-    def __init__(self, embed_size):
-        super(SelfAttention, self).__init__()
-        self.embed_size = embed_size
-        # Define linear transformations for Q, K, V
-        self.query = nn.Linear(embed_size, embed_size)
-        self.key = nn.Linear(embed_size, embed_size)
-        self.value = nn.Linear(embed_size, embed_size)
-
-    def forward(self, x, mask=None):
-        # Generate Q, K, V matrices
-        Q = self.query(x)
-        K = self.key(x)
-        V = self.value(x)
-        
-        # Calculate attention using our scaled dot-product function
-        out, _ = scaled_dot_product_attention(Q, K, V, mask)
-        return out
-
-
 class ParticleNetWrapper(nn.Module):
     def __init__(self, **kwargs) -> None:
         super().__init__()
@@ -48,15 +11,18 @@ class ParticleNetWrapper(nn.Module):
         in_dim = kwargs['fc_params'][-1][0]
         num_classes = kwargs['num_classes']
         self.for_inference = kwargs['for_inference']
+        fc_out_params = kwargs.pop('fc_out_params')
 
         # finetune the last FC layer
-        self.fc_out = nn.Sequential(nn.Linear(in_dim, 128),
-                                    nn.LeakyReLU(),
-                                    nn.Linear(128, 64),
-                                    nn.LeakyReLU(),
-                                    nn.Linear(64, 16),
-                                    nn.LeakyReLU(),
-                                    nn.Linear(16, num_classes))
+        layers = []
+        for i in range(len(fc_out_params)):
+            if i == len(fc_out_params) - 1:
+                layers += [nn.Linear(fc_out_params[i], num_classes)]
+            else:
+                layers += [nn.Linear(fc_out_params[i], fc_out_params[i + 1]),
+                           nn.ReLU()]
+        
+        self.fc_out = nn.Sequential(*layers)
 
         kwargs['for_inference'] = False
         self.mod = ParticleNet(**kwargs)
@@ -79,19 +45,21 @@ def get_model(data_config, **kwargs):
         (16, (128, 128, 128)),
         (16, (256, 256, 256)),
     ]
-    fc_params = [(256, 0.1)]  # Fully connected layers with dropout
+    fc_params = [(256, 0.2)]  # Fully connected layers with dropout
+    fc_out_params = [256]
 
     # Initialize ParticleNet model
     model = ParticleNetWrapper(
         input_dims=pf_features_dims,
         num_classes=num_classes,
+        fc_out_params=fc_out_params,
         conv_params=kwargs.get('conv_params', conv_params),
         fc_params=kwargs.get('fc_params', fc_params),
-        use_fusion=kwargs.get('use_fusion', False),
+        use_fusion=kwargs.get('use_fusion', True),
         use_fts_bn=kwargs.get('use_fts_bn', True),
         use_counts=kwargs.get('use_counts', True),
         for_inference=kwargs.get('for_inference', False),
-        use_attention=False
+        use_attention=kwargs.get('use_attention', False),
     )
 
     # Define loss function and optimizer

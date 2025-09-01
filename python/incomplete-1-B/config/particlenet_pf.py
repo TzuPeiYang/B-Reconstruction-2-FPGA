@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 from weaver.nn.model.ParticleNet import ParticleNet
 
+
 class ParticleNetWrapper(nn.Module):
     def __init__(self, **kwargs) -> None:
         super().__init__()

@@ -30,6 +30,7 @@ if __name__ == "__main__":
     part_px, part_py, part_pz, part_E = [], [], [], []
     part_vx, part_vy, part_vz = [], [], []
     part_pdgid = []
+    part_mask = []
 
     B_px, B_py, B_pz, B_E = [], [], [], []
     Bbar_px, Bbar_py, Bbar_pz, Bbar_E = [], [], [], []
@@ -45,6 +46,7 @@ if __name__ == "__main__":
         ev_px, ev_py, ev_pz, ev_E = [], [], [], []
         ev_vx, ev_vy, ev_vz = [], [], []
         ev_pdgid = []
+        ev_mask = []
 
         bpx = bpy = bpz = be = None
         bbarpx = bbarpy = bbarpz = bbare = None
@@ -53,6 +55,10 @@ if __name__ == "__main__":
 
         for p in event.particles:
             if p.status == 1:  # Final-state particle
+                ''' ===========        complete B-B-          =========== '''
+                b_ancestor = get_b_ancestor(p)
+                select =  b_ancestor != 300553
+
                 ''' =========== complete B+ and incomplete B- =========== '''
                 # b_ancestor = get_b_ancestor(p)
                 # select =  b_ancestor != 300553 and ((b_ancestor == -521 and np.random.rand() > 0.1 and abs(p.pid) not in [12, 14, 16]) or (b_ancestor == 521))
@@ -62,8 +68,8 @@ if __name__ == "__main__":
                 # select = p.pid != -521 and b_ancestor != 300553
 
                 ''' ===========        incomplete B+          =========== '''
-                b_ancestor = get_b_ancestor(p)
-                select = b_ancestor not in [-521, 300553] and np.random.rand() > 0.03 and abs(p.pid) not in [12, 14, 16]
+                # b_ancestor = get_b_ancestor(p)
+                # select = b_ancestor not in [-521, 300553] and np.random.rand() > 0.1 and abs(p.pid) not in [12, 14, 16]
 
                 if select:
                     mom = p.momentum
@@ -72,6 +78,11 @@ if __name__ == "__main__":
                     ev_pz.append(mom.pz)
                     ev_E.append(mom.e)
                     ev_pdgid.append(p.pid)
+
+                    if b_ancestor == -521:
+                        ev_mask.append(0)
+                    else:
+                        ev_mask.append(1)
 
                     # total_px += mom.px
                     # total_py += mom.py
@@ -113,6 +124,7 @@ if __name__ == "__main__":
         part_vy.append(ev_vy)
         part_vz.append(ev_vz)
         part_pdgid.append(ev_pdgid)
+        part_mask.append(ev_mask)
 
         B_px.append(bpx if bpx is not None else 0)
         B_py.append(bpy if bpy is not None else 0)
@@ -129,6 +141,9 @@ if __name__ == "__main__":
             max_part = len(ev_px)
 
     # Convert to awkward arrays
+    length = 52
+    part_mask = np.array([xi + [0] * (length - len(xi)) for xi in part_mask], dtype=np.float32)
+    np.savez(sub_dir + "data/part_mask_truth_" + filename + ".npz", mask=part_mask)
     output = {
         "Part_px": ak.Array(part_px),
         "Part_py": ak.Array(part_py),
@@ -138,6 +153,7 @@ if __name__ == "__main__":
         "Part_vy": ak.Array(part_vy),
         "Part_vz": ak.Array(part_vz),
         "pdg_id":  ak.Array(part_pdgid),
+        "Part_mask": part_mask,
         "B_px": np.array(B_px, dtype=np.float32),
         "B_py": np.array(B_py, dtype=np.float32),
         "B_pz": np.array(B_pz, dtype=np.float32),
