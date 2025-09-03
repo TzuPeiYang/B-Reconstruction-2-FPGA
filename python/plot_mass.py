@@ -18,15 +18,15 @@ def calculate_invariant_mass(E, px, py, pz):
 if __name__ == "__main__":
     # Path to the ROOT file
     sub_dir = sys.argv[1]
-    root_files = glob.glob(sub_dir + "training-log/particlenet*.root")
+    root_files = glob.glob(sub_dir + "training_log/particlenet*.root")
     tree_name = "Events"
 
     plt.figure(figsize=(8, 6), dpi=200)
     for file in root_files:
     # Load the ROOT 
-        name = file.replace(sub_dir + "training-log/particlenet_predict_", "")
+        name = file.replace(sub_dir + "training_log/particlenet_predict_", "")
         if name == file:
-            name = file.replace(sub_dir + "training-log/particlenet_predict", "")
+            name = file.replace(sub_dir + "training_log/particlenet_predict", "")
         name = name.replace(".root", "")
         print(name)
         with uproot.open(f"{file}:{tree_name}") as tree:

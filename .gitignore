@@ -2,3 +2,4 @@
 *.hepmc3
 python/runs/*
 *.npz
+*.pyc

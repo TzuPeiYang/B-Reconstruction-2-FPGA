@@ -57,13 +57,13 @@ while true; do
     esac
 done
 
-PREFIX='particlemask'
-SUFFIX='complete'
+PREFIX='particlenet'
+SUFFIX='complete_with_eta_phi'
 ROOT_DIR='/home/tpyang/B-Reconstruction-2-FPGA/python/'
 SUB_DIR='gen_level_2B/'
 
-MODEL_CONFIG='config/particlenet_pf_mask.py'
-DATA_CONFIG='config/data_config_mask.yaml'
+MODEL_CONFIG='config/particlenet_pf.py'
+DATA_CONFIG='config/data_config.yaml'
 SAMPLES_DIR='data/'
 PATH_TO_LOG='training_log/'
 
@@ -73,7 +73,7 @@ args=( --data-train ${ROOT_DIR}${SUB_DIR}${SAMPLES_DIR}'train*.root' \
     --data-config ${ROOT_DIR}${SUB_DIR}${DATA_CONFIG} \
     --network-config ${ROOT_DIR}${SUB_DIR}${MODEL_CONFIG} \
     --model-prefix ${ROOT_DIR}${SUB_DIR}${PATH_TO_LOG}${PREFIX} \
-    --gpus 0 --batch-size 256 --start-lr 5e-5 --num-epochs 100 --optimizer ranger \
+    --gpus 0 --batch-size 256 --start-lr 5e-3 --num-epochs 100 --optimizer ranger \
     --log ${ROOT_DIR}${SUB_DIR}${PATH_TO_LOG}${PREFIX}.train.log \
     --tensorboard ${PREFIX} )
 if [ $r -eq 1 ]; then 

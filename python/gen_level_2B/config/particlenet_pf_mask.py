@@ -18,7 +18,7 @@ class ParticleNetWrapper(nn.Module):
         layers = []
         for i in range(len(fc_out_params) - 1):
             layers += [nn.Linear(fc_out_params[i], fc_out_params[i + 1]),
-                           nn.LeakyReLU()]
+                       nn.LeakyReLU()]
         
         self.fc_out = nn.Sequential(*layers)
 
@@ -39,13 +39,12 @@ def get_model(data_config, **kwargs):
     pf_features_dims = len(data_config.input_dicts['pf_features'])  # 4-momentum (px, py, pz, E)
     length = 52
     num_classes = len(data_config.label_value)
-    print("------------------------\n", length)
     conv_params = [
         (16, (64, 64, 64)),
         (16, (128, 128, 128)),
     ]
     fc_params = [(128, 0.2)]  # Fully connected layers with dropout
-    fc_out_params = [128, 128, 64, 2]
+    fc_out_params = [128, 64, 2]
 
     # Initialize ParticleNet model
     model = ParticleNetWrapper(

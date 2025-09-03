@@ -29,11 +29,11 @@ if __name__ == "__main__":
     # Lists to hold all events
     part_px, part_py, part_pz, part_E = [], [], [], []
     part_vx, part_vy, part_vz = [], [], []
+    part_eta, part_phi = [], []
     part_pdgid = []
     part_mask = []
 
     B_px, B_py, B_pz, B_E = [], [], [], []
-    Bbar_px, Bbar_py, Bbar_pz, Bbar_E = [], [], [], []
 
     event_count = 0
     max_part = 0
@@ -45,19 +45,23 @@ if __name__ == "__main__":
         # Per-event lists
         ev_px, ev_py, ev_pz, ev_E = [], [], [], []
         ev_vx, ev_vy, ev_vz = [], [], []
+        ev_eta, ev_phi = [], []
         ev_pdgid = []
         ev_mask = []
 
         bpx = bpy = bpz = be = None
-        bbarpx = bbarpy = bbarpz = bbare = None
 
         # total_px, total_py, total_pz, total_E = 0, 0, 0, 0
 
         for p in event.particles:
             if p.status == 1:  # Final-state particle
-                ''' ===========        complete B-B-          =========== '''
+                ''' ===========        complete B+B-          =========== '''
                 b_ancestor = get_b_ancestor(p)
                 select =  b_ancestor != 300553
+
+                ''' ===========       incomplete B+B-         =========== '''
+                # b_ancestor = get_b_ancestor(p)
+                # select =  b_ancestor != 300553 and (np.random.rand() > 0.1 and abs(p.pid) not in [12, 14, 16])
 
                 ''' =========== complete B+ and incomplete B- =========== '''
                 # b_ancestor = get_b_ancestor(p)
@@ -78,6 +82,13 @@ if __name__ == "__main__":
                     ev_pz.append(mom.pz)
                     ev_E.append(mom.e)
                     ev_pdgid.append(p.pid)
+                    
+                    p_abs = np.sqrt(mom.px ** 2 + mom.py ** 2 + mom.pz ** 2)
+                    denom = np.clip(p_abs - np.abs(mom.pz), 1e-15, None)
+                    numer = p_abs + np.abs(mom.pz)
+
+                    ev_phi.append(np.arctan2(mom.py, mom.px))
+                    ev_eta.append(np.log(numer / denom) / 2)
 
                     if b_ancestor == -521:
                         ev_mask.append(0)
@@ -106,13 +117,6 @@ if __name__ == "__main__":
                 bpz = mom.pz
                 be = mom.e
 
-            if p.pid == -521 and bbarpx is None:
-                mom = p.momentum
-                bbarpx = mom.px
-                bbarpy = mom.py
-                bbarpz = mom.pz
-                bbare = mom.e
-
         # print(total_px, total_py, total_pz, total_E)
 
         # Add this event's info
@@ -123,6 +127,8 @@ if __name__ == "__main__":
         part_vx.append(ev_vx)
         part_vy.append(ev_vy)
         part_vz.append(ev_vz)
+        part_eta.append(ev_eta)
+        part_phi.append(ev_phi)
         part_pdgid.append(ev_pdgid)
         part_mask.append(ev_mask)
 
@@ -130,11 +136,6 @@ if __name__ == "__main__":
         B_py.append(bpy if bpy is not None else 0)
         B_pz.append(bpz if bpz is not None else 0)
         B_E.append(be if be is not None else 0)
-
-        Bbar_px.append(bbarpx if bbarpx is not None else 0)
-        Bbar_py.append(bbarpy if bbarpy is not None else 0)
-        Bbar_pz.append(bbarpz if bbarpz is not None else 0)
-        Bbar_E.append(bbare if bbare is not None else 0)
 
         event_count += 1
         if len(ev_px) > max_part:
@@ -152,16 +153,14 @@ if __name__ == "__main__":
         "Part_vx": ak.Array(part_vx),
         "Part_vy": ak.Array(part_vy),
         "Part_vz": ak.Array(part_vz),
+        "Part_eta": ak.Array(part_eta),
+        "Part_phi": ak.Array(part_phi),
         "pdg_id":  ak.Array(part_pdgid),
         "Part_mask": part_mask,
         "B_px": np.array(B_px, dtype=np.float32),
         "B_py": np.array(B_py, dtype=np.float32),
         "B_pz": np.array(B_pz, dtype=np.float32),
         "B_E":  np.array(B_E,  dtype=np.float32),
-        "Bbar_px": np.array(Bbar_px, dtype=np.float32),
-        "Bbar_py": np.array(Bbar_py, dtype=np.float32),
-        "Bbar_pz": np.array(Bbar_pz, dtype=np.float32),
-        "Bbar_E":  np.array(Bbar_E,  dtype=np.float32),
     }
 
     # Write with uproot

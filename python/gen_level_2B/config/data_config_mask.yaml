@@ -10,9 +10,8 @@ inputs:
   pf_points:
     length: 52
     vars:
-      - [Part_vx, null, 1, -10, 10]
-      - [Part_vy, null, 1, -10, 10]
-      - [Part_vz, null, 1, -10, 10]
+      - [Part_eta, null, 1, -10, 10]
+      - [Part_phi, null, 1, -10, 10]
     pad_mode: constant
     pad_value: 0
 
