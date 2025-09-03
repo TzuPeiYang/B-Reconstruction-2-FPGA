@@ -3,3 +3,5 @@
 python/runs/*
 *.npz
 *.pyc
+C/build/
+C/bin/
