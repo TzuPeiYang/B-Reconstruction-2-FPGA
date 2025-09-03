@@ -33,6 +33,8 @@ if __name__ == "__main__":
     part_pdgid = []
     part_mask = []
 
+    n_nu = []
+
     B_px, B_py, B_pz, B_E = [], [], [], []
 
     event_count = 0
@@ -48,6 +50,7 @@ if __name__ == "__main__":
         ev_eta, ev_phi = [], []
         ev_pdgid = []
         ev_mask = []
+        ev_n_nu = 0
 
         bpx = bpy = bpz = be = None
 
@@ -74,7 +77,8 @@ if __name__ == "__main__":
                 ''' ===========        incomplete B+          =========== '''
                 # b_ancestor = get_b_ancestor(p)
                 # select = b_ancestor not in [-521, 300553] and np.random.rand() > 0.1 and abs(p.pid) not in [12, 14, 16]
-
+                if abs(p.pid) in [12, 14, 16]:
+                    ev_n_nu += 1
                 if select:
                     mom = p.momentum
                     ev_px.append(mom.px)
@@ -132,6 +136,8 @@ if __name__ == "__main__":
         part_pdgid.append(ev_pdgid)
         part_mask.append(ev_mask)
 
+        n_nu.append(ev_n_nu)
+
         B_px.append(bpx if bpx is not None else 0)
         B_py.append(bpy if bpy is not None else 0)
         B_pz.append(bpz if bpz is not None else 0)
@@ -161,6 +167,7 @@ if __name__ == "__main__":
         "B_py": np.array(B_py, dtype=np.float32),
         "B_pz": np.array(B_pz, dtype=np.float32),
         "B_E":  np.array(B_E,  dtype=np.float32),
+        "n_nu": np.array(n_nu, dtype=np.int32),
     }
 
     # Write with uproot
