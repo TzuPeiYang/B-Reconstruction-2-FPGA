@@ -60,11 +60,11 @@ done
 PREFIX='particlemask'
 SUFFIX='complete_with_eta_phi'
 ROOT_DIR='/home/tpyang/B-Reconstruction-2-FPGA/python/'
-SUB_DIR='gen_level_2B/'
+SUB_DIR='gen_level_2B/with_vertex'
 
 MODEL_CONFIG='config/particlenet_pf.py'
 DATA_CONFIG='config/data_config.yaml'
-SAMPLES_DIR='data/'
+SAMPLES_DIR='../data/'
 PATH_TO_LOG='training_log/'
 
 args=( --data-train ${ROOT_DIR}${SUB_DIR}${SAMPLES_DIR}'train*.root' \
