@@ -20,8 +20,7 @@ class ParticleNetWrapper(nn.Module):
             out_channel, _ = fc_out_params[i + 1]
             layers += [nn.Linear(in_channel, out_channel),
                        nn.LeakyReLU(),
-                       nn.Dropout(drop_rate, inplace=True),
-                       nn.BatchNorm1d(num_features=out_channel)]
+                       nn.Dropout(drop_rate, inplace=True)]
         
         self.fc_out = nn.Sequential(*layers)
 
@@ -35,6 +34,21 @@ class ParticleNetWrapper(nn.Module):
         if self.for_inference:
             output = torch.softmax(output, dim=1)
         return output
+
+
+class CustomLoss(nn.Module):
+    def __init__(self):
+        super(CustomLoss, self).__init__()
+        self.mse = nn.MSELoss()
+
+    def forward(self, outputs, targets):
+        # print(outputs.size(), targets.size())
+        loss = self.mse(outputs, targets)
+        # print(loss)
+        delta_mass = torch.mean(outputs[:, 0] ** 2 - targets[:, 0] ** 2)
+        for i in range(1, 4):
+            delta_mass += -torch.mean(outputs[:, i] ** 2 - targets[:, i] ** 2)
+        return loss + torch.abs(delta_mass)
 
 
 def get_model(data_config, **kwargs):
@@ -74,4 +88,4 @@ def get_model(data_config, **kwargs):
 
     
 def get_loss(data_config, **kwargs):
-    return torch.nn.MSELoss()
+    return CustomLoss()
