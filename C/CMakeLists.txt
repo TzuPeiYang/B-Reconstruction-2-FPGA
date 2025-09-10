@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.22)
 project(Treeeeee C CXX)
 # Set C standard
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -Wall -O2")
 
 # Add directories
@@ -27,7 +27,12 @@ if(OMP)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DOMP")
 endif()
 
+find_package(ROOT REQUIRED)
+target_link_libraries(network_output PUBLIC ${ROOT_LIBRARIES})
+include_directories(${ROOT_INCLUDE_DIRS})
+
 target_link_libraries(network_output PUBLIC m)
+target_link_libraries(network_output PUBLIC yaml-cpp)
 
 # Output directories
 file(MAKE_DIRECTORY ${CMAKE_SOURCE_DIR}/build)
