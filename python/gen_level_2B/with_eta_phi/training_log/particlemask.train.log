@@ -1,0 +1,1280 @@
+[2025-09-08 16:21:47,848] INFO: args:
+ - ('regression_mode', False)
+ - ('data_config', '/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/config/data_config_mask.yaml')
+ - ('extra_selection', None)
+ - ('extra_test_selection', None)
+ - ('data_train', ['/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_0*.root'])
+ - ('data_val', ['/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/test.root'])
+ - ('data_test', [])
+ - ('data_fraction', 1)
+ - ('file_fraction', 1)
+ - ('fetch_by_files', True)
+ - ('fetch_step', 1.0)
+ - ('in_memory', False)
+ - ('train_val_split', 0.8)
+ - ('no_remake_weights', False)
+ - ('demo', False)
+ - ('lr_finder', None)
+ - ('tensorboard', 'particlemask')
+ - ('tensorboard_custom_fn', None)
+ - ('network_config', '/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/config/particlenet_pf_mask.py')
+ - ('network_option', [])
+ - ('model_prefix', '/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/training_log/particlemask')
+ - ('load_model_weights', None)
+ - ('exclude_model_weights', None)
+ - ('freeze_model_weights', None)
+ - ('num_epochs', 200)
+ - ('steps_per_epoch', None)
+ - ('steps_per_epoch_val', None)
+ - ('samples_per_epoch', None)
+ - ('samples_per_epoch_val', None)
+ - ('optimizer', 'ranger')
+ - ('optimizer_option', [])
+ - ('lr_scheduler', 'flat+decay')
+ - ('warmup_steps', 0)
+ - ('load_epoch', None)
+ - ('start_lr', 0.005)
+ - ('batch_size', 256)
+ - ('use_amp', False)
+ - ('gpus', '0')
+ - ('predict_gpus', '0')
+ - ('num_workers', 2)
+ - ('predict', False)
+ - ('predict_output', None)
+ - ('export_onnx', None)
+ - ('onnx_opset', 15)
+ - ('io_test', False)
+ - ('copy_inputs', False)
+ - ('log', '/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/training_log/particlemask.train.log')
+ - ('print', False)
+ - ('profile', False)
+ - ('backend', None)
+ - ('cross_validation', None)
+ - ('local_rank', None)
+[2025-09-08 16:21:47,849] INFO: Running in classification mode
+[2025-09-08 16:21:48,997] INFO: Using 2 files for training, range: (0, 1)
+[2025-09-08 16:21:48,997] INFO: Using 1 files for validation, range: (0, 1)
+[2025-09-08 16:21:49,000] INFO: [0;37mpreprocess config: {'method': 'manual', 'data_fraction': 1.0, 'params': None}[0m
+[2025-09-08 16:21:49,000] INFO: [0;37mselection: None[0m
+[2025-09-08 16:21:49,000] INFO: [0;37mtest_time_selection: None[0m
+[2025-09-08 16:21:49,000] INFO: [0;37mvar_funcs:
+ - ('pf_mask', 'awkward.ones_like(Part_E)')
+ - ('not_mask', '1 - Part_mask')
+ - ('_label_', 'np.stack([ak.to_numpy(Part_mask)], axis=1)')
+ - ('_labelcheck_', 'np.sum(np.stack([ak.to_numpy(Part_mask)], axis=1), axis=1)')[0m
+[2025-09-08 16:21:49,000] INFO: [0;37minput_names: ('pf_points', 'pf_features', 'pf_mask')[0m
+[2025-09-08 16:21:49,000] INFO: [0;37minput_dicts:
+ - ('pf_points', ['Part_eta', 'Part_phi'])
+ - ('pf_features', ['Part_E', 'Part_px', 'Part_py', 'Part_pz'])
+ - ('pf_mask', ['pf_mask'])[0m
+[2025-09-08 16:21:49,001] INFO: [0;37minput_shapes:
+ - ('pf_points', (-1, 2, 52))
+ - ('pf_features', (-1, 4, 52))
+ - ('pf_mask', (-1, 1, 52))[0m
+[2025-09-08 16:21:49,001] INFO: [0;37mpreprocess_params:
+ - ('Part_eta', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -10, 'max': 10, 'pad_value': 0})
+ - ('Part_phi', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -10, 'max': 10, 'pad_value': 0})
+ - ('Part_E', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_px', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_py', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_pz', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('pf_mask', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})[0m
+[2025-09-08 16:21:49,001] INFO: [0;37mlabel_names: ('_label_',)[0m
+[2025-09-08 16:21:49,001] INFO: [0;37mobserver_names: ('pdg_id',)[0m
+[2025-09-08 16:21:49,001] INFO: [0;37mmonitor_variables: ()[0m
+[2025-09-08 16:21:49,003] INFO: [0;37mpreprocess config: {'method': 'manual', 'data_fraction': 1.0, 'params': None}[0m
+[2025-09-08 16:21:49,003] INFO: [0;37mselection: None[0m
+[2025-09-08 16:21:49,003] INFO: [0;37mtest_time_selection: None[0m
+[2025-09-08 16:21:49,003] INFO: [0;37mvar_funcs:
+ - ('pf_mask', 'awkward.ones_like(Part_E)')
+ - ('not_mask', '1 - Part_mask')
+ - ('_label_', 'np.stack([ak.to_numpy(Part_mask)], axis=1)')
+ - ('_labelcheck_', 'np.sum(np.stack([ak.to_numpy(Part_mask)], axis=1), axis=1)')[0m
+[2025-09-08 16:21:49,003] INFO: [0;37minput_names: ('pf_points', 'pf_features', 'pf_mask')[0m
+[2025-09-08 16:21:49,003] INFO: [0;37minput_dicts:
+ - ('pf_points', ['Part_eta', 'Part_phi'])
+ - ('pf_features', ['Part_E', 'Part_px', 'Part_py', 'Part_pz'])
+ - ('pf_mask', ['pf_mask'])[0m
+[2025-09-08 16:21:49,003] INFO: [0;37minput_shapes:
+ - ('pf_points', (-1, 2, 52))
+ - ('pf_features', (-1, 4, 52))
+ - ('pf_mask', (-1, 1, 52))[0m
+[2025-09-08 16:21:49,003] INFO: [0;37mpreprocess_params:
+ - ('Part_eta', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -10, 'max': 10, 'pad_value': 0})
+ - ('Part_phi', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -10, 'max': 10, 'pad_value': 0})
+ - ('Part_E', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_px', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_py', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_pz', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('pf_mask', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})[0m
+[2025-09-08 16:21:49,003] INFO: [0;37mlabel_names: ('_label_',)[0m
+[2025-09-08 16:21:49,003] INFO: [0;37mobserver_names: ()[0m
+[2025-09-08 16:21:49,003] INFO: [0;37mmonitor_variables: ()[0m
+[2025-09-08 16:21:49,005] INFO: [0;37mpreprocess config: {'method': 'manual', 'data_fraction': 1.0, 'params': None}[0m
+[2025-09-08 16:21:49,005] INFO: [0;37mselection: None[0m
+[2025-09-08 16:21:49,005] INFO: [0;37mtest_time_selection: None[0m
+[2025-09-08 16:21:49,005] INFO: [0;37mvar_funcs:
+ - ('pf_mask', 'awkward.ones_like(Part_E)')
+ - ('not_mask', '1 - Part_mask')
+ - ('_label_', 'np.stack([ak.to_numpy(Part_mask)], axis=1)')
+ - ('_labelcheck_', 'np.sum(np.stack([ak.to_numpy(Part_mask)], axis=1), axis=1)')[0m
+[2025-09-08 16:21:49,005] INFO: [0;37minput_names: ('pf_points', 'pf_features', 'pf_mask')[0m
+[2025-09-08 16:21:49,005] INFO: [0;37minput_dicts:
+ - ('pf_points', ['Part_eta', 'Part_phi'])
+ - ('pf_features', ['Part_E', 'Part_px', 'Part_py', 'Part_pz'])
+ - ('pf_mask', ['pf_mask'])[0m
+[2025-09-08 16:21:49,005] INFO: [0;37minput_shapes:
+ - ('pf_points', (-1, 2, 52))
+ - ('pf_features', (-1, 4, 52))
+ - ('pf_mask', (-1, 1, 52))[0m
+[2025-09-08 16:21:49,005] INFO: [0;37mpreprocess_params:
+ - ('Part_eta', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -10, 'max': 10, 'pad_value': 0})
+ - ('Part_phi', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -10, 'max': 10, 'pad_value': 0})
+ - ('Part_E', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_px', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_py', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_pz', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('pf_mask', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})[0m
+[2025-09-08 16:21:49,006] INFO: [0;37mlabel_names: ('_label_',)[0m
+[2025-09-08 16:21:49,006] INFO: [0;37mobserver_names: ('pdg_id',)[0m
+[2025-09-08 16:21:49,006] INFO: [0;37mmonitor_variables: ()[0m
+[2025-09-08 16:21:49,007] INFO: [0;37mpreprocess config: {'method': 'manual', 'data_fraction': 1.0, 'params': None}[0m
+[2025-09-08 16:21:49,007] INFO: [0;37mselection: None[0m
+[2025-09-08 16:21:49,008] INFO: [0;37mtest_time_selection: None[0m
+[2025-09-08 16:21:49,008] INFO: [0;37mvar_funcs:
+ - ('pf_mask', 'awkward.ones_like(Part_E)')
+ - ('not_mask', '1 - Part_mask')
+ - ('_label_', 'np.stack([ak.to_numpy(Part_mask)], axis=1)')
+ - ('_labelcheck_', 'np.sum(np.stack([ak.to_numpy(Part_mask)], axis=1), axis=1)')[0m
+[2025-09-08 16:21:49,008] INFO: [0;37minput_names: ('pf_points', 'pf_features', 'pf_mask')[0m
+[2025-09-08 16:21:49,008] INFO: [0;37minput_dicts:
+ - ('pf_points', ['Part_eta', 'Part_phi'])
+ - ('pf_features', ['Part_E', 'Part_px', 'Part_py', 'Part_pz'])
+ - ('pf_mask', ['pf_mask'])[0m
+[2025-09-08 16:21:49,008] INFO: [0;37minput_shapes:
+ - ('pf_points', (-1, 2, 52))
+ - ('pf_features', (-1, 4, 52))
+ - ('pf_mask', (-1, 1, 52))[0m
+[2025-09-08 16:21:49,008] INFO: [0;37mpreprocess_params:
+ - ('Part_eta', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -10, 'max': 10, 'pad_value': 0})
+ - ('Part_phi', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -10, 'max': 10, 'pad_value': 0})
+ - ('Part_E', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_px', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_py', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_pz', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('pf_mask', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})[0m
+[2025-09-08 16:21:49,008] INFO: [0;37mlabel_names: ('_label_',)[0m
+[2025-09-08 16:21:49,008] INFO: [0;37mobserver_names: ()[0m
+[2025-09-08 16:21:49,008] INFO: [0;37mmonitor_variables: ()[0m
+[2025-09-08 16:21:49,013] INFO: Network options: {}
+[2025-09-08 16:21:49,383] INFO: [0;37mWarning: module EdgeConvBlock is treated as a zero-op.[0m
+[2025-09-08 16:21:49,383] INFO: [0;37mWarning: module Dropout is treated as a zero-op.[0m
+[2025-09-08 16:21:49,383] INFO: [0;37mWarning: module ParticleNet is treated as a zero-op.[0m
+[2025-09-08 16:21:49,383] INFO: [0;37mWarning: module ParticleNetWrapper is treated as a zero-op.[0m
+[2025-09-08 16:21:50,053] INFO: [0;37mParticleNetWrapper(
+  |0.134 M, 100.000% Params, 53.508 MMac, 100.000% MACs|
+  (fc_out): Sequential(
+    |0.025 M, 18.550% Params, 1.295 MMac, 2.420% MACs|
+    (0): Linear(in_features=128, out_features=128, bias=True, |0.017 M, 12.302% Params, 852.096 KMac, 1.592% MACs|)
+    (1): LeakyReLU(negative_slope=0.01, |0.0 M, 0.000% Params, 6.656 KMac, 0.012% MACs|)
+    (2): Linear(in_features=128, out_features=64, bias=True, |0.008 M, 6.151% Params, 426.048 KMac, 0.796% MACs|)
+    (3): LeakyReLU(negative_slope=0.01, |0.0 M, 0.000% Params, 3.328 KMac, 0.006% MACs|)
+    (4): Linear(in_features=64, out_features=2, bias=True, |0.0 M, 0.097% Params, 6.658 KMac, 0.012% MACs|)
+    (5): LeakyReLU(negative_slope=0.01, |0.0 M, 0.000% Params, 104.0 Mac, 0.000% MACs|)
+  )
+  (mod): ParticleNet(
+    |0.109 M, 81.450% Params, 52.213 MMac, 97.580% MACs|
+    (bn_fts): BatchNorm1d(4, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True, |0.0 M, 0.006% Params, 416.0 Mac, 0.001% MACs|)
+    (edge_convs): ModuleList(
+      (0): EdgeConvBlock(
+        |0.009 M, 7.057% Params, 7.744 MMac, 14.473% MACs|
+        (convs): ModuleList(
+          (0): Conv2d(8, 64, kernel_size=(1, 1), stride=(1, 1), bias=False, |0.001 M, 0.381% Params, 425.984 KMac, 0.796% MACs|)
+          (1-2): 2 x Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1), bias=False, |0.004 M, 3.052% Params, 3.408 MMac, 6.369% MACs|)
+        )
+        (bns): ModuleList(
+          (0-2): 3 x BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True, |0.0 M, 0.095% Params, 106.496 KMac, 0.199% MACs|)
+        )
+        (acts): ModuleList(
+          (0-2): 3 x ReLU(|0.0 M, 0.000% Params, 53.248 KMac, 0.100% MACs|)
+        )
+        (sc): Conv1d(4, 64, kernel_size=(1,), stride=(1,), bias=False, |0.0 M, 0.191% Params, 13.312 KMac, 0.025% MACs|)
+        (sc_bn): BatchNorm1d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True, |0.0 M, 0.095% Params, 6.656 KMac, 0.012% MACs|)
+        (sc_act): ReLU(|0.0 M, 0.000% Params, 3.328 KMac, 0.006% MACs|)
+      )
+      (1): EdgeConvBlock(
+        |0.058 M, 43.487% Params, 42.299 MMac, 79.051% MACs|
+        (convs): ModuleList(
+          (0-2): 3 x Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1), bias=False, |0.016 M, 12.207% Params, 13.631 MMac, 25.475% MACs|)
+        )
+        (bns): ModuleList(
+          (0-2): 3 x BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True, |0.0 M, 0.191% Params, 212.992 KMac, 0.398% MACs|)
+        )
+        (acts): ModuleList(
+          (0-2): 3 x ReLU(|0.0 M, 0.000% Params, 106.496 KMac, 0.199% MACs|)
+        )
+        (sc): Conv1d(64, 128, kernel_size=(1,), stride=(1,), bias=False, |0.008 M, 6.104% Params, 425.984 KMac, 0.796% MACs|)
+        (sc_bn): BatchNorm1d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True, |0.0 M, 0.191% Params, 13.312 KMac, 0.025% MACs|)
+        (sc_act): ReLU(|0.0 M, 0.000% Params, 6.656 KMac, 0.012% MACs|)
+      )
+    )
+    (fusion_block): Sequential(
+      |0.025 M, 18.501% Params, 1.298 MMac, 2.426% MACs|
+      (0): Conv1d(192, 128, kernel_size=(1,), stride=(1,), bias=False, |0.025 M, 18.311% Params, 1.278 MMac, 2.388% MACs|)
+      (1): BatchNorm1d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True, |0.0 M, 0.191% Params, 13.312 KMac, 0.025% MACs|)
+      (2): ReLU(|0.0 M, 0.000% Params, 6.656 KMac, 0.012% MACs|)
+    )
+    (fc): Sequential(
+      |0.017 M, 12.398% Params, 871.936 KMac, 1.630% MACs|
+      (0): Sequential(
+        |0.017 M, 12.398% Params, 871.936 KMac, 1.630% MACs|
+        (0): Conv1d(128, 128, kernel_size=(1,), stride=(1,), bias=False, |0.016 M, 12.207% Params, 851.968 KMac, 1.592% MACs|)
+        (1): BatchNorm1d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True, |0.0 M, 0.191% Params, 13.312 KMac, 0.025% MACs|)
+        (2): ReLU(|0.0 M, 0.000% Params, 6.656 KMac, 0.012% MACs|)
+        (3): Dropout(p=0.2, inplace=False, |0.0 M, 0.000% Params, 0.0 Mac, 0.000% MACs|)
+      )
+    )
+  )
+)[0m
+[2025-09-08 16:21:50,054] INFO: Computational complexity:       53.51 MMac
+[2025-09-08 16:21:50,054] INFO: Number of parameters:           134.22 k
+[2025-09-08 16:21:50,054] INFO: Using loss function CrossEntropyLoss() with options {}
+[2025-09-08 16:21:50,151] INFO: Create Tensorboard summary writer with comment particlemask
+[2025-09-08 16:21:50,155] INFO: Optimizer options: {}
+[2025-09-08 16:21:51,448] INFO: --------------------------------------------------
+[2025-09-08 16:21:51,448] INFO: Epoch #0 training
+[2025-09-08 16:21:51,482] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-08 16:21:51,483] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-08 16:22:25,743] INFO: args:
+ - ('regression_mode', False)
+ - ('data_config', '/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/config/data_config_mask.yaml')
+ - ('extra_selection', None)
+ - ('extra_test_selection', None)
+ - ('data_train', ['/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_0*.root'])
+ - ('data_val', ['/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/test.root'])
+ - ('data_test', [])
+ - ('data_fraction', 1)
+ - ('file_fraction', 1)
+ - ('fetch_by_files', True)
+ - ('fetch_step', 1.0)
+ - ('in_memory', False)
+ - ('train_val_split', 0.8)
+ - ('no_remake_weights', False)
+ - ('demo', False)
+ - ('lr_finder', None)
+ - ('tensorboard', 'particlemask')
+ - ('tensorboard_custom_fn', None)
+ - ('network_config', '/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/config/particlenet_pf_mask.py')
+ - ('network_option', [])
+ - ('model_prefix', '/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/training_log/particlemask')
+ - ('load_model_weights', None)
+ - ('exclude_model_weights', None)
+ - ('freeze_model_weights', None)
+ - ('num_epochs', 20)
+ - ('steps_per_epoch', None)
+ - ('steps_per_epoch_val', None)
+ - ('samples_per_epoch', None)
+ - ('samples_per_epoch_val', None)
+ - ('optimizer', 'ranger')
+ - ('optimizer_option', [])
+ - ('lr_scheduler', 'flat+decay')
+ - ('warmup_steps', 0)
+ - ('load_epoch', None)
+ - ('start_lr', 0.005)
+ - ('batch_size', 256)
+ - ('use_amp', False)
+ - ('gpus', '0')
+ - ('predict_gpus', '0')
+ - ('num_workers', 2)
+ - ('predict', False)
+ - ('predict_output', None)
+ - ('export_onnx', None)
+ - ('onnx_opset', 15)
+ - ('io_test', False)
+ - ('copy_inputs', False)
+ - ('log', '/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/training_log/particlemask.train.log')
+ - ('print', False)
+ - ('profile', False)
+ - ('backend', None)
+ - ('cross_validation', None)
+ - ('local_rank', None)
+[2025-09-08 16:22:25,744] INFO: Running in classification mode
+[2025-09-08 16:22:26,378] INFO: Using 2 files for training, range: (0, 1)
+[2025-09-08 16:22:26,378] INFO: Using 1 files for validation, range: (0, 1)
+[2025-09-08 16:22:26,380] INFO: [0;37mpreprocess config: {'method': 'manual', 'data_fraction': 1.0, 'params': None}[0m
+[2025-09-08 16:22:26,380] INFO: [0;37mselection: None[0m
+[2025-09-08 16:22:26,380] INFO: [0;37mtest_time_selection: None[0m
+[2025-09-08 16:22:26,380] INFO: [0;37mvar_funcs:
+ - ('pf_mask', 'awkward.ones_like(Part_E)')
+ - ('not_mask', '1 - Part_mask')
+ - ('_label_', 'np.stack([ak.to_numpy(Part_mask)], axis=1)')
+ - ('_labelcheck_', 'np.sum(np.stack([ak.to_numpy(Part_mask)], axis=1), axis=1)')[0m
+[2025-09-08 16:22:26,380] INFO: [0;37minput_names: ('pf_points', 'pf_features', 'pf_mask')[0m
+[2025-09-08 16:22:26,381] INFO: [0;37minput_dicts:
+ - ('pf_points', ['Part_eta', 'Part_phi'])
+ - ('pf_features', ['Part_E', 'Part_px', 'Part_py', 'Part_pz'])
+ - ('pf_mask', ['pf_mask'])[0m
+[2025-09-08 16:22:26,381] INFO: [0;37minput_shapes:
+ - ('pf_points', (-1, 2, 52))
+ - ('pf_features', (-1, 4, 52))
+ - ('pf_mask', (-1, 1, 52))[0m
+[2025-09-08 16:22:26,381] INFO: [0;37mpreprocess_params:
+ - ('Part_eta', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -10, 'max': 10, 'pad_value': 0})
+ - ('Part_phi', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -10, 'max': 10, 'pad_value': 0})
+ - ('Part_E', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_px', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_py', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_pz', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('pf_mask', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})[0m
+[2025-09-08 16:22:26,381] INFO: [0;37mlabel_names: ('_label_',)[0m
+[2025-09-08 16:22:26,381] INFO: [0;37mobserver_names: ('pdg_id',)[0m
+[2025-09-08 16:22:26,381] INFO: [0;37mmonitor_variables: ()[0m
+[2025-09-08 16:22:26,383] INFO: [0;37mpreprocess config: {'method': 'manual', 'data_fraction': 1.0, 'params': None}[0m
+[2025-09-08 16:22:26,383] INFO: [0;37mselection: None[0m
+[2025-09-08 16:22:26,383] INFO: [0;37mtest_time_selection: None[0m
+[2025-09-08 16:22:26,383] INFO: [0;37mvar_funcs:
+ - ('pf_mask', 'awkward.ones_like(Part_E)')
+ - ('not_mask', '1 - Part_mask')
+ - ('_label_', 'np.stack([ak.to_numpy(Part_mask)], axis=1)')
+ - ('_labelcheck_', 'np.sum(np.stack([ak.to_numpy(Part_mask)], axis=1), axis=1)')[0m
+[2025-09-08 16:22:26,383] INFO: [0;37minput_names: ('pf_points', 'pf_features', 'pf_mask')[0m
+[2025-09-08 16:22:26,383] INFO: [0;37minput_dicts:
+ - ('pf_points', ['Part_eta', 'Part_phi'])
+ - ('pf_features', ['Part_E', 'Part_px', 'Part_py', 'Part_pz'])
+ - ('pf_mask', ['pf_mask'])[0m
+[2025-09-08 16:22:26,383] INFO: [0;37minput_shapes:
+ - ('pf_points', (-1, 2, 52))
+ - ('pf_features', (-1, 4, 52))
+ - ('pf_mask', (-1, 1, 52))[0m
+[2025-09-08 16:22:26,383] INFO: [0;37mpreprocess_params:
+ - ('Part_eta', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -10, 'max': 10, 'pad_value': 0})
+ - ('Part_phi', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -10, 'max': 10, 'pad_value': 0})
+ - ('Part_E', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_px', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_py', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_pz', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('pf_mask', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})[0m
+[2025-09-08 16:22:26,383] INFO: [0;37mlabel_names: ('_label_',)[0m
+[2025-09-08 16:22:26,383] INFO: [0;37mobserver_names: ()[0m
+[2025-09-08 16:22:26,383] INFO: [0;37mmonitor_variables: ()[0m
+[2025-09-08 16:22:26,385] INFO: [0;37mpreprocess config: {'method': 'manual', 'data_fraction': 1.0, 'params': None}[0m
+[2025-09-08 16:22:26,385] INFO: [0;37mselection: None[0m
+[2025-09-08 16:22:26,385] INFO: [0;37mtest_time_selection: None[0m
+[2025-09-08 16:22:26,385] INFO: [0;37mvar_funcs:
+ - ('pf_mask', 'awkward.ones_like(Part_E)')
+ - ('not_mask', '1 - Part_mask')
+ - ('_label_', 'np.stack([ak.to_numpy(Part_mask)], axis=1)')
+ - ('_labelcheck_', 'np.sum(np.stack([ak.to_numpy(Part_mask)], axis=1), axis=1)')[0m
+[2025-09-08 16:22:26,385] INFO: [0;37minput_names: ('pf_points', 'pf_features', 'pf_mask')[0m
+[2025-09-08 16:22:26,385] INFO: [0;37minput_dicts:
+ - ('pf_points', ['Part_eta', 'Part_phi'])
+ - ('pf_features', ['Part_E', 'Part_px', 'Part_py', 'Part_pz'])
+ - ('pf_mask', ['pf_mask'])[0m
+[2025-09-08 16:22:26,385] INFO: [0;37minput_shapes:
+ - ('pf_points', (-1, 2, 52))
+ - ('pf_features', (-1, 4, 52))
+ - ('pf_mask', (-1, 1, 52))[0m
+[2025-09-08 16:22:26,385] INFO: [0;37mpreprocess_params:
+ - ('Part_eta', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -10, 'max': 10, 'pad_value': 0})
+ - ('Part_phi', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -10, 'max': 10, 'pad_value': 0})
+ - ('Part_E', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_px', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_py', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_pz', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('pf_mask', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})[0m
+[2025-09-08 16:22:26,386] INFO: [0;37mlabel_names: ('_label_',)[0m
+[2025-09-08 16:22:26,386] INFO: [0;37mobserver_names: ('pdg_id',)[0m
+[2025-09-08 16:22:26,386] INFO: [0;37mmonitor_variables: ()[0m
+[2025-09-08 16:22:26,387] INFO: [0;37mpreprocess config: {'method': 'manual', 'data_fraction': 1.0, 'params': None}[0m
+[2025-09-08 16:22:26,388] INFO: [0;37mselection: None[0m
+[2025-09-08 16:22:26,388] INFO: [0;37mtest_time_selection: None[0m
+[2025-09-08 16:22:26,388] INFO: [0;37mvar_funcs:
+ - ('pf_mask', 'awkward.ones_like(Part_E)')
+ - ('not_mask', '1 - Part_mask')
+ - ('_label_', 'np.stack([ak.to_numpy(Part_mask)], axis=1)')
+ - ('_labelcheck_', 'np.sum(np.stack([ak.to_numpy(Part_mask)], axis=1), axis=1)')[0m
+[2025-09-08 16:22:26,388] INFO: [0;37minput_names: ('pf_points', 'pf_features', 'pf_mask')[0m
+[2025-09-08 16:22:26,388] INFO: [0;37minput_dicts:
+ - ('pf_points', ['Part_eta', 'Part_phi'])
+ - ('pf_features', ['Part_E', 'Part_px', 'Part_py', 'Part_pz'])
+ - ('pf_mask', ['pf_mask'])[0m
+[2025-09-08 16:22:26,388] INFO: [0;37minput_shapes:
+ - ('pf_points', (-1, 2, 52))
+ - ('pf_features', (-1, 4, 52))
+ - ('pf_mask', (-1, 1, 52))[0m
+[2025-09-08 16:22:26,388] INFO: [0;37mpreprocess_params:
+ - ('Part_eta', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -10, 'max': 10, 'pad_value': 0})
+ - ('Part_phi', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -10, 'max': 10, 'pad_value': 0})
+ - ('Part_E', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_px', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_py', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_pz', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('pf_mask', {'length': 52, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})[0m
+[2025-09-08 16:22:26,388] INFO: [0;37mlabel_names: ('_label_',)[0m
+[2025-09-08 16:22:26,388] INFO: [0;37mobserver_names: ()[0m
+[2025-09-08 16:22:26,388] INFO: [0;37mmonitor_variables: ()[0m
+[2025-09-08 16:22:26,389] INFO: Network options: {}
+[2025-09-08 16:22:26,602] INFO: [0;37mWarning: module EdgeConvBlock is treated as a zero-op.[0m
+[2025-09-08 16:22:26,602] INFO: [0;37mWarning: module Dropout is treated as a zero-op.[0m
+[2025-09-08 16:22:26,602] INFO: [0;37mWarning: module ParticleNet is treated as a zero-op.[0m
+[2025-09-08 16:22:26,602] INFO: [0;37mWarning: module ParticleNetWrapper is treated as a zero-op.[0m
+[2025-09-08 16:22:26,860] INFO: [0;37mParticleNetWrapper(
+  |0.134 M, 100.000% Params, 53.508 MMac, 100.000% MACs|
+  (fc_out): Sequential(
+    |0.025 M, 18.550% Params, 1.295 MMac, 2.420% MACs|
+    (0): Linear(in_features=128, out_features=128, bias=True, |0.017 M, 12.302% Params, 852.096 KMac, 1.592% MACs|)
+    (1): LeakyReLU(negative_slope=0.01, |0.0 M, 0.000% Params, 6.656 KMac, 0.012% MACs|)
+    (2): Linear(in_features=128, out_features=64, bias=True, |0.008 M, 6.151% Params, 426.048 KMac, 0.796% MACs|)
+    (3): LeakyReLU(negative_slope=0.01, |0.0 M, 0.000% Params, 3.328 KMac, 0.006% MACs|)
+    (4): Linear(in_features=64, out_features=2, bias=True, |0.0 M, 0.097% Params, 6.658 KMac, 0.012% MACs|)
+    (5): LeakyReLU(negative_slope=0.01, |0.0 M, 0.000% Params, 104.0 Mac, 0.000% MACs|)
+  )
+  (mod): ParticleNet(
+    |0.109 M, 81.450% Params, 52.213 MMac, 97.580% MACs|
+    (bn_fts): BatchNorm1d(4, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True, |0.0 M, 0.006% Params, 416.0 Mac, 0.001% MACs|)
+    (edge_convs): ModuleList(
+      (0): EdgeConvBlock(
+        |0.009 M, 7.057% Params, 7.744 MMac, 14.473% MACs|
+        (convs): ModuleList(
+          (0): Conv2d(8, 64, kernel_size=(1, 1), stride=(1, 1), bias=False, |0.001 M, 0.381% Params, 425.984 KMac, 0.796% MACs|)
+          (1-2): 2 x Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1), bias=False, |0.004 M, 3.052% Params, 3.408 MMac, 6.369% MACs|)
+        )
+        (bns): ModuleList(
+          (0-2): 3 x BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True, |0.0 M, 0.095% Params, 106.496 KMac, 0.199% MACs|)
+        )
+        (acts): ModuleList(
+          (0-2): 3 x ReLU(|0.0 M, 0.000% Params, 53.248 KMac, 0.100% MACs|)
+        )
+        (sc): Conv1d(4, 64, kernel_size=(1,), stride=(1,), bias=False, |0.0 M, 0.191% Params, 13.312 KMac, 0.025% MACs|)
+        (sc_bn): BatchNorm1d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True, |0.0 M, 0.095% Params, 6.656 KMac, 0.012% MACs|)
+        (sc_act): ReLU(|0.0 M, 0.000% Params, 3.328 KMac, 0.006% MACs|)
+      )
+      (1): EdgeConvBlock(
+        |0.058 M, 43.487% Params, 42.299 MMac, 79.051% MACs|
+        (convs): ModuleList(
+          (0-2): 3 x Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1), bias=False, |0.016 M, 12.207% Params, 13.631 MMac, 25.475% MACs|)
+        )
+        (bns): ModuleList(
+          (0-2): 3 x BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True, |0.0 M, 0.191% Params, 212.992 KMac, 0.398% MACs|)
+        )
+        (acts): ModuleList(
+          (0-2): 3 x ReLU(|0.0 M, 0.000% Params, 106.496 KMac, 0.199% MACs|)
+        )
+        (sc): Conv1d(64, 128, kernel_size=(1,), stride=(1,), bias=False, |0.008 M, 6.104% Params, 425.984 KMac, 0.796% MACs|)
+        (sc_bn): BatchNorm1d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True, |0.0 M, 0.191% Params, 13.312 KMac, 0.025% MACs|)
+        (sc_act): ReLU(|0.0 M, 0.000% Params, 6.656 KMac, 0.012% MACs|)
+      )
+    )
+    (fusion_block): Sequential(
+      |0.025 M, 18.501% Params, 1.298 MMac, 2.426% MACs|
+      (0): Conv1d(192, 128, kernel_size=(1,), stride=(1,), bias=False, |0.025 M, 18.311% Params, 1.278 MMac, 2.388% MACs|)
+      (1): BatchNorm1d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True, |0.0 M, 0.191% Params, 13.312 KMac, 0.025% MACs|)
+      (2): ReLU(|0.0 M, 0.000% Params, 6.656 KMac, 0.012% MACs|)
+    )
+    (fc): Sequential(
+      |0.017 M, 12.398% Params, 871.936 KMac, 1.630% MACs|
+      (0): Sequential(
+        |0.017 M, 12.398% Params, 871.936 KMac, 1.630% MACs|
+        (0): Conv1d(128, 128, kernel_size=(1,), stride=(1,), bias=False, |0.016 M, 12.207% Params, 851.968 KMac, 1.592% MACs|)
+        (1): BatchNorm1d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True, |0.0 M, 0.191% Params, 13.312 KMac, 0.025% MACs|)
+        (2): ReLU(|0.0 M, 0.000% Params, 6.656 KMac, 0.012% MACs|)
+        (3): Dropout(p=0.2, inplace=False, |0.0 M, 0.000% Params, 0.0 Mac, 0.000% MACs|)
+      )
+    )
+  )
+)[0m
+[2025-09-08 16:22:26,860] INFO: Computational complexity:       53.51 MMac
+[2025-09-08 16:22:26,860] INFO: Number of parameters:           134.22 k
+[2025-09-08 16:22:26,860] INFO: Using loss function CrossEntropyLoss() with options {}
+[2025-09-08 16:22:26,893] INFO: Create Tensorboard summary writer with comment particlemask
+[2025-09-08 16:22:26,896] INFO: Optimizer options: {}
+[2025-09-08 16:22:27,493] INFO: --------------------------------------------------
+[2025-09-08 16:22:27,493] INFO: Epoch #0 training
+[2025-09-08 16:22:27,517] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-08 16:22:27,524] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-08 16:23:14,529] INFO: Processed 199680 entries in total (avg. speed 4245.3 entries/s)
+[2025-09-08 16:23:14,529] INFO: Train AvgLoss: 0.09815, AvgAcc: 0.95278
+[2025-09-08 16:23:14,529] INFO: Train class distribution: 
+    [(0, 8026664), (1, 2356696)]
+[2025-09-08 16:23:14,545] INFO: Epoch #0 validating
+[2025-09-08 16:23:14,567] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-08 16:23:15,866] INFO: Processed 9984 entries in total (avg. speed 7560.3 entries/s)
+[2025-09-08 16:23:15,866] INFO: Evaluation class distribution: 
+    [(0, 401118), (1, 118050)]
+[2025-09-08 16:23:15,927] ERROR: y should be a 1d array, got an array of shape (519168, 2) instead.
+[2025-09-08 16:23:16,639] INFO: Evaluation metrics: 
+    - roc_auc_score: 
+None
+    - roc_auc_score_matrix: 
+[[0.       0.999761]
+ [0.       0.      ]]
+    - confusion_matrix: 
+[[0.99514607 0.00485393]
+ [0.01273189 0.98726811]]
+[2025-09-08 16:23:16,641] INFO: [1mEpoch #0: Current validation metric: 0.99335 (best: 0.99335)[0m
+[2025-09-08 16:23:16,641] INFO: --------------------------------------------------
+[2025-09-08 16:23:16,641] INFO: Epoch #1 training
+[2025-09-08 16:23:16,659] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-08 16:23:16,671] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-08 16:24:04,011] INFO: Processed 199680 entries in total (avg. speed 4215.4 entries/s)
+[2025-09-08 16:24:04,011] INFO: Train AvgLoss: 0.02865, AvgAcc: 0.98797
+[2025-09-08 16:24:04,011] INFO: Train class distribution: 
+    [(0, 8026628), (1, 2356732)]
+[2025-09-08 16:24:04,031] INFO: Epoch #1 validating
+[2025-09-08 16:24:04,050] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-08 16:24:05,437] INFO: Processed 9984 entries in total (avg. speed 7106.8 entries/s)
+[2025-09-08 16:24:05,437] INFO: Evaluation class distribution: 
+    [(0, 401101), (1, 118067)]
+[2025-09-08 16:24:05,495] ERROR: y should be a 1d array, got an array of shape (519168, 2) instead.
+[2025-09-08 16:24:06,237] INFO: Evaluation metrics: 
+    - roc_auc_score: 
+None
+    - roc_auc_score_matrix: 
+[[0.         0.99988055]
+ [0.         0.        ]]
+    - confusion_matrix: 
+[[0.99626029 0.00373971]
+ [0.00726706 0.99273294]]
+[2025-09-08 16:24:06,240] INFO: [1mEpoch #1: Current validation metric: 0.99546 (best: 0.99546)[0m
+[2025-09-08 16:24:06,240] INFO: --------------------------------------------------
+[2025-09-08 16:24:06,240] INFO: Epoch #2 training
+[2025-09-08 16:24:06,259] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-08 16:24:06,270] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-08 16:24:53,235] INFO: Processed 199680 entries in total (avg. speed 4249.0 entries/s)
+[2025-09-08 16:24:53,235] INFO: Train AvgLoss: 0.02471, AvgAcc: 0.98969
+[2025-09-08 16:24:53,235] INFO: Train class distribution: 
+    [(0, 8026545), (1, 2356815)]
+[2025-09-08 16:24:53,250] INFO: Epoch #2 validating
+[2025-09-08 16:24:53,269] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-08 16:24:54,469] INFO: Processed 9984 entries in total (avg. speed 8189.8 entries/s)
+[2025-09-08 16:24:54,470] INFO: Evaluation class distribution: 
+    [(0, 401104), (1, 118064)]
+[2025-09-08 16:24:54,534] ERROR: y should be a 1d array, got an array of shape (519168, 2) instead.
+[2025-09-08 16:24:55,350] INFO: Evaluation metrics: 
+    - roc_auc_score: 
+None
+    - roc_auc_score_matrix: 
+[[0.         0.99991655]
+ [0.         0.        ]]
+    - confusion_matrix: 
+[[0.99713042 0.00286958]
+ [0.00644566 0.99355434]]
+[2025-09-08 16:24:55,351] INFO: [1mEpoch #2: Current validation metric: 0.99632 (best: 0.99632)[0m
+[2025-09-08 16:24:55,351] INFO: --------------------------------------------------
+[2025-09-08 16:24:55,351] INFO: Epoch #3 training
+[2025-09-08 16:24:55,368] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-08 16:24:55,380] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-08 16:25:42,201] INFO: Processed 199680 entries in total (avg. speed 4262.2 entries/s)
+[2025-09-08 16:25:42,201] INFO: Train AvgLoss: 0.02286, AvgAcc: 0.99047
+[2025-09-08 16:25:42,201] INFO: Train class distribution: 
+    [(0, 8026524), (1, 2356836)]
+[2025-09-08 16:25:42,216] INFO: Epoch #3 validating
+[2025-09-08 16:25:42,234] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-08 16:25:43,415] INFO: Processed 9984 entries in total (avg. speed 8329.1 entries/s)
+[2025-09-08 16:25:43,416] INFO: Evaluation class distribution: 
+    [(0, 401124), (1, 118044)]
+[2025-09-08 16:25:43,478] ERROR: y should be a 1d array, got an array of shape (519168, 2) instead.
+[2025-09-08 16:25:44,266] INFO: Evaluation metrics: 
+    - roc_auc_score: 
+None
+    - roc_auc_score_matrix: 
+[[0.         0.99992484]
+ [0.         0.        ]]
+    - confusion_matrix: 
+[[0.99697849 0.00302151]
+ [0.00509979 0.99490021]]
+[2025-09-08 16:25:44,268] INFO: [1mEpoch #3: Current validation metric: 0.99651 (best: 0.99651)[0m
+[2025-09-08 16:25:44,268] INFO: --------------------------------------------------
+[2025-09-08 16:25:44,268] INFO: Epoch #4 training
+[2025-09-08 16:25:44,286] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-08 16:25:44,296] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-08 16:26:31,198] INFO: Processed 199680 entries in total (avg. speed 4254.8 entries/s)
+[2025-09-08 16:26:31,199] INFO: Train AvgLoss: 0.02172, AvgAcc: 0.99099
+[2025-09-08 16:26:31,199] INFO: Train class distribution: 
+    [(0, 8026612), (1, 2356748)]
+[2025-09-08 16:26:31,216] INFO: Epoch #4 validating
+[2025-09-08 16:26:31,236] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-08 16:26:32,414] INFO: Processed 9984 entries in total (avg. speed 8337.7 entries/s)
+[2025-09-08 16:26:32,414] INFO: Evaluation class distribution: 
+    [(0, 401123), (1, 118045)]
+[2025-09-08 16:26:32,478] ERROR: y should be a 1d array, got an array of shape (519168, 2) instead.
+[2025-09-08 16:26:33,242] INFO: Evaluation metrics: 
+    - roc_auc_score: 
+None
+    - roc_auc_score_matrix: 
+[[0.         0.99992394]
+ [0.         0.        ]]
+    - confusion_matrix: 
+[[0.99664442 0.00335558]
+ [0.00455758 0.99544242]]
+[2025-09-08 16:26:33,243] INFO: [1mEpoch #4: Current validation metric: 0.99637 (best: 0.99651)[0m
+[2025-09-08 16:26:33,243] INFO: --------------------------------------------------
+[2025-09-08 16:26:33,243] INFO: Epoch #5 training
+[2025-09-08 16:26:33,264] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-08 16:26:33,276] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-08 16:27:20,423] INFO: Processed 199680 entries in total (avg. speed 4232.3 entries/s)
+[2025-09-08 16:27:20,424] INFO: Train AvgLoss: 0.02082, AvgAcc: 0.99137
+[2025-09-08 16:27:20,424] INFO: Train class distribution: 
+    [(0, 8026571), (1, 2356789)]
+[2025-09-08 16:27:20,440] INFO: Epoch #5 validating
+[2025-09-08 16:27:20,459] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-08 16:27:21,646] INFO: Processed 9984 entries in total (avg. speed 8283.7 entries/s)
+[2025-09-08 16:27:21,647] INFO: Evaluation class distribution: 
+    [(0, 401135), (1, 118033)]
+[2025-09-08 16:27:21,723] ERROR: y should be a 1d array, got an array of shape (519168, 2) instead.
+[2025-09-08 16:27:22,562] INFO: Evaluation metrics: 
+    - roc_auc_score: 
+None
+    - roc_auc_score_matrix: 
+[[0.         0.99993634]
+ [0.         0.        ]]
+    - confusion_matrix: 
+[[0.99726277 0.00273723]
+ [0.00477832 0.99522168]]
+[2025-09-08 16:27:22,563] INFO: [1mEpoch #5: Current validation metric: 0.99680 (best: 0.99680)[0m
+[2025-09-08 16:27:22,564] INFO: --------------------------------------------------
+[2025-09-08 16:27:22,564] INFO: Epoch #6 training
+[2025-09-08 16:27:22,582] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-08 16:27:22,594] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-08 16:28:08,444] INFO: Processed 199680 entries in total (avg. speed 4352.2 entries/s)
+[2025-09-08 16:28:08,444] INFO: Train AvgLoss: 0.02007, AvgAcc: 0.99169
+[2025-09-08 16:28:08,444] INFO: Train class distribution: 
+    [(0, 8026537), (1, 2356823)]
+[2025-09-08 16:28:08,463] INFO: Epoch #6 validating
+[2025-09-08 16:28:08,480] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-08 16:28:09,599] INFO: Processed 9984 entries in total (avg. speed 8787.1 entries/s)
+[2025-09-08 16:28:09,599] INFO: Evaluation class distribution: 
+    [(0, 401112), (1, 118056)]
+[2025-09-08 16:28:09,655] ERROR: y should be a 1d array, got an array of shape (519168, 2) instead.
+[2025-09-08 16:28:10,420] INFO: Evaluation metrics: 
+    - roc_auc_score: 
+None
+    - roc_auc_score_matrix: 
+[[0.        0.9999404]
+ [0.        0.       ]]
+    - confusion_matrix: 
+[[0.99679641 0.00320359]
+ [0.00359999 0.99640001]]
+[2025-09-08 16:28:10,420] INFO: [1mEpoch #6: Current validation metric: 0.99671 (best: 0.99680)[0m
+[2025-09-08 16:28:10,420] INFO: --------------------------------------------------
+[2025-09-08 16:28:10,421] INFO: Epoch #7 training
+[2025-09-08 16:28:10,440] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-08 16:28:10,449] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-08 16:28:55,816] INFO: Processed 199680 entries in total (avg. speed 4398.7 entries/s)
+[2025-09-08 16:28:55,816] INFO: Train AvgLoss: 0.01935, AvgAcc: 0.99201
+[2025-09-08 16:28:55,816] INFO: Train class distribution: 
+    [(0, 8026674), (1, 2356686)]
+[2025-09-08 16:28:55,833] INFO: Epoch #7 validating
+[2025-09-08 16:28:55,851] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-08 16:28:56,991] INFO: Processed 9984 entries in total (avg. speed 8622.7 entries/s)
+[2025-09-08 16:28:56,992] INFO: Evaluation class distribution: 
+    [(0, 401133), (1, 118035)]
+[2025-09-08 16:28:57,056] ERROR: y should be a 1d array, got an array of shape (519168, 2) instead.
+[2025-09-08 16:28:57,842] INFO: Evaluation metrics: 
+    - roc_auc_score: 
+None
+    - roc_auc_score_matrix: 
+[[0.        0.9999474]
+ [0.        0.       ]]
+    - confusion_matrix: 
+[[0.99778876 0.00221124]
+ [0.0052781  0.9947219 ]]
+[2025-09-08 16:28:57,844] INFO: [1mEpoch #7: Current validation metric: 0.99709 (best: 0.99709)[0m
+[2025-09-08 16:28:57,844] INFO: --------------------------------------------------
+[2025-09-08 16:28:57,844] INFO: Epoch #8 training
+[2025-09-08 16:28:57,862] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-08 16:28:57,873] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-08 16:29:43,061] INFO: Processed 199680 entries in total (avg. speed 4416.0 entries/s)
+[2025-09-08 16:29:43,062] INFO: Train AvgLoss: 0.01901, AvgAcc: 0.99219
+[2025-09-08 16:29:43,062] INFO: Train class distribution: 
+    [(0, 8026625), (1, 2356735)]
+[2025-09-08 16:29:43,077] INFO: Epoch #8 validating
+[2025-09-08 16:29:43,104] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-08 16:29:44,250] INFO: Processed 9984 entries in total (avg. speed 8513.6 entries/s)
+[2025-09-08 16:29:44,250] INFO: Evaluation class distribution: 
+    [(0, 401109), (1, 118059)]
+[2025-09-08 16:29:44,315] ERROR: y should be a 1d array, got an array of shape (519168, 2) instead.
+[2025-09-08 16:29:45,153] INFO: Evaluation metrics: 
+    - roc_auc_score: 
+None
+    - roc_auc_score_matrix: 
+[[0.         0.99994963]
+ [0.         0.        ]]
+    - confusion_matrix: 
+[[0.99729749 0.00270251]
+ [0.00374389 0.99625611]]
+[2025-09-08 16:29:45,153] INFO: [1mEpoch #8: Current validation metric: 0.99706 (best: 0.99709)[0m
+[2025-09-08 16:29:45,154] INFO: --------------------------------------------------
+[2025-09-08 16:29:45,154] INFO: Epoch #9 training
+[2025-09-08 16:29:45,172] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-08 16:29:45,181] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-08 16:30:30,236] INFO: Processed 199680 entries in total (avg. speed 4429.3 entries/s)
+[2025-09-08 16:30:30,236] INFO: Train AvgLoss: 0.01843, AvgAcc: 0.99243
+[2025-09-08 16:30:30,236] INFO: Train class distribution: 
+    [(0, 8026466), (1, 2356894)]
+[2025-09-08 16:30:30,251] INFO: Epoch #9 validating
+[2025-09-08 16:30:30,271] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-08 16:30:31,392] INFO: Processed 9984 entries in total (avg. speed 8757.5 entries/s)
+[2025-09-08 16:30:31,392] INFO: Evaluation class distribution: 
+    [(0, 401111), (1, 118057)]
+[2025-09-08 16:30:31,455] ERROR: y should be a 1d array, got an array of shape (519168, 2) instead.
+[2025-09-08 16:30:32,243] INFO: Evaluation metrics: 
+    - roc_auc_score: 
+None
+    - roc_auc_score_matrix: 
+[[0.         0.99995315]
+ [0.         0.        ]]
+    - confusion_matrix: 
+[[0.99768393 0.00231607]
+ [0.00454865 0.99545135]]
+[2025-09-08 16:30:32,244] INFO: [1mEpoch #9: Current validation metric: 0.99718 (best: 0.99718)[0m
+[2025-09-08 16:30:32,244] INFO: --------------------------------------------------
+[2025-09-08 16:30:32,244] INFO: Epoch #10 training
+[2025-09-08 16:30:32,262] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-08 16:30:32,273] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-08 16:31:17,481] INFO: Processed 199680 entries in total (avg. speed 4414.1 entries/s)
+[2025-09-08 16:31:17,481] INFO: Train AvgLoss: 0.01812, AvgAcc: 0.99255
+[2025-09-08 16:31:17,482] INFO: Train class distribution: 
+    [(0, 8026609), (1, 2356751)]
+[2025-09-08 16:31:17,499] INFO: Epoch #10 validating
+[2025-09-08 16:31:17,517] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-08 16:31:18,649] INFO: Processed 9984 entries in total (avg. speed 8684.6 entries/s)
+[2025-09-08 16:31:18,649] INFO: Evaluation class distribution: 
+    [(0, 401089), (1, 118079)]
+[2025-09-08 16:31:18,709] ERROR: y should be a 1d array, got an array of shape (519168, 2) instead.
+[2025-09-08 16:31:19,475] INFO: Evaluation metrics: 
+    - roc_auc_score: 
+None
+    - roc_auc_score_matrix: 
+[[0.        0.9999524]
+ [0.        0.       ]]
+    - confusion_matrix: 
+[[0.99807773 0.00192227]
+ [0.00577579 0.99422421]]
+[2025-09-08 16:31:19,477] INFO: [1mEpoch #10: Current validation metric: 0.99720 (best: 0.99720)[0m
+[2025-09-08 16:31:19,477] INFO: --------------------------------------------------
+[2025-09-08 16:31:19,477] INFO: Epoch #11 training
+[2025-09-08 16:31:19,495] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-08 16:31:19,506] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-08 16:32:04,956] INFO: Processed 199680 entries in total (avg. speed 4390.7 entries/s)
+[2025-09-08 16:32:04,956] INFO: Train AvgLoss: 0.01786, AvgAcc: 0.99269
+[2025-09-08 16:32:04,956] INFO: Train class distribution: 
+    [(0, 8026541), (1, 2356819)]
+[2025-09-08 16:32:04,972] INFO: Epoch #11 validating
+[2025-09-08 16:32:04,994] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-08 16:32:06,139] INFO: Processed 9984 entries in total (avg. speed 8566.0 entries/s)
+[2025-09-08 16:32:06,139] INFO: Evaluation class distribution: 
+    [(0, 401112), (1, 118056)]
+[2025-09-08 16:32:06,202] ERROR: y should be a 1d array, got an array of shape (519168, 2) instead.
+[2025-09-08 16:32:07,024] INFO: Evaluation metrics: 
+    - roc_auc_score: 
+None
+    - roc_auc_score_matrix: 
+[[0.        0.9999549]
+ [0.        0.       ]]
+    - confusion_matrix: 
+[[0.99769391 0.00230609]
+ [0.00418445 0.99581555]]
+[2025-09-08 16:32:07,026] INFO: [1mEpoch #11: Current validation metric: 0.99727 (best: 0.99727)[0m
+[2025-09-08 16:32:07,026] INFO: --------------------------------------------------
+[2025-09-08 16:32:07,026] INFO: Epoch #12 training
+[2025-09-08 16:32:07,044] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-08 16:32:07,055] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-08 16:32:52,491] INFO: Processed 199680 entries in total (avg. speed 4392.0 entries/s)
+[2025-09-08 16:32:52,491] INFO: Train AvgLoss: 0.01737, AvgAcc: 0.99290
+[2025-09-08 16:32:52,491] INFO: Train class distribution: 
+    [(0, 8026470), (1, 2356890)]
+[2025-09-08 16:32:52,511] INFO: Epoch #12 validating
+[2025-09-08 16:32:52,532] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-08 16:32:53,697] INFO: Processed 9984 entries in total (avg. speed 8419.9 entries/s)
+[2025-09-08 16:32:53,697] INFO: Evaluation class distribution: 
+    [(0, 401103), (1, 118065)]
+[2025-09-08 16:32:53,755] ERROR: y should be a 1d array, got an array of shape (519168, 2) instead.
+[2025-09-08 16:32:54,567] INFO: Evaluation metrics: 
+    - roc_auc_score: 
+None
+    - roc_auc_score_matrix: 
+[[0.       0.999963]
+ [0.       0.      ]]
+    - confusion_matrix: 
+[[0.99794068 0.00205932]
+ [0.00422649 0.99577351]]
+[2025-09-08 16:32:54,568] INFO: [1mEpoch #12: Current validation metric: 0.99745 (best: 0.99745)[0m
+[2025-09-08 16:32:54,568] INFO: --------------------------------------------------
+[2025-09-08 16:32:54,569] INFO: Epoch #13 training
+[2025-09-08 16:32:54,591] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-08 16:32:54,596] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-08 16:33:40,619] INFO: Processed 199680 entries in total (avg. speed 4336.1 entries/s)
+[2025-09-08 16:33:40,619] INFO: Train AvgLoss: 0.01721, AvgAcc: 0.99294
+[2025-09-08 16:33:40,619] INFO: Train class distribution: 
+    [(0, 8026599), (1, 2356761)]
+[2025-09-08 16:33:40,637] INFO: Epoch #13 validating
+[2025-09-08 16:33:40,658] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-08 16:33:41,917] INFO: Processed 9984 entries in total (avg. speed 7808.1 entries/s)
+[2025-09-08 16:33:41,917] INFO: Evaluation class distribution: 
+    [(0, 401112), (1, 118056)]
+[2025-09-08 16:33:41,987] ERROR: y should be a 1d array, got an array of shape (519168, 2) instead.
+[2025-09-08 16:33:42,830] INFO: Evaluation metrics: 
+    - roc_auc_score: 
+None
+    - roc_auc_score_matrix: 
+[[0.         0.99996537]
+ [0.         0.        ]]
+    - confusion_matrix: 
+[[0.99800804 0.00199196]
+ [0.0039134  0.9960866 ]]
+[2025-09-08 16:33:42,831] INFO: [1mEpoch #13: Current validation metric: 0.99757 (best: 0.99757)[0m
+[2025-09-08 16:33:42,831] INFO: --------------------------------------------------
+[2025-09-08 16:33:42,831] INFO: Epoch #14 training
+[2025-09-08 16:33:42,850] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-08 16:33:42,862] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-08 16:34:30,775] INFO: Processed 199680 entries in total (avg. speed 4164.9 entries/s)
+[2025-09-08 16:34:30,775] INFO: Train AvgLoss: 0.01603, AvgAcc: 0.99348
+[2025-09-08 16:34:30,776] INFO: Train class distribution: 
+    [(0, 8026619), (1, 2356741)]
+[2025-09-08 16:34:30,797] INFO: Epoch #14 validating
+[2025-09-08 16:34:30,817] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-08 16:34:32,035] INFO: Processed 9984 entries in total (avg. speed 8071.3 entries/s)
+[2025-09-08 16:34:32,035] INFO: Evaluation class distribution: 
+    [(0, 401094), (1, 118074)]
+[2025-09-08 16:34:32,098] ERROR: y should be a 1d array, got an array of shape (519168, 2) instead.
+[2025-09-08 16:34:32,927] INFO: Evaluation metrics: 
+    - roc_auc_score: 
+None
+    - roc_auc_score_matrix: 
+[[0.         0.99996895]
+ [0.         0.        ]]
+    - confusion_matrix: 
+[[0.99807028 0.00192972]
+ [0.00375188 0.99624812]]
+[2025-09-08 16:34:32,930] INFO: [1mEpoch #14: Current validation metric: 0.99766 (best: 0.99766)[0m
+[2025-09-08 16:34:32,930] INFO: --------------------------------------------------
+[2025-09-08 16:34:32,930] INFO: Epoch #15 training
+[2025-09-08 16:34:32,949] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-08 16:34:32,962] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-08 16:35:19,162] INFO: Processed 199680 entries in total (avg. speed 4319.1 entries/s)
+[2025-09-08 16:35:19,163] INFO: Train AvgLoss: 0.01537, AvgAcc: 0.99373
+[2025-09-08 16:35:19,163] INFO: Train class distribution: 
+    [(0, 8026691), (1, 2356669)]
+[2025-09-08 16:35:19,181] INFO: Epoch #15 validating
+[2025-09-08 16:35:19,201] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-08 16:35:20,356] INFO: Processed 9984 entries in total (avg. speed 8503.3 entries/s)
+[2025-09-08 16:35:20,356] INFO: Evaluation class distribution: 
+    [(0, 401108), (1, 118060)]
+[2025-09-08 16:35:20,416] ERROR: y should be a 1d array, got an array of shape (519168, 2) instead.
+[2025-09-08 16:35:21,214] INFO: Evaluation metrics: 
+    - roc_auc_score: 
+None
+    - roc_auc_score_matrix: 
+[[0.         0.99997705]
+ [0.         0.        ]]
+    - confusion_matrix: 
+[[0.99826231 0.00173769]
+ [0.00285448 0.99714552]]
+[2025-09-08 16:35:21,215] INFO: [1mEpoch #15: Current validation metric: 0.99801 (best: 0.99801)[0m
+[2025-09-08 16:35:21,215] INFO: --------------------------------------------------
+[2025-09-08 16:35:21,216] INFO: Epoch #16 training
+[2025-09-08 16:35:21,233] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-08 16:35:21,245] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-08 16:36:07,093] INFO: Processed 199680 entries in total (avg. speed 4352.5 entries/s)
+[2025-09-08 16:36:07,094] INFO: Train AvgLoss: 0.01501, AvgAcc: 0.99388
+[2025-09-08 16:36:07,094] INFO: Train class distribution: 
+    [(0, 8026526), (1, 2356834)]
+[2025-09-08 16:36:07,112] INFO: Epoch #16 validating
+[2025-09-08 16:36:07,132] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-08 16:36:08,264] INFO: Processed 9984 entries in total (avg. speed 8676.5 entries/s)
+[2025-09-08 16:36:08,264] INFO: Evaluation class distribution: 
+    [(0, 401092), (1, 118076)]
+[2025-09-08 16:36:08,323] ERROR: y should be a 1d array, got an array of shape (519168, 2) instead.
+[2025-09-08 16:36:09,090] INFO: Evaluation metrics: 
+    - roc_auc_score: 
+None
+    - roc_auc_score_matrix: 
+[[0.        0.9999771]
+ [0.        0.       ]]
+    - confusion_matrix: 
+[[0.998352   0.001648  ]
+ [0.00329449 0.99670551]]
+[2025-09-08 16:36:09,090] INFO: [1mEpoch #16: Current validation metric: 0.99798 (best: 0.99801)[0m
+[2025-09-08 16:36:09,091] INFO: --------------------------------------------------
+[2025-09-08 16:36:09,091] INFO: Epoch #17 training
+[2025-09-08 16:36:09,110] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-08 16:36:09,121] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-08 16:36:54,528] INFO: Processed 199680 entries in total (avg. speed 4394.7 entries/s)
+[2025-09-08 16:36:54,528] INFO: Train AvgLoss: 0.01491, AvgAcc: 0.99396
+[2025-09-08 16:36:54,528] INFO: Train class distribution: 
+    [(0, 8026593), (1, 2356767)]
+[2025-09-08 16:36:54,545] INFO: Epoch #17 validating
+[2025-09-08 16:36:54,564] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-08 16:36:55,702] INFO: Processed 9984 entries in total (avg. speed 8633.5 entries/s)
+[2025-09-08 16:36:55,702] INFO: Evaluation class distribution: 
+    [(0, 401134), (1, 118034)]
+[2025-09-08 16:36:55,761] ERROR: y should be a 1d array, got an array of shape (519168, 2) instead.
+[2025-09-08 16:36:56,541] INFO: Evaluation metrics: 
+    - roc_auc_score: 
+None
+    - roc_auc_score_matrix: 
+[[0.        0.9999766]
+ [0.        0.       ]]
+    - confusion_matrix: 
+[[0.99834968 0.00165032]
+ [0.00327872 0.99672128]]
+[2025-09-08 16:36:56,541] INFO: [1mEpoch #17: Current validation metric: 0.99798 (best: 0.99801)[0m
+[2025-09-08 16:36:56,541] INFO: --------------------------------------------------
+[2025-09-08 16:36:56,542] INFO: Epoch #18 training
+[2025-09-08 16:36:56,560] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-08 16:36:56,570] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-08 16:37:41,966] INFO: Processed 199680 entries in total (avg. speed 4395.9 entries/s)
+[2025-09-08 16:37:41,966] INFO: Train AvgLoss: 0.01471, AvgAcc: 0.99402
+[2025-09-08 16:37:41,966] INFO: Train class distribution: 
+    [(0, 8026553), (1, 2356807)]
+[2025-09-08 16:37:41,984] INFO: Epoch #18 validating
+[2025-09-08 16:37:42,003] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-08 16:37:43,141] INFO: Processed 9984 entries in total (avg. speed 8635.0 entries/s)
+[2025-09-08 16:37:43,141] INFO: Evaluation class distribution: 
+    [(0, 401088), (1, 118080)]
+[2025-09-08 16:37:43,200] ERROR: y should be a 1d array, got an array of shape (519168, 2) instead.
+[2025-09-08 16:37:43,988] INFO: Evaluation metrics: 
+    - roc_auc_score: 
+None
+    - roc_auc_score_matrix: 
+[[0.         0.99997926]
+ [0.         0.        ]]
+    - confusion_matrix: 
+[[0.99828217 0.00171783]
+ [0.0027439  0.9972561 ]]
+[2025-09-08 16:37:43,990] INFO: [1mEpoch #18: Current validation metric: 0.99805 (best: 0.99805)[0m
+[2025-09-08 16:37:43,990] INFO: --------------------------------------------------
+[2025-09-08 16:37:43,990] INFO: Epoch #19 training
+[2025-09-08 16:37:44,007] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-08 16:37:44,018] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-08 16:38:29,303] INFO: Processed 199680 entries in total (avg. speed 4406.7 entries/s)
+[2025-09-08 16:38:29,304] INFO: Train AvgLoss: 0.01464, AvgAcc: 0.99407
+[2025-09-08 16:38:29,304] INFO: Train class distribution: 
+    [(0, 8026618), (1, 2356742)]
+[2025-09-08 16:38:29,320] INFO: Epoch #19 validating
+[2025-09-08 16:38:29,340] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/gen_level_2B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-08 16:38:30,461] INFO: Processed 9984 entries in total (avg. speed 8750.9 entries/s)
+[2025-09-08 16:38:30,462] INFO: Evaluation class distribution: 
+    [(0, 401136), (1, 118032)]
+[2025-09-08 16:38:30,524] ERROR: y should be a 1d array, got an array of shape (519168, 2) instead.
+[2025-09-08 16:38:31,303] INFO: Evaluation metrics: 
+    - roc_auc_score: 
+None
+    - roc_auc_score_matrix: 
+[[0.        0.9999792]
+ [0.        0.       ]]
+    - confusion_matrix: 
+[[0.99837462 0.00162538]
+ [0.00305849 0.99694151]]
+[2025-09-08 16:38:31,303] INFO: [1mEpoch #19: Current validation metric: 0.99805 (best: 0.99805)[0m

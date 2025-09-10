@@ -41,12 +41,12 @@ def get_model(data_config, **kwargs):
     pf_features_dims = len(data_config.input_dicts['pf_features'])  # 4-momentum (px, py, pz, E)
     num_classes = len(data_config.label_value) 
     conv_params = [
-        (16, (64, 64, 64)),
-        (16, (128, 128, 128)),
-        (16, (256, 256, 256)),
+        (24, (64, 64, 64)),
+        (24, (128, 128, 128)),
+        (24, (256, 256, 256)),
     ]
     fc_params = [(256, 0.1)]  # Fully connected layers with dropout
-    fc_out_params = [(256, 0.0), (num_classes, 0.0)]  # Output layers
+    fc_out_params = [(256, 0.0), (64, 0.0), (16, 0.0), (num_classes, 0.0)]  # Output layers
 
     # Initialize ParticleNet model
     model = ParticleNetWrapper(

@@ -1,6 +1,5 @@
 new_variables:
   pf_mask: awkward.ones_like(Part_E)
-  # log_E: np.log(B_E)
 
 preprocess:
   method: manual
@@ -8,19 +7,18 @@ preprocess:
 
 inputs:
   pf_points:
-    length: 35
+    length: 52
     vars:
-      - [Part_vx, null, 1, -10, 10]
-      - [Part_vy, null, 1, -10, 10]
-      - [Part_vz, null, 1, -10, 10]
+      - [Part_eta, null, 1, -10, 10]
+      - [Part_phi, null, 1, -10, 10]
     pad_mode: constant
     pad_value: 0
 
   pf_features:
-    length: 35
+    length: 52
     vars:
-      - Part_eta
-      - Part_phi
+      - [Part_eta, null, 1, -10, 10]
+      - [Part_phi, null, 1, -10, 10]
       - Part_E
       - Part_px
       - Part_py
@@ -28,8 +26,18 @@ inputs:
     pad_mode: constant
     pad_value: 0
 
+  pf_vectors:
+    length: 52
+    vars: 
+      - Part_px
+      - Part_py
+      - Part_pz
+      - Part_E
+    pad_mode: constant
+    pad_value: 0
+
   pf_mask:
-    length: 35
+    length: 52
     vars:
       - pf_mask
 

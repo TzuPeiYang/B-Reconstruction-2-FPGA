@@ -16,8 +16,11 @@ class ParticleNetWrapper(nn.Module):
         # finetune the last FC layer
         layers = []
         for i in range(len(fc_out_params) - 1):
-            layers += [nn.Linear(fc_out_params[i], fc_out_params[i + 1]),
-                           nn.ReLU()]
+            in_channel, drop_rate = fc_out_params[i]
+            out_channel, _ = fc_out_params[i + 1]
+            layers += [nn.Linear(in_channel, out_channel),
+                       nn.LeakyReLU(),
+                       nn.Dropout(drop_rate, inplace=True)]
         
         self.fc_out = nn.Sequential(*layers)
 
@@ -42,8 +45,8 @@ def get_model(data_config, **kwargs):
         (16, (128, 128, 128)),
         (16, (256, 256, 256)),
     ]
-    fc_params = [(256, 0.2)]  # Fully connected layers with dropout
-    fc_out_params = [256, 128, 64, 16, num_classes]
+    fc_params = [(256, 0.1)]  # Fully connected layers with dropout
+    fc_out_params = [(256, 0.0), (num_classes, 0.0)]  # Output layers
 
     # Initialize ParticleNet model
     model = ParticleNetWrapper(
@@ -69,5 +72,20 @@ def get_model(data_config, **kwargs):
     return model, model_info
 
     
+class CustomLoss(nn.Module):
+    def __init__(self):
+        super(CustomLoss, self).__init__()
+        self.mse = nn.MSELoss()
+
+    def forward(self, outputs, targets):
+        # print(outputs.size(), targets.size())
+        loss = self.mse(outputs, targets)
+        # print(loss)
+        delta_mass = torch.mean(outputs[:, 0] ** 2 - targets[:, 0] ** 2)
+        for i in range(1, 4):
+            delta_mass += -torch.mean(outputs[:, i] ** 2 - targets[:, i] ** 2)
+        return loss + torch.abs(delta_mass)
+    
+
 def get_loss(data_config, **kwargs):
-    return torch.nn.MSELoss()
+    return nn.MSELoss()

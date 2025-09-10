@@ -7,3 +7,5 @@ C/build/
 C/bin/
 .vscode/
 pycache/
+*epoch*.pt
+*.png

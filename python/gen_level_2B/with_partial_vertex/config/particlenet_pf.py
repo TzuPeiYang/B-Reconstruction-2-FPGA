@@ -36,6 +36,21 @@ class ParticleNetWrapper(nn.Module):
         return output
 
 
+class CustomLoss(nn.Module):
+    def __init__(self):
+        super(CustomLoss, self).__init__()
+        self.mse = nn.MSELoss()
+
+    def forward(self, outputs, targets):
+        # print(outputs.size(), targets.size())
+        loss = self.mse(outputs, targets)
+        # print(loss)
+        delta_mass = torch.mean(outputs[:, 0] ** 2 - targets[:, 0] ** 2)
+        for i in range(1, 4):
+            delta_mass += -torch.mean(outputs[:, i] ** 2 - targets[:, i] ** 2)
+        return loss + torch.abs(delta_mass)
+
+
 def get_model(data_config, **kwargs):
     # Define model configuration
     pf_features_dims = len(data_config.input_dicts['pf_features'])  # 4-momentum (px, py, pz, E)
@@ -46,7 +61,7 @@ def get_model(data_config, **kwargs):
         (16, (256, 256, 256)),
     ]
     fc_params = [(256, 0.1)]  # Fully connected layers with dropout
-    fc_out_params = [(256, 0.0), (num_classes, 0.0)]  # Output layers
+    fc_out_params = [(256, 0.0), (128, 0.0), (64, 0.0), (16, 0.0), (num_classes, 0)]
 
     # Initialize ParticleNet model
     model = ParticleNetWrapper(
@@ -72,20 +87,5 @@ def get_model(data_config, **kwargs):
     return model, model_info
 
     
-class CustomLoss(nn.Module):
-    def __init__(self):
-        super(CustomLoss, self).__init__()
-        self.mse = nn.MSELoss()
-
-    def forward(self, outputs, targets):
-        # print(outputs.size(), targets.size())
-        loss = self.mse(outputs, targets)
-        # print(loss)
-        delta_mass = torch.mean(outputs[:, 0] ** 2 - targets[:, 0] ** 2)
-        for i in range(1, 4):
-            delta_mass += -torch.mean(outputs[:, i] ** 2 - targets[:, i] ** 2)
-        return loss + torch.abs(delta_mass)
-    
-
 def get_loss(data_config, **kwargs):
-    return nn.MSELoss()
+    return CustomLoss()
