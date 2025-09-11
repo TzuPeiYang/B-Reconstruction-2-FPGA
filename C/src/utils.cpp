@@ -109,10 +109,22 @@ void load_root_files(const char *config_file, std::vector<std::string>& root_fil
             file->Close();
             return;
         }
-        std::vector<std::vector<double>*> branches_data(branches.size(), nullptr);
+        std::vector<std::vector<double*>> pf_points_data;
         for (size_t j = 0; j < branches.size(); j++) {
-            branches_data[j] = new std::vector<double>();
-            tree->SetBranchAddress(branches[j].c_str(), &branches_data[j]);
+            double *branches_data;
+            tree->SetBranchAddress(branches[j].c_str(), &branches_data);
+
+            std::vector<double*> nested_vector;
+            for (Long64_t i = 0; i < tree->GetEntries(); i++) {
+                tree->GetEntry(i);
+                if (branches_data) {
+                    std::cout << branches_data[0] << " entries in branch " << branches[j] << " for event " << i << std::endl;
+                    nested_vector.push_back(branches_data);
+                }
+            }
+            std::cout << "Loaded " << nested_vector.size() << " entries for branch " << branches[j] << std::endl;
+            pf_points_data.push_back(nested_vector);
         }
+        file->Close();
     }
 }
