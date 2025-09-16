@@ -1,4 +1,4 @@
-*.hepmc
+*.hepmc3
 *.root
 python/runs/*
 *.npz
