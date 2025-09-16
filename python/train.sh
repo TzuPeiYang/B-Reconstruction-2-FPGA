@@ -11,8 +11,8 @@ if [[ $? -ne 4 ]]; then
 fi
 
 # option --output/-o requires 1 argument
-LONGOPTS=train,predict,graph,continue,regression
-OPTIONS=tpgcr
+LONGOPTS=train,predict,graph,continue,regression,save
+OPTIONS=tpgcrs
 
 # -temporarily store output to be able to check for errors
 # -activate quoting/enhanced mode (e.g. by writing out “--options”)
@@ -22,7 +22,7 @@ PARSED=$(getopt --options=$OPTIONS --longoptions=$LONGOPTS --name "$0" -- "$@") 
 # read getopt’s output this way to handle the quoting right:
 eval set -- "$PARSED"
 
-t=0 p=0  g=0 c=0 r=0
+t=0 p=0  g=0 c=0 r=0 s=0
 # now enjoy the options in order and nicely split until we see --
 while true; do
     case "$1" in
@@ -46,6 +46,10 @@ while true; do
             r=1
             shift
             ;;
+        -s|--save)
+            s=1
+            shift
+            ;;
         --)
             shift
             break
@@ -57,18 +61,18 @@ while true; do
     esac
 done
 
-PREFIX='particletransformer'
-SUFFIX='complete'
+PREFIX='particlenet'
+SUFFIX='$P_d=0.1$_add_linear'
 ROOT_DIR='/home/tpyang/B-Reconstruction-2-FPGA/python/'
-SUB_DIR='gen_level_2B/with_vertex/'
+SUB_DIR='pure_B_plus_B_minus/gen_level_1B/with_partial_vertex/'
+MODEL_CONFIG='config/particlenet_pf.py'
+DATA_CONFIG='config/data_config.yaml'
 
-MODEL_CONFIG='config/particletransformer_pf.py'
-DATA_CONFIG='config/data_config_transformer.yaml'
 SAMPLES_DIR='../data/'
 PATH_TO_LOG='training_log/'
 
 args=( --data-train ${ROOT_DIR}${SUB_DIR}${SAMPLES_DIR}'train_0*.root' \
-    --data-val ${ROOT_DIR}${SUB_DIR}${SAMPLES_DIR}'test.root' \
+    --data-val ${ROOT_DIR}${SUB_DIR}${SAMPLES_DIR}'test*.root' \
     --fetch-by-file --fetch-step 1 --num-workers 2 \
     --data-config ${ROOT_DIR}${SUB_DIR}${DATA_CONFIG} \
     --network-config ${ROOT_DIR}${SUB_DIR}${MODEL_CONFIG} \
@@ -91,7 +95,7 @@ if [ $t -eq 1 ]; then
 fi
 
 pred_args=( --predict \
-    --data-test ${ROOT_DIR}${SUB_DIR}${SAMPLES_DIR}'test.root' \
+    --data-test ${ROOT_DIR}${SUB_DIR}${SAMPLES_DIR}'test*.root' \
     --num-workers 1 \
     --data-config ${ROOT_DIR}${SUB_DIR}${DATA_CONFIG} \
     --network-config ${ROOT_DIR}${SUB_DIR}${MODEL_CONFIG} \
@@ -108,3 +112,15 @@ fi
 if [ $g -eq 1 ]; then
     python plot_mass.py ${SUB_DIR}
 fi
+
+save_args=( 
+    --data-config ${ROOT_DIR}${SUB_DIR}${DATA_CONFIG} \
+    --network-config ${ROOT_DIR}${SUB_DIR}${MODEL_CONFIG} \
+    --model-prefix ${ROOT_DIR}${SUB_DIR}${PATH_TO_LOG}${PREFIX}_${SUFFIX}.pt \
+    --export-onnx ${ROOT_DIR}${SUB_DIR}${PATH_TO_LOG}${PREFIX}_${SUFFIX}.onnx
+     )
+
+if [ $s -eq 1 ]; then
+    python /home/tpyang/weaver-core/weaver/train.py "${save_args[@]}"
+fi
+

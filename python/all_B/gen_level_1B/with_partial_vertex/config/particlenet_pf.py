@@ -15,7 +15,6 @@ class ParticleNetWrapper(nn.Module):
 
         # finetune the last FC layer
         layers = []
-        layers = []
         for i in range(len(fc_out_params) - 1):
             in_channel, drop_rate = fc_out_params[i]
             out_channel, _ = fc_out_params[i + 1]
@@ -26,7 +25,13 @@ class ParticleNetWrapper(nn.Module):
                            nn.LeakyReLU(),
                            nn.Dropout(drop_rate, inplace=True)]
         
-        self.fc_out = nn.Sequential(*layers)
+        self.regression_head = nn.Sequential(*layers)
+
+        # Binary classification head
+        self.class_head = nn.Sequential(nn.Linear(in_dim,64),
+                                        nn.LeakyReLU(),
+                                        nn.Linear(64, 2))
+                                        
 
         kwargs['for_inference'] = False
         self.mod = ParticleNet(**kwargs)
@@ -34,9 +39,13 @@ class ParticleNetWrapper(nn.Module):
 
     def forward(self, points, features, mask):
         output = self.mod(points, features, mask)
-        output = self.fc_out(output)
+        reg_output = self.regression_head(output)
+
+        class_output = self.class_head(output)
         if self.for_inference:
-            output = torch.softmax(output, dim=1)
+            class_output = torch.softmax(class_output, dim=1)
+        output = torch.cat((reg_output, class_output), dim=1)
+        
         return output
 
 
@@ -50,7 +59,7 @@ def get_model(data_config, **kwargs):
         (16, (256, 256, 256)),
     ]
     fc_params = [(256, 0.1)]  # Fully connected layers with dropout
-    fc_out_params = [(256, 0.0), (num_classes, 0.0)]  # Output layers
+    fc_out_params = [(256, 0.0), (128, 0), (64, 0), (16, 0), (4, 0.0)]  # Output layers
 
     # Initialize ParticleNet model
     model = ParticleNetWrapper(
@@ -74,22 +83,24 @@ def get_model(data_config, **kwargs):
         'dynamic_axes': {**{k: {0: 'N', 2: 'n_' + k.split('_')[0]} for k in data_config.input_names}, **{'MSE': {0: 'N'}}},
     }
     return model, model_info
-
     
-class MassWeightedLoss(nn.Module):
+
+class DualHeadedLoss(nn.Module):
     def __init__(self):
-        super(MassWeightedLoss, self).__init__()
+        super(DualHeadedLoss, self).__init__()
         self.mse = nn.MSELoss()
+        self.cross_entropy = nn.CrossEntropyLoss()
+
+        self.log_var_class = nn.Parameter(torch.zeros(1))
+        self.log_var_reg = nn.Parameter(torch.zeros(1))
 
     def forward(self, outputs, targets):
         # print(outputs.size(), targets.size())
-        loss = self.mse(outputs, targets)
-        # print(loss)
-        delta_mass = torch.mean(outputs[:, 0] ** 2 - targets[:, 0] ** 2)
-        for i in range(1, 4):
-            delta_mass += -torch.mean(outputs[:, i] ** 2 - targets[:, i] ** 2)
-        return loss + torch.abs(delta_mass) / 4
+        reg_loss = self.mse(outputs[:, :4], targets[:, :4])
+        class_loss = self.cross_entropy(outputs[:, 4:], targets[:, 4].long())
+
+        return class_loss + reg_loss
     
 
 def get_loss(data_config, **kwargs):
-    return nn.MSELoss()
+    return DualHeadedLoss()

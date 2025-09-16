@@ -17,8 +17,14 @@ class ParticleNetWrapper(nn.Module):
         # finetune the last FC layer
         layers = []
         for i in range(len(fc_out_params) - 1):
-            layers += [nn.Linear(fc_out_params[i], fc_out_params[i + 1]),
-                       nn.LeakyReLU()]
+            in_channel, drop_rate = fc_out_params[i]
+            out_channel, _ = fc_out_params[i + 1]
+            if i == len(fc_out_params) - 2:
+                layers += [nn.Linear(in_channel, out_channel)]
+            else:
+                layers += [nn.Linear(in_channel, out_channel),
+                           nn.LeakyReLU(),
+                           nn.Dropout(drop_rate, inplace=True)]
         
         self.fc_out = nn.Sequential(*layers)
 
@@ -44,7 +50,7 @@ def get_model(data_config, **kwargs):
         (16, (128, 128, 128)),
     ]
     fc_params = [(128, 0.2)]  # Fully connected layers with dropout
-    fc_out_params = [128, 128, 64, 2]
+    fc_out_params = [(128, 0), (128, 0), (64, 0), (2, 0)]
 
     # Initialize ParticleNet model
     model = ParticleNetWrapper(

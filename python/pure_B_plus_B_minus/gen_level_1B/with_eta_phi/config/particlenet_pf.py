@@ -18,9 +18,12 @@ class ParticleNetWrapper(nn.Module):
         for i in range(len(fc_out_params) - 1):
             in_channel, drop_rate = fc_out_params[i]
             out_channel, _ = fc_out_params[i + 1]
-            layers += [nn.Linear(in_channel, out_channel),
-                       nn.LeakyReLU(),
-                       nn.Dropout(drop_rate, inplace=True)]
+            if i == len(fc_out_params) - 2:
+                layers += [nn.Linear(in_channel, out_channel)]
+            else:
+                layers += [nn.Linear(in_channel, out_channel),
+                           nn.LeakyReLU(),
+                           nn.Dropout(drop_rate, inplace=True)]
         
         self.fc_out = nn.Sequential(*layers)
 

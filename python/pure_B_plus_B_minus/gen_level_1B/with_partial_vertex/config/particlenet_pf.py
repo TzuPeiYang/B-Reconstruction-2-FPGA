@@ -18,9 +18,12 @@ class ParticleNetWrapper(nn.Module):
         for i in range(len(fc_out_params) - 1):
             in_channel, drop_rate = fc_out_params[i]
             out_channel, _ = fc_out_params[i + 1]
-            layers += [nn.Linear(in_channel, out_channel),
-                       nn.LeakyReLU(),
-                       nn.Dropout(drop_rate, inplace=True)]
+            if i == len(fc_out_params) - 2:
+                layers += [nn.Linear(in_channel, out_channel)]
+            else:
+                layers += [nn.Linear(in_channel, out_channel),
+                           nn.LeakyReLU(),
+                           nn.Dropout(drop_rate, inplace=True)]
         
         self.fc_out = nn.Sequential(*layers)
 
@@ -41,12 +44,12 @@ def get_model(data_config, **kwargs):
     pf_features_dims = len(data_config.input_dicts['pf_features'])  # 4-momentum (px, py, pz, E)
     num_classes = len(data_config.label_value) 
     conv_params = [
-        (24, (64, 64, 64)),
-        (24, (128, 128, 128)),
-        (24, (256, 256, 256)),
+        (16, (64, 64, 64)),
+        (16, (128, 128, 128)),
+        (16, (256, 256, 256)),
     ]
     fc_params = [(256, 0.1)]  # Fully connected layers with dropout
-    fc_out_params = [(256, 0.0), (64, 0.0), (16, 0.0), (num_classes, 0.0)]  # Output layers
+    fc_out_params = [(256, 0.1), (128, 0.0), (64, 0.1), (num_classes, 0.0)]  # Output layers
 
     # Initialize ParticleNet model
     model = ParticleNetWrapper(
@@ -71,20 +74,23 @@ def get_model(data_config, **kwargs):
     }
     return model, model_info
 
-    
-class CustomLoss(nn.Module):
+
+class MassWeightedLoss(nn.Module):
     def __init__(self):
-        super(CustomLoss, self).__init__()
+        super(MassWeightedLoss, self).__init__()
         self.mse = nn.MSELoss()
 
     def forward(self, outputs, targets):
         # print(outputs.size(), targets.size())
         loss = self.mse(outputs, targets)
         # print(loss)
-        delta_mass = torch.mean(outputs[:, 0] ** 2 - targets[:, 0] ** 2)
-        for i in range(1, 4):
-            delta_mass += -torch.mean(outputs[:, i] ** 2 - targets[:, i] ** 2)
-        return loss + torch.abs(delta_mass)
+        mass = outputs[:, 0] ** 2 - outputs[:, 1] ** 2 - outputs[:, 2] ** 2 - outputs[:, 3] ** 2
+        mass = torch.sqrt(torch.clamp(mass, min=0))
+
+        predicted_mass = targets[:, 0] ** 2 - targets[:, 1] ** 2 - targets[:, 2] ** 2 - targets[:, 3] ** 2
+        predicted_mass = torch.sqrt(torch.clamp(predicted_mass, min=0))
+        delta_mass = torch.mean((mass - predicted_mass) ** 2)
+        return loss + delta_mass
     
 
 def get_loss(data_config, **kwargs):

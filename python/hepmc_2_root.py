@@ -32,6 +32,8 @@ if __name__ == "__main__":
     part_eta, part_phi = [], []
     part_pdgid = []
     part_mask = []
+    
+    B_type = []
 
     n_nu = []
 
@@ -71,8 +73,8 @@ if __name__ == "__main__":
                     decay_products.append(p.pid)                
                 
                 ''' ===========        complete B+B-          =========== '''
-                b_ancestor = get_b_ancestor(p)
-                select =  b_ancestor != 300553
+                # b_ancestor = get_b_ancestor(p)
+                # select =  b_ancestor != 300553
 
                 ''' ===========       incomplete B+B-         =========== '''
                 # b_ancestor = get_b_ancestor(p)
@@ -82,13 +84,13 @@ if __name__ == "__main__":
                 # b_ancestor = get_b_ancestor(p)
                 # select =  b_ancestor != 300553 and ((b_ancestor == -521 and np.random.rand() > 0.1 and abs(p.pid) not in [12, 14, 16]) or (b_ancestor == 521))
 
-                ''' ===========         complete B+           =========== '''
+                ''' ===========         complete B+ (B0)           =========== '''
                 # b_ancestor = get_b_ancestor(p)
                 # select = b_ancestor not in [300553, -511, -521]
 
                 ''' ===========        incomplete B+          =========== '''
-                # b_ancestor = get_b_ancestor(p)
-                # select = b_ancestor not in [-511, -521, 300553] and np.random.rand() > 0.1 and abs(p.pid) not in [12, 14, 16]
+                b_ancestor = get_b_ancestor(p)
+                select = b_ancestor not in [-511, -521, 300553] and np.random.rand() > 0.1 and abs(p.pid) not in [12, 14, 16]
 
                 if abs(p.pid) in [12, 14, 16]:
                     ev_n_nu += 1
@@ -129,6 +131,10 @@ if __name__ == "__main__":
                         ev_vz.append(0.0)
 
             if p.pid in [511, 521] and bpx is None:
+                if p.pid == 511:
+                    ev_b_type = 0
+                else:
+                    ev_b_type = 1
                 mom = p.momentum
                 bpx = mom.px
                 bpy = mom.py
@@ -152,6 +158,8 @@ if __name__ == "__main__":
             part_pdgid.append(ev_pdgid)
             part_mask.append(ev_mask)
 
+            B_type.append(ev_b_type)
+
             n_nu.append(ev_n_nu)
 
             B_px.append(bpx if bpx is not None else 0)
@@ -169,6 +177,7 @@ if __name__ == "__main__":
     length = 52
     part_mask = np.array([xi + [0] * (length - len(xi)) for xi in part_mask], dtype=np.float32)
     np.savez(sub_dir + "data/part_mask_truth_" + filename + ".npz", mask=part_mask)
+    np.savez(sub_dir + "data/b_type_truth_" + filename + ".npz", btype=B_type)
     output = {
         "Part_px": ak.Array(part_px),
         "Part_py": ak.Array(part_py),
@@ -186,6 +195,7 @@ if __name__ == "__main__":
         "B_pz": np.array(B_pz, dtype=np.float32),
         "B_E":  np.array(B_E,  dtype=np.float32),
         "n_nu": np.array(n_nu, dtype=np.int32),
+        "B_type": np.array(B_type, dtype=np.int32),
     }
 
     # Write with uproot
