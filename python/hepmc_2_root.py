@@ -3,6 +3,7 @@ import numpy as np
 import awkward as ak
 import uproot
 import sys
+import os
 
 
 def get_b_ancestor(particle):
@@ -21,6 +22,9 @@ if __name__ == "__main__":
     # Input/output
     input_file = "data/" + filename + ".hepmc3"
     output_file = sub_dir + "data/" + filename + ".root"
+
+    if os.path.isdir(sub_dir + "data/") is False:
+        os.makedirs(sub_dir + "data/")
 
     # Set up HepMC3 reader
     reader = pyhepmc.io.ReaderAscii(input_file)

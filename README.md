@@ -1,9 +1,9 @@
 # B-Reconstruction to FPGA
-Aiming to configure FPGAs to run graph neural networks (GNNs) for B-meson reconstruction. Now at the NN design phase, this repo relies on the weaver-core framework to train and test. The C++ part is currently empty except for loading data.
+Aiming to configure FPGAs to run graph neural networks (GNNs) for B-meson reconstruction. Now at the NN design phase, this repo relies on the [weaver-core](https://github.com/hqucms/weaver-core?tab=readme-ov-file) framework to train and test. Some of the files in weaver-core are modified for various purposes, so in order to use this repository, clone and set up the [forked-version](https://github.com/TzuPeiYang/weaver-core) instead. The C++ part is currently still empty except for loading data. 
 
 ## Dependencies
-- python: pyhepmc, uproot, torch 
-- C++: yaml-cpp (for loading test data)
+- python: pyhepmc (has to be installed with HepMC3), uproot, torch 
+- C++: yaml-cpp (for testing)
 
 ## Folder structure
 - C
@@ -27,8 +27,8 @@ Aiming to configure FPGAs to run graph neural networks (GNNs) for B-meson recons
         - config (data_config.yaml, model_config.py)
         - training_log (model files and prediction outputs)
 
-## Training 
-The ```python/train.sh``` file depends on weaver-core to function. The directory of ```train.py``` has to be changed appropriately. If weaver-core is installed via pip, change the ```python ${directory}/train.py "${args[@]}"``` to just ```weaver "${args[@]}"```. Then modify the following part of the script to appropriate files and names
+## How to run
+The ```python/train.sh``` file depends on weaver-core to function. The directory of ```python /home/weaver-core/weaver/train.py "${args[@]}"``` has to be changed appropriately. If you use the ```pip``` to install weaver-core, change it to ```weaver "${args[@]}"``` instead. Then modify the following part of the script to appropriate files and names
 ```
 PREFIX='particlenet'
 SUFFIX='complete'
@@ -53,10 +53,22 @@ For example, to train regression, run
 
 ## Python code usages
 - hepmc_2_root.py \
-The original data are in hepmc3 format, this piece of code converts hepmc3 file ```./data/${filename}.hepmc3``` to ready to train root file ```./${subdirectory}/data/${filename}.root```. The selections or any preprocessing are also done in this file.
+The original data are in hepmc3 format, this piece of code converts hepmc3 file ```./data/${filename}.hepmc3``` to ready to train root file ```./${directory}/data/${filename}.root```. The selections or any preprocessing are also done in this file.
 ```
-python hepmc_2_root.py ${subdirectory} ${filename}
+python hepmc_2_root.py ${directory} ${filename}
 ```
 
-- add_mask_2_data.py
+- add_mask_2_data.py \
+When training the network for masking, after prediction run this to add ```pred_mask``` branch to the original training data. For example, after prediction of masking for ```${directory}/data/${filename}.root```, a ```score.npz``` will appear, then run 
+```
+python add_mask_2_data.py ${directory} ${filename}
+```
 
+- plot_mass.py
+After the 4-momentum prediction of test data, a output root file will appear in ```${directory}/training_log```, run the following to plot the resulting reconstructed mass.
+```
+python plot_mass.py ${directory}
+```
+
+## Data
+The hepmc3 files `train_01.hepmc3`, `train_02.hepmc3`, `test.hepmc3` are pure $\Upsilon(4S) \rightarrow B^+ B^-$, the first two sets each contain 100k events, and the last one contain 10k events. `train_03.hepmc3` and `test_03.hepmc3` contains 200k and 20k events with the actual branching ratios, respectively.
