@@ -1,7 +1,11 @@
-*.root
 *.hepmc3
+*.root
 python/runs/*
 *.npz
 *.pyc
 C/build/
 C/bin/
+.vscode/
+pycache/
+*epoch*.pt
+*.png

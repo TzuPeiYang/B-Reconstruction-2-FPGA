@@ -18,7 +18,12 @@ def calculate_invariant_mass(E, px, py, pz):
 if __name__ == "__main__":
     # Path to the ROOT file
     sub_dir = sys.argv[1]
-    root_files = glob.glob(sub_dir + "training_log/particlenet*.root")
+    if len(sys.argv) == 2:
+        root_files = glob.glob(sub_dir + "training_log/particlenet*.root")
+    else:
+        root_files = sys.argv[2:]
+    root_files.sort()
+
     tree_name = "Events"
 
     plt.figure(figsize=(8, 6), dpi=200)
@@ -48,7 +53,7 @@ if __name__ == "__main__":
         stdev = np.std(masses_np)
 
         # Plot the mass distribution
-        plt.hist(masses_np, bins=50, range=(5.26, 5.3), histtype='step', label='%s: $m_B = %.3f \pm %.3f$ GeV' % (name, avg, stdev))
+        plt.hist(masses_np, bins=40, range=(5.26, 5.3), histtype='step', label='%s: $m_B = %.3f \pm %.3f$ GeV' % (name, avg, stdev))
     
     plt.xlabel('Reconstructed Mass [GeV]')
     plt.ylabel('Events')
