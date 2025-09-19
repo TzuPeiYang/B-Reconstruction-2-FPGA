@@ -39,8 +39,6 @@ PREFIX='particlenet'
 SUFFIX='complete'
 ROOT_DIR='/home/B-Reconstruction-2-FPGA/python/'
 SUB_DIR='pure_B_plus_B_minus/gen_level_1B/with_partial_vertex/'
-MODEL_CONFIG='config/particlenet_pf.py'
-DATA_CONFIG='config/data_config.yaml'
 ```
 
 The shell script takes the following flags
