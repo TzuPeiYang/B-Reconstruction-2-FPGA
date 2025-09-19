@@ -9,3 +9,4 @@ C/bin/
 pycache/
 *epoch*.pt
 *.png
+*.tar.gz
