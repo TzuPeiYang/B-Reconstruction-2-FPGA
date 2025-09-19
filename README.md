@@ -46,6 +46,7 @@ The shell script takes the following flags
 - -c | --continue: continue with existing model
 - -p | --predict: load model and output prediction in root files
 - -r | --regression: train or predict regression, classification is defaulted if this is missing
+- -m | --mixed: train with a regression head and a classification head
 - -s | --save: save model to ONNX
 - -g | --graph: plot calls `plot_mass.py` to plot all prediction outputs in the training_log directory
 

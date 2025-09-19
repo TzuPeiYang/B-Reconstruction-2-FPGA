@@ -11,8 +11,8 @@ if [[ $? -ne 4 ]]; then
 fi
 
 # option --output/-o requires 1 argument
-LONGOPTS=train,predict,graph,continue,regression,save
-OPTIONS=tpgcrs
+LONGOPTS=train,predict,graph,continue,regression,save,mixed
+OPTIONS=tpgcrsm
 
 # -temporarily store output to be able to check for errors
 # -activate quoting/enhanced mode (e.g. by writing out “--options”)
@@ -22,7 +22,7 @@ PARSED=$(getopt --options=$OPTIONS --longoptions=$LONGOPTS --name "$0" -- "$@") 
 # read getopt’s output this way to handle the quoting right:
 eval set -- "$PARSED"
 
-t=0 p=0  g=0 c=0 r=0 s=0
+t=0 p=0  g=0 c=0 r=0 s=0 m=0
 # now enjoy the options in order and nicely split until we see --
 while true; do
     case "$1" in
@@ -46,6 +46,10 @@ while true; do
             r=1
             shift
             ;;
+        -m|--mixed)
+            m=1
+            shift
+            ;;
         -s|--save)
             s=1
             shift
@@ -64,7 +68,7 @@ done
 PREFIX='particlenet'
 SUFFIX='complete'
 ROOT_DIR='/home/tpyang/B-Reconstruction-2-FPGA/python/'
-SUB_DIR='pure_B_plus_B_minus/gen_level_2B/with_vertex/'
+SUB_DIR='all_B/gen_level_1B/with_partial_vertex/'
 MODEL_CONFIG='config/'${PREFIX}'_'${SUFFIX}'.py'
 DATA_CONFIG='config/data_config_'${SUFFIX}'.yaml'
 
@@ -82,6 +86,9 @@ args=( --data-train ${ROOT_DIR}${SUB_DIR}${SAMPLES_DIR}'train_0*.root' \
     --tensorboard ${PREFIX} )
 if [ $r -eq 1 ]; then 
     args+=( --regression-mode ) 
+fi
+if [ $m -eq 1 ]; then 
+    args+=( --mixed-mode ) 
 fi
 if [ $c -eq 1 ]; then 
     args+=( --load-model-weights ${ROOT_DIR}${SUB_DIR}${PATH_TO_LOG}${PREFIX}_${SUFFIX}.pt ) 
@@ -101,9 +108,13 @@ pred_args=( --predict \
     --network-config ${ROOT_DIR}${SUB_DIR}${MODEL_CONFIG} \
     --model-prefix ${ROOT_DIR}${SUB_DIR}${PATH_TO_LOG}${PREFIX}_${SUFFIX}.pt  \
     --gpus 0 --batch-size 256 \
-    --predict-output ${ROOT_DIR}${SUB_DIR}${PATH_TO_LOG}${PREFIX}_predict_${SUFFIX}.root )
+    --predict-output ${ROOT_DIR}${SUB_DIR}${PATH_TO_LOG}${PREFIX}_predict_${SUFFIX}.root 
+    )
 if [ $r -eq 1 ]; then 
     pred_args+=( --regression-mode ) 
+fi
+if [ $m -eq 1 ]; then 
+    pred_args+=( --mixed-mode ) 
 fi
 if [ $p -eq 1 ]; then
     weaver "${pred_args[@]}"

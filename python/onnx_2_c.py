@@ -6,43 +6,43 @@ from onnx import helper, numpy_helper
 import numpy as np
 
 
-def fix_topk_k(onnx_in, onnx_out, fixed_k=16):
+def force_topk_k(onnx_in, onnx_out, fixed_k=16):
     model = onnx.load(onnx_in)
     graph = model.graph
 
-    new_nodes = []
+    # 1. Create a single constant initializer for k
+    k_name = "const_k{}".format(fixed_k)
+    k_tensor = numpy_helper.from_array(
+        np.array([fixed_k], dtype=np.int64), name=k_name
+    )
+    graph.initializer.append(k_tensor)
+
+    # 2. Remove any Constant nodes that were feeding into TopK
+    keep_nodes = []
     for node in graph.node:
+        if node.op_type == "Constant" and any("output_0" in o for o in node.output):
+            # skip this constant (candidate for k)
+            print("Removing Constant node:", node.name or node.output)
+            continue
+        keep_nodes.append(node)
+
+    # 3. Rewire TopK inputs to use our initializer
+    new_nodes = []
+    for node in keep_nodes:
         if node.op_type == "TopK":
-            print("Patching TopK:", node.name or "(unnamed)")
-
-            # Always keep 2 inputs, but make k a constant initializer
+            print("Rewiring TopK:", node.name or node.output)
             data_input = node.input[0]
-            k_const_name = node.name + "_k" if node.name else "const_k"
-
-            # Create initializer tensor for k
-            k_tensor = numpy_helper.from_array(
-                np.array([fixed_k], dtype=np.int64),
-                name=k_const_name
-            )
-            graph.initializer.append(k_tensor)
-
-            # Replace inputs with [data_input, k_const_name]
-            new_node = helper.make_node(
-                "TopK",
-                inputs=[data_input, k_const_name],
-                outputs=node.output,
-                name=node.name
-            )
-            new_nodes.append(new_node)
-        else:
-            new_nodes.append(node)
+            node.input[:] = [data_input, k_name]
+        new_nodes.append(node)
 
     # Replace graph nodes
     del graph.node[:]
     graph.node.extend(new_nodes)
 
     onnx.save(model, onnx_out)
-    print(f"Saved patched model with fixed k={fixed_k} to {onnx_out}")
+    print(f"Saved patched model to {onnx_out}")
+
+
 
 def main(onnx_path, output_path="model.c"):
     # Load ONNX
@@ -93,7 +93,7 @@ if __name__ == "__main__":
     #     print("Usage: python tvm_export_to_c.py /path/to/model.onnx")
     #     sys.exit(1)
     # onnx_path = sys.argv[1]
-    onnx_path = "particlenet_complete_simplified.onnx"
+    onnx_path = "pure_B_plus_B_minus/gen_level_1B/with_partial_vertex/training_log/particlenet_complete.onnx"
     fixed_onnx_path = "particlenet_fixed.onnx"
-    fix_topk_k(onnx_path, fixed_onnx_path, fixed_k=16)
+    force_topk_k(onnx_path, fixed_onnx_path, fixed_k=17)
     main(fixed_onnx_path)
