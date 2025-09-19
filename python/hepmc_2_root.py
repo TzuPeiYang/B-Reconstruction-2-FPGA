@@ -74,11 +74,11 @@ if __name__ == "__main__":
             if p.status == 1:  # Final-state particle
 
                 if p.pid not in decay_products:
-                    decay_products.append(p.pid)                
+                    decay_products.append(p.pid) 
                 
                 ''' ===========        complete B+B-          =========== '''
-                # b_ancestor = get_b_ancestor(p)
-                # select =  b_ancestor != 300553
+                b_ancestor = get_b_ancestor(p)
+                select = b_ancestor != 300553
 
                 ''' ===========       incomplete B+B-         =========== '''
                 # b_ancestor = get_b_ancestor(p)
@@ -93,8 +93,8 @@ if __name__ == "__main__":
                 # select = b_ancestor not in [300553, -511, -521]
 
                 ''' ===========        incomplete B+          =========== '''
-                b_ancestor = get_b_ancestor(p)
-                select = b_ancestor not in [-511, -521, 300553] and np.random.rand() > 0.1 and abs(p.pid) not in [12, 14, 16]
+                # b_ancestor = get_b_ancestor(p)
+                # select = b_ancestor not in [-511, -521, 300553] and np.random.rand() > 0.1 and abs(p.pid) not in [12, 14, 16]
 
                 if abs(p.pid) in [12, 14, 16]:
                     ev_n_nu += 1
@@ -124,7 +124,8 @@ if __name__ == "__main__":
                     total_E += mom.e
 
                     vtx = p.production_vertex
-                    charged = abs(p.pid) in [211, 11, 321, 13, 321, 2212]
+                    # selected charge particles
+                    charged = True # abs(p.pid) in [211, 11, 321, 13, 321, 2212]
                     if vtx and charged:
                         ev_vx.append(vtx.position.x)
                         ev_vy.append(vtx.position.y)

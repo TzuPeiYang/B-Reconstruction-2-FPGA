@@ -7517,3 +7517,1213 @@ None
     - mean_gamma_deviance: 
 None
 [2025-09-07 21:51:10,848] INFO: [1mEpoch #199: Current validation metric: 0.00749 (best: 0.00747)[0m
+[2025-09-16 21:49:48,426] INFO: args:
+ - ('regression_mode', True)
+ - ('data_config', '/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/config/data_config_complete.yaml')
+ - ('extra_selection', None)
+ - ('extra_test_selection', None)
+ - ('data_train', ['/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_0*.root'])
+ - ('data_val', ['/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/test*.root'])
+ - ('data_test', [])
+ - ('data_fraction', 1)
+ - ('file_fraction', 1)
+ - ('fetch_by_files', True)
+ - ('fetch_step', 1.0)
+ - ('in_memory', False)
+ - ('train_val_split', 0.8)
+ - ('no_remake_weights', False)
+ - ('demo', False)
+ - ('lr_finder', None)
+ - ('tensorboard', 'particlenet')
+ - ('tensorboard_custom_fn', None)
+ - ('network_config', '/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/config/particlenet_complete.py')
+ - ('network_option', [])
+ - ('model_prefix', '/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/training_log/particlenet')
+ - ('load_model_weights', None)
+ - ('exclude_model_weights', None)
+ - ('freeze_model_weights', None)
+ - ('num_epochs', 20)
+ - ('steps_per_epoch', None)
+ - ('steps_per_epoch_val', None)
+ - ('samples_per_epoch', None)
+ - ('samples_per_epoch_val', None)
+ - ('optimizer', 'adamW')
+ - ('optimizer_option', [])
+ - ('lr_scheduler', 'flat+decay')
+ - ('warmup_steps', 0)
+ - ('load_epoch', None)
+ - ('start_lr', 0.005)
+ - ('batch_size', 256)
+ - ('use_amp', False)
+ - ('gpus', '0')
+ - ('predict_gpus', '0')
+ - ('num_workers', 2)
+ - ('predict', False)
+ - ('predict_output', None)
+ - ('export_onnx', None)
+ - ('onnx_opset', 15)
+ - ('io_test', False)
+ - ('copy_inputs', False)
+ - ('log', '/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/training_log/particlenet.train.log')
+ - ('print', False)
+ - ('profile', False)
+ - ('backend', None)
+ - ('cross_validation', None)
+ - ('local_rank', None)
+[2025-09-16 21:49:48,427] INFO: Running in regression mode
+[2025-09-16 21:49:49,810] INFO: Using 2 files for training, range: (0, 1)
+[2025-09-16 21:49:49,811] INFO: Using 1 files for validation, range: (0, 1)
+[2025-09-16 21:49:49,814] INFO: [0;37mpreprocess config: {'method': 'manual', 'data_fraction': 1.0, 'params': None}[0m
+[2025-09-16 21:49:49,815] INFO: [0;37mselection: None[0m
+[2025-09-16 21:49:49,815] INFO: [0;37mtest_time_selection: None[0m
+[2025-09-16 21:49:49,815] INFO: [0;37mvar_funcs:
+ - ('pf_mask', 'awkward.ones_like(Part_E)')
+ - ('_label_', 'np.stack([ak.to_numpy(B_E),ak.to_numpy(B_px),ak.to_numpy(B_py),ak.to_numpy(B_pz)], axis=1)')
+ - ('_labelcheck_', 'np.sum(np.stack([ak.to_numpy(B_E),ak.to_numpy(B_px),ak.to_numpy(B_py),ak.to_numpy(B_pz)], axis=1), axis=1)')[0m
+[2025-09-16 21:49:49,815] INFO: [0;37minput_names: ('pf_points', 'pf_features', 'pf_mask')[0m
+[2025-09-16 21:49:49,815] INFO: [0;37minput_dicts:
+ - ('pf_points', ['Part_eta', 'Part_phi'])
+ - ('pf_features', ['Part_E', 'Part_px', 'Part_py', 'Part_pz'])
+ - ('pf_mask', ['pf_mask'])[0m
+[2025-09-16 21:49:49,815] INFO: [0;37minput_shapes:
+ - ('pf_points', (-1, 2, 35))
+ - ('pf_features', (-1, 4, 35))
+ - ('pf_mask', (-1, 1, 35))[0m
+[2025-09-16 21:49:49,815] INFO: [0;37mpreprocess_params:
+ - ('Part_eta', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_phi', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_E', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_px', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_py', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_pz', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('pf_mask', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})[0m
+[2025-09-16 21:49:49,815] INFO: [0;37mlabel_names: ('_label_',)[0m
+[2025-09-16 21:49:49,815] INFO: [0;37mobserver_names: ('pdg_id',)[0m
+[2025-09-16 21:49:49,815] INFO: [0;37mmonitor_variables: ()[0m
+[2025-09-16 21:49:49,817] INFO: [0;37mpreprocess config: {'method': 'manual', 'data_fraction': 1.0, 'params': None}[0m
+[2025-09-16 21:49:49,817] INFO: [0;37mselection: None[0m
+[2025-09-16 21:49:49,817] INFO: [0;37mtest_time_selection: None[0m
+[2025-09-16 21:49:49,817] INFO: [0;37mvar_funcs:
+ - ('pf_mask', 'awkward.ones_like(Part_E)')
+ - ('_label_', 'np.stack([ak.to_numpy(B_E),ak.to_numpy(B_px),ak.to_numpy(B_py),ak.to_numpy(B_pz)], axis=1)')
+ - ('_labelcheck_', 'np.sum(np.stack([ak.to_numpy(B_E),ak.to_numpy(B_px),ak.to_numpy(B_py),ak.to_numpy(B_pz)], axis=1), axis=1)')[0m
+[2025-09-16 21:49:49,817] INFO: [0;37minput_names: ('pf_points', 'pf_features', 'pf_mask')[0m
+[2025-09-16 21:49:49,817] INFO: [0;37minput_dicts:
+ - ('pf_points', ['Part_eta', 'Part_phi'])
+ - ('pf_features', ['Part_E', 'Part_px', 'Part_py', 'Part_pz'])
+ - ('pf_mask', ['pf_mask'])[0m
+[2025-09-16 21:49:49,817] INFO: [0;37minput_shapes:
+ - ('pf_points', (-1, 2, 35))
+ - ('pf_features', (-1, 4, 35))
+ - ('pf_mask', (-1, 1, 35))[0m
+[2025-09-16 21:49:49,817] INFO: [0;37mpreprocess_params:
+ - ('Part_eta', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_phi', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_E', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_px', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_py', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_pz', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('pf_mask', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})[0m
+[2025-09-16 21:49:49,817] INFO: [0;37mlabel_names: ('_label_',)[0m
+[2025-09-16 21:49:49,817] INFO: [0;37mobserver_names: ()[0m
+[2025-09-16 21:49:49,817] INFO: [0;37mmonitor_variables: ()[0m
+[2025-09-16 21:49:49,819] INFO: [0;37mpreprocess config: {'method': 'manual', 'data_fraction': 1.0, 'params': None}[0m
+[2025-09-16 21:49:49,819] INFO: [0;37mselection: None[0m
+[2025-09-16 21:49:49,819] INFO: [0;37mtest_time_selection: None[0m
+[2025-09-16 21:49:49,819] INFO: [0;37mvar_funcs:
+ - ('pf_mask', 'awkward.ones_like(Part_E)')
+ - ('_label_', 'np.stack([ak.to_numpy(B_E),ak.to_numpy(B_px),ak.to_numpy(B_py),ak.to_numpy(B_pz)], axis=1)')
+ - ('_labelcheck_', 'np.sum(np.stack([ak.to_numpy(B_E),ak.to_numpy(B_px),ak.to_numpy(B_py),ak.to_numpy(B_pz)], axis=1), axis=1)')[0m
+[2025-09-16 21:49:49,819] INFO: [0;37minput_names: ('pf_points', 'pf_features', 'pf_mask')[0m
+[2025-09-16 21:49:49,819] INFO: [0;37minput_dicts:
+ - ('pf_points', ['Part_eta', 'Part_phi'])
+ - ('pf_features', ['Part_E', 'Part_px', 'Part_py', 'Part_pz'])
+ - ('pf_mask', ['pf_mask'])[0m
+[2025-09-16 21:49:49,819] INFO: [0;37minput_shapes:
+ - ('pf_points', (-1, 2, 35))
+ - ('pf_features', (-1, 4, 35))
+ - ('pf_mask', (-1, 1, 35))[0m
+[2025-09-16 21:49:49,819] INFO: [0;37mpreprocess_params:
+ - ('Part_eta', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_phi', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_E', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_px', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_py', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_pz', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('pf_mask', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})[0m
+[2025-09-16 21:49:49,819] INFO: [0;37mlabel_names: ('_label_',)[0m
+[2025-09-16 21:49:49,819] INFO: [0;37mobserver_names: ('pdg_id',)[0m
+[2025-09-16 21:49:49,819] INFO: [0;37mmonitor_variables: ()[0m
+[2025-09-16 21:49:49,823] INFO: [0;37mpreprocess config: {'method': 'manual', 'data_fraction': 1.0, 'params': None}[0m
+[2025-09-16 21:49:49,824] INFO: [0;37mselection: None[0m
+[2025-09-16 21:49:49,825] INFO: [0;37mtest_time_selection: None[0m
+[2025-09-16 21:49:49,825] INFO: [0;37mvar_funcs:
+ - ('pf_mask', 'awkward.ones_like(Part_E)')
+ - ('_label_', 'np.stack([ak.to_numpy(B_E),ak.to_numpy(B_px),ak.to_numpy(B_py),ak.to_numpy(B_pz)], axis=1)')
+ - ('_labelcheck_', 'np.sum(np.stack([ak.to_numpy(B_E),ak.to_numpy(B_px),ak.to_numpy(B_py),ak.to_numpy(B_pz)], axis=1), axis=1)')[0m
+[2025-09-16 21:49:49,826] INFO: [0;37minput_names: ('pf_points', 'pf_features', 'pf_mask')[0m
+[2025-09-16 21:49:49,826] INFO: [0;37minput_dicts:
+ - ('pf_points', ['Part_eta', 'Part_phi'])
+ - ('pf_features', ['Part_E', 'Part_px', 'Part_py', 'Part_pz'])
+ - ('pf_mask', ['pf_mask'])[0m
+[2025-09-16 21:49:49,826] INFO: [0;37minput_shapes:
+ - ('pf_points', (-1, 2, 35))
+ - ('pf_features', (-1, 4, 35))
+ - ('pf_mask', (-1, 1, 35))[0m
+[2025-09-16 21:49:49,826] INFO: [0;37mpreprocess_params:
+ - ('Part_eta', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_phi', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_E', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_px', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_py', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_pz', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('pf_mask', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})[0m
+[2025-09-16 21:49:49,826] INFO: [0;37mlabel_names: ('_label_',)[0m
+[2025-09-16 21:49:49,827] INFO: [0;37mobserver_names: ()[0m
+[2025-09-16 21:49:49,827] INFO: [0;37mmonitor_variables: ()[0m
+[2025-09-16 21:49:49,834] INFO: Network options: {}
+[2025-09-16 21:49:50,174] INFO: [0;37mWarning: module EdgeConvBlock is treated as a zero-op.[0m
+[2025-09-16 21:49:50,174] INFO: [0;37mWarning: module Dropout is treated as a zero-op.[0m
+[2025-09-16 21:49:50,174] INFO: [0;37mWarning: module ParticleNet is treated as a zero-op.[0m
+[2025-09-16 21:49:50,174] INFO: [0;37mWarning: module ParticleNetWrapper is treated as a zero-op.[0m
+[2025-09-16 21:49:50,892] INFO: [0;37mParticleNetWrapper(
+  |0.572 M, 100.000% Params, 152.409 MMac, 100.000% MACs|
+  (fc_out): Sequential(
+    |0.001 M, 0.180% Params, 1.028 KMac, 0.001% MACs|
+    (0): Linear(in_features=256, out_features=4, bias=True, |0.001 M, 0.180% Params, 1.028 KMac, 0.001% MACs|)
+  )
+  (mod): ParticleNet(
+    |0.571 M, 99.820% Params, 152.408 MMac, 99.999% MACs|
+    (bn_fts): BatchNorm1d(4, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True, |0.0 M, 0.001% Params, 280.0 Mac, 0.000% MACs|)
+    (edge_convs): ModuleList(
+      (0): EdgeConvBlock(
+        |0.009 M, 1.657% Params, 5.212 MMac, 3.420% MACs|
+        (convs): ModuleList(
+          (0): Conv2d(8, 64, kernel_size=(1, 1), stride=(1, 1), bias=False, |0.001 M, 0.090% Params, 286.72 KMac, 0.188% MACs|)
+          (1-2): 2 x Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1), bias=False, |0.004 M, 0.717% Params, 2.294 MMac, 1.505% MACs|)
+        )
+        (bns): ModuleList(
+          (0-2): 3 x BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True, |0.0 M, 0.022% Params, 71.68 KMac, 0.047% MACs|)
+        )
+        (acts): ModuleList(
+          (0-2): 3 x ReLU(|0.0 M, 0.000% Params, 35.84 KMac, 0.024% MACs|)
+        )
+        (sc): Conv1d(4, 64, kernel_size=(1,), stride=(1,), bias=False, |0.0 M, 0.045% Params, 8.96 KMac, 0.006% MACs|)
+        (sc_bn): BatchNorm1d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True, |0.0 M, 0.022% Params, 4.48 KMac, 0.003% MACs|)
+        (sc_act): ReLU(|0.0 M, 0.000% Params, 2.24 KMac, 0.001% MACs|)
+      )
+      (1): EdgeConvBlock(
+        |0.058 M, 10.210% Params, 28.47 MMac, 18.680% MACs|
+        (convs): ModuleList(
+          (0-2): 3 x Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1), bias=False, |0.016 M, 2.866% Params, 9.175 MMac, 6.020% MACs|)
+        )
+        (bns): ModuleList(
+          (0-2): 3 x BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True, |0.0 M, 0.045% Params, 143.36 KMac, 0.094% MACs|)
+        )
+        (acts): ModuleList(
+          (0-2): 3 x ReLU(|0.0 M, 0.000% Params, 71.68 KMac, 0.047% MACs|)
+        )
+        (sc): Conv1d(64, 128, kernel_size=(1,), stride=(1,), bias=False, |0.008 M, 1.433% Params, 286.72 KMac, 0.188% MACs|)
+        (sc_bn): BatchNorm1d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True, |0.0 M, 0.045% Params, 8.96 KMac, 0.006% MACs|)
+        (sc_act): ReLU(|0.0 M, 0.000% Params, 4.48 KMac, 0.003% MACs|)
+      )
+      (2): EdgeConvBlock(
+        |0.231 M, 40.483% Params, 112.564 MMac, 73.857% MACs|
+        (convs): ModuleList(
+          (0-2): 3 x Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1), bias=False, |0.066 M, 11.464% Params, 36.7 MMac, 24.080% MACs|)
+        )
+        (bns): ModuleList(
+          (0-2): 3 x BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True, |0.001 M, 0.090% Params, 286.72 KMac, 0.188% MACs|)
+        )
+        (acts): ModuleList(
+          (0-2): 3 x ReLU(|0.0 M, 0.000% Params, 143.36 KMac, 0.094% MACs|)
+        )
+        (sc): Conv1d(128, 256, kernel_size=(1,), stride=(1,), bias=False, |0.033 M, 5.732% Params, 1.147 MMac, 0.753% MACs|)
+        (sc_bn): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True, |0.001 M, 0.090% Params, 17.92 KMac, 0.012% MACs|)
+        (sc_act): ReLU(|0.0 M, 0.000% Params, 8.96 KMac, 0.006% MACs|)
+      )
+    )
+    (fusion_block): Sequential(
+      |0.173 M, 30.228% Params, 6.061 MMac, 3.977% MACs|
+      (0): Conv1d(448, 384, kernel_size=(1,), stride=(1,), bias=False, |0.172 M, 30.093% Params, 6.021 MMac, 3.951% MACs|)
+      (1): BatchNorm1d(384, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True, |0.001 M, 0.134% Params, 26.88 KMac, 0.018% MACs|)
+      (2): ReLU(|0.0 M, 0.000% Params, 13.44 KMac, 0.009% MACs|)
+    )
+    (fc): Sequential(
+      |0.099 M, 17.241% Params, 98.816 KMac, 0.065% MACs|
+      (0): Sequential(
+        |0.099 M, 17.241% Params, 98.816 KMac, 0.065% MACs|
+        (0): Linear(in_features=384, out_features=256, bias=True, |0.099 M, 17.241% Params, 98.56 KMac, 0.065% MACs|)
+        (1): ReLU(|0.0 M, 0.000% Params, 256.0 Mac, 0.000% MACs|)
+        (2): Dropout(p=0.1, inplace=False, |0.0 M, 0.000% Params, 0.0 Mac, 0.000% MACs|)
+      )
+    )
+  )
+)[0m
+[2025-09-16 21:49:50,893] INFO: Computational complexity:       152.41 MMac
+[2025-09-16 21:49:50,893] INFO: Number of parameters:           571.66 k
+[2025-09-16 21:49:50,893] INFO: Using loss function MSELoss() with options {}
+[2025-09-16 21:49:50,992] INFO: Create Tensorboard summary writer with comment particlenet
+[2025-09-16 21:49:50,996] INFO: Optimizer options: {}
+[2025-09-16 21:49:52,456] INFO: --------------------------------------------------
+[2025-09-16 21:49:52,456] INFO: Epoch #0 training
+[2025-09-16 21:49:52,498] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-16 21:49:52,500] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-16 21:50:23,481] INFO: args:
+ - ('regression_mode', True)
+ - ('data_config', '/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/config/data_config_complete.yaml')
+ - ('extra_selection', None)
+ - ('extra_test_selection', None)
+ - ('data_train', ['/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_0*.root'])
+ - ('data_val', ['/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/test*.root'])
+ - ('data_test', [])
+ - ('data_fraction', 1)
+ - ('file_fraction', 1)
+ - ('fetch_by_files', True)
+ - ('fetch_step', 1.0)
+ - ('in_memory', False)
+ - ('train_val_split', 0.8)
+ - ('no_remake_weights', False)
+ - ('demo', False)
+ - ('lr_finder', None)
+ - ('tensorboard', 'particlenet')
+ - ('tensorboard_custom_fn', None)
+ - ('network_config', '/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/config/particlenet_complete.py')
+ - ('network_option', [])
+ - ('model_prefix', '/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/training_log/particlenet')
+ - ('load_model_weights', None)
+ - ('exclude_model_weights', None)
+ - ('freeze_model_weights', None)
+ - ('num_epochs', 20)
+ - ('steps_per_epoch', None)
+ - ('steps_per_epoch_val', None)
+ - ('samples_per_epoch', None)
+ - ('samples_per_epoch_val', None)
+ - ('optimizer', 'adamW')
+ - ('optimizer_option', [])
+ - ('lr_scheduler', 'flat+decay')
+ - ('warmup_steps', 0)
+ - ('load_epoch', None)
+ - ('start_lr', 0.005)
+ - ('batch_size', 256)
+ - ('use_amp', False)
+ - ('gpus', '0')
+ - ('predict_gpus', '0')
+ - ('num_workers', 2)
+ - ('predict', False)
+ - ('predict_output', None)
+ - ('export_onnx', None)
+ - ('onnx_opset', 15)
+ - ('io_test', False)
+ - ('copy_inputs', False)
+ - ('log', '/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/training_log/particlenet.train.log')
+ - ('print', False)
+ - ('profile', False)
+ - ('backend', None)
+ - ('cross_validation', None)
+ - ('local_rank', None)
+[2025-09-16 21:50:23,481] INFO: Running in regression mode
+[2025-09-16 21:50:24,039] INFO: Using 2 files for training, range: (0, 1)
+[2025-09-16 21:50:24,040] INFO: Using 1 files for validation, range: (0, 1)
+[2025-09-16 21:50:24,042] INFO: [0;37mpreprocess config: {'method': 'manual', 'data_fraction': 1.0, 'params': None}[0m
+[2025-09-16 21:50:24,042] INFO: [0;37mselection: None[0m
+[2025-09-16 21:50:24,042] INFO: [0;37mtest_time_selection: None[0m
+[2025-09-16 21:50:24,042] INFO: [0;37mvar_funcs:
+ - ('pf_mask', 'awkward.ones_like(Part_E)')
+ - ('_label_', 'np.stack([ak.to_numpy(B_E),ak.to_numpy(B_px),ak.to_numpy(B_py),ak.to_numpy(B_pz)], axis=1)')
+ - ('_labelcheck_', 'np.sum(np.stack([ak.to_numpy(B_E),ak.to_numpy(B_px),ak.to_numpy(B_py),ak.to_numpy(B_pz)], axis=1), axis=1)')[0m
+[2025-09-16 21:50:24,042] INFO: [0;37minput_names: ('pf_points', 'pf_features', 'pf_mask')[0m
+[2025-09-16 21:50:24,042] INFO: [0;37minput_dicts:
+ - ('pf_points', ['Part_eta', 'Part_phi'])
+ - ('pf_features', ['Part_E', 'Part_px', 'Part_py', 'Part_pz'])
+ - ('pf_mask', ['pf_mask'])[0m
+[2025-09-16 21:50:24,042] INFO: [0;37minput_shapes:
+ - ('pf_points', (-1, 2, 35))
+ - ('pf_features', (-1, 4, 35))
+ - ('pf_mask', (-1, 1, 35))[0m
+[2025-09-16 21:50:24,042] INFO: [0;37mpreprocess_params:
+ - ('Part_eta', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_phi', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_E', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_px', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_py', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_pz', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('pf_mask', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})[0m
+[2025-09-16 21:50:24,042] INFO: [0;37mlabel_names: ('_label_',)[0m
+[2025-09-16 21:50:24,042] INFO: [0;37mobserver_names: ('pdg_id',)[0m
+[2025-09-16 21:50:24,042] INFO: [0;37mmonitor_variables: ()[0m
+[2025-09-16 21:50:24,044] INFO: [0;37mpreprocess config: {'method': 'manual', 'data_fraction': 1.0, 'params': None}[0m
+[2025-09-16 21:50:24,044] INFO: [0;37mselection: None[0m
+[2025-09-16 21:50:24,044] INFO: [0;37mtest_time_selection: None[0m
+[2025-09-16 21:50:24,044] INFO: [0;37mvar_funcs:
+ - ('pf_mask', 'awkward.ones_like(Part_E)')
+ - ('_label_', 'np.stack([ak.to_numpy(B_E),ak.to_numpy(B_px),ak.to_numpy(B_py),ak.to_numpy(B_pz)], axis=1)')
+ - ('_labelcheck_', 'np.sum(np.stack([ak.to_numpy(B_E),ak.to_numpy(B_px),ak.to_numpy(B_py),ak.to_numpy(B_pz)], axis=1), axis=1)')[0m
+[2025-09-16 21:50:24,045] INFO: [0;37minput_names: ('pf_points', 'pf_features', 'pf_mask')[0m
+[2025-09-16 21:50:24,045] INFO: [0;37minput_dicts:
+ - ('pf_points', ['Part_eta', 'Part_phi'])
+ - ('pf_features', ['Part_E', 'Part_px', 'Part_py', 'Part_pz'])
+ - ('pf_mask', ['pf_mask'])[0m
+[2025-09-16 21:50:24,045] INFO: [0;37minput_shapes:
+ - ('pf_points', (-1, 2, 35))
+ - ('pf_features', (-1, 4, 35))
+ - ('pf_mask', (-1, 1, 35))[0m
+[2025-09-16 21:50:24,045] INFO: [0;37mpreprocess_params:
+ - ('Part_eta', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_phi', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_E', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_px', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_py', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_pz', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('pf_mask', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})[0m
+[2025-09-16 21:50:24,045] INFO: [0;37mlabel_names: ('_label_',)[0m
+[2025-09-16 21:50:24,045] INFO: [0;37mobserver_names: ()[0m
+[2025-09-16 21:50:24,045] INFO: [0;37mmonitor_variables: ()[0m
+[2025-09-16 21:50:24,047] INFO: [0;37mpreprocess config: {'method': 'manual', 'data_fraction': 1.0, 'params': None}[0m
+[2025-09-16 21:50:24,047] INFO: [0;37mselection: None[0m
+[2025-09-16 21:50:24,047] INFO: [0;37mtest_time_selection: None[0m
+[2025-09-16 21:50:24,047] INFO: [0;37mvar_funcs:
+ - ('pf_mask', 'awkward.ones_like(Part_E)')
+ - ('_label_', 'np.stack([ak.to_numpy(B_E),ak.to_numpy(B_px),ak.to_numpy(B_py),ak.to_numpy(B_pz)], axis=1)')
+ - ('_labelcheck_', 'np.sum(np.stack([ak.to_numpy(B_E),ak.to_numpy(B_px),ak.to_numpy(B_py),ak.to_numpy(B_pz)], axis=1), axis=1)')[0m
+[2025-09-16 21:50:24,048] INFO: [0;37minput_names: ('pf_points', 'pf_features', 'pf_mask')[0m
+[2025-09-16 21:50:24,048] INFO: [0;37minput_dicts:
+ - ('pf_points', ['Part_eta', 'Part_phi'])
+ - ('pf_features', ['Part_E', 'Part_px', 'Part_py', 'Part_pz'])
+ - ('pf_mask', ['pf_mask'])[0m
+[2025-09-16 21:50:24,048] INFO: [0;37minput_shapes:
+ - ('pf_points', (-1, 2, 35))
+ - ('pf_features', (-1, 4, 35))
+ - ('pf_mask', (-1, 1, 35))[0m
+[2025-09-16 21:50:24,048] INFO: [0;37mpreprocess_params:
+ - ('Part_eta', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_phi', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_E', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_px', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_py', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_pz', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('pf_mask', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})[0m
+[2025-09-16 21:50:24,048] INFO: [0;37mlabel_names: ('_label_',)[0m
+[2025-09-16 21:50:24,048] INFO: [0;37mobserver_names: ('pdg_id',)[0m
+[2025-09-16 21:50:24,048] INFO: [0;37mmonitor_variables: ()[0m
+[2025-09-16 21:50:24,051] INFO: [0;37mpreprocess config: {'method': 'manual', 'data_fraction': 1.0, 'params': None}[0m
+[2025-09-16 21:50:24,051] INFO: [0;37mselection: None[0m
+[2025-09-16 21:50:24,051] INFO: [0;37mtest_time_selection: None[0m
+[2025-09-16 21:50:24,051] INFO: [0;37mvar_funcs:
+ - ('pf_mask', 'awkward.ones_like(Part_E)')
+ - ('_label_', 'np.stack([ak.to_numpy(B_E),ak.to_numpy(B_px),ak.to_numpy(B_py),ak.to_numpy(B_pz)], axis=1)')
+ - ('_labelcheck_', 'np.sum(np.stack([ak.to_numpy(B_E),ak.to_numpy(B_px),ak.to_numpy(B_py),ak.to_numpy(B_pz)], axis=1), axis=1)')[0m
+[2025-09-16 21:50:24,052] INFO: [0;37minput_names: ('pf_points', 'pf_features', 'pf_mask')[0m
+[2025-09-16 21:50:24,052] INFO: [0;37minput_dicts:
+ - ('pf_points', ['Part_eta', 'Part_phi'])
+ - ('pf_features', ['Part_E', 'Part_px', 'Part_py', 'Part_pz'])
+ - ('pf_mask', ['pf_mask'])[0m
+[2025-09-16 21:50:24,052] INFO: [0;37minput_shapes:
+ - ('pf_points', (-1, 2, 35))
+ - ('pf_features', (-1, 4, 35))
+ - ('pf_mask', (-1, 1, 35))[0m
+[2025-09-16 21:50:24,052] INFO: [0;37mpreprocess_params:
+ - ('Part_eta', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_phi', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_E', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_px', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_py', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('Part_pz', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('pf_mask', {'length': 35, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})[0m
+[2025-09-16 21:50:24,052] INFO: [0;37mlabel_names: ('_label_',)[0m
+[2025-09-16 21:50:24,052] INFO: [0;37mobserver_names: ()[0m
+[2025-09-16 21:50:24,053] INFO: [0;37mmonitor_variables: ()[0m
+[2025-09-16 21:50:24,055] INFO: Network options: {}
+[2025-09-16 21:50:24,292] INFO: [0;37mWarning: module EdgeConvBlock is treated as a zero-op.[0m
+[2025-09-16 21:50:24,292] INFO: [0;37mWarning: module Dropout is treated as a zero-op.[0m
+[2025-09-16 21:50:24,293] INFO: [0;37mWarning: module ParticleNet is treated as a zero-op.[0m
+[2025-09-16 21:50:24,293] INFO: [0;37mWarning: module ParticleNetWrapper is treated as a zero-op.[0m
+[2025-09-16 21:50:24,683] INFO: [0;37mParticleNetWrapper(
+  |0.572 M, 100.000% Params, 152.409 MMac, 100.000% MACs|
+  (fc_out): Sequential(
+    |0.001 M, 0.180% Params, 1.028 KMac, 0.001% MACs|
+    (0): Linear(in_features=256, out_features=4, bias=True, |0.001 M, 0.180% Params, 1.028 KMac, 0.001% MACs|)
+  )
+  (mod): ParticleNet(
+    |0.571 M, 99.820% Params, 152.408 MMac, 99.999% MACs|
+    (bn_fts): BatchNorm1d(4, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True, |0.0 M, 0.001% Params, 280.0 Mac, 0.000% MACs|)
+    (edge_convs): ModuleList(
+      (0): EdgeConvBlock(
+        |0.009 M, 1.657% Params, 5.212 MMac, 3.420% MACs|
+        (convs): ModuleList(
+          (0): Conv2d(8, 64, kernel_size=(1, 1), stride=(1, 1), bias=False, |0.001 M, 0.090% Params, 286.72 KMac, 0.188% MACs|)
+          (1-2): 2 x Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1), bias=False, |0.004 M, 0.717% Params, 2.294 MMac, 1.505% MACs|)
+        )
+        (bns): ModuleList(
+          (0-2): 3 x BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True, |0.0 M, 0.022% Params, 71.68 KMac, 0.047% MACs|)
+        )
+        (acts): ModuleList(
+          (0-2): 3 x ReLU(|0.0 M, 0.000% Params, 35.84 KMac, 0.024% MACs|)
+        )
+        (sc): Conv1d(4, 64, kernel_size=(1,), stride=(1,), bias=False, |0.0 M, 0.045% Params, 8.96 KMac, 0.006% MACs|)
+        (sc_bn): BatchNorm1d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True, |0.0 M, 0.022% Params, 4.48 KMac, 0.003% MACs|)
+        (sc_act): ReLU(|0.0 M, 0.000% Params, 2.24 KMac, 0.001% MACs|)
+      )
+      (1): EdgeConvBlock(
+        |0.058 M, 10.210% Params, 28.47 MMac, 18.680% MACs|
+        (convs): ModuleList(
+          (0-2): 3 x Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1), bias=False, |0.016 M, 2.866% Params, 9.175 MMac, 6.020% MACs|)
+        )
+        (bns): ModuleList(
+          (0-2): 3 x BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True, |0.0 M, 0.045% Params, 143.36 KMac, 0.094% MACs|)
+        )
+        (acts): ModuleList(
+          (0-2): 3 x ReLU(|0.0 M, 0.000% Params, 71.68 KMac, 0.047% MACs|)
+        )
+        (sc): Conv1d(64, 128, kernel_size=(1,), stride=(1,), bias=False, |0.008 M, 1.433% Params, 286.72 KMac, 0.188% MACs|)
+        (sc_bn): BatchNorm1d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True, |0.0 M, 0.045% Params, 8.96 KMac, 0.006% MACs|)
+        (sc_act): ReLU(|0.0 M, 0.000% Params, 4.48 KMac, 0.003% MACs|)
+      )
+      (2): EdgeConvBlock(
+        |0.231 M, 40.483% Params, 112.564 MMac, 73.857% MACs|
+        (convs): ModuleList(
+          (0-2): 3 x Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1), bias=False, |0.066 M, 11.464% Params, 36.7 MMac, 24.080% MACs|)
+        )
+        (bns): ModuleList(
+          (0-2): 3 x BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True, |0.001 M, 0.090% Params, 286.72 KMac, 0.188% MACs|)
+        )
+        (acts): ModuleList(
+          (0-2): 3 x ReLU(|0.0 M, 0.000% Params, 143.36 KMac, 0.094% MACs|)
+        )
+        (sc): Conv1d(128, 256, kernel_size=(1,), stride=(1,), bias=False, |0.033 M, 5.732% Params, 1.147 MMac, 0.753% MACs|)
+        (sc_bn): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True, |0.001 M, 0.090% Params, 17.92 KMac, 0.012% MACs|)
+        (sc_act): ReLU(|0.0 M, 0.000% Params, 8.96 KMac, 0.006% MACs|)
+      )
+    )
+    (fusion_block): Sequential(
+      |0.173 M, 30.228% Params, 6.061 MMac, 3.977% MACs|
+      (0): Conv1d(448, 384, kernel_size=(1,), stride=(1,), bias=False, |0.172 M, 30.093% Params, 6.021 MMac, 3.951% MACs|)
+      (1): BatchNorm1d(384, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True, |0.001 M, 0.134% Params, 26.88 KMac, 0.018% MACs|)
+      (2): ReLU(|0.0 M, 0.000% Params, 13.44 KMac, 0.009% MACs|)
+    )
+    (fc): Sequential(
+      |0.099 M, 17.241% Params, 98.816 KMac, 0.065% MACs|
+      (0): Sequential(
+        |0.099 M, 17.241% Params, 98.816 KMac, 0.065% MACs|
+        (0): Linear(in_features=384, out_features=256, bias=True, |0.099 M, 17.241% Params, 98.56 KMac, 0.065% MACs|)
+        (1): ReLU(|0.0 M, 0.000% Params, 256.0 Mac, 0.000% MACs|)
+        (2): Dropout(p=0.1, inplace=False, |0.0 M, 0.000% Params, 0.0 Mac, 0.000% MACs|)
+      )
+    )
+  )
+)[0m
+[2025-09-16 21:50:24,684] INFO: Computational complexity:       152.41 MMac
+[2025-09-16 21:50:24,684] INFO: Number of parameters:           571.66 k
+[2025-09-16 21:50:24,685] INFO: Using loss function MSELoss() with options {}
+[2025-09-16 21:50:24,721] INFO: Create Tensorboard summary writer with comment particlenet
+[2025-09-16 21:50:24,726] INFO: Optimizer options: {}
+[2025-09-16 21:50:25,381] INFO: --------------------------------------------------
+[2025-09-16 21:50:25,381] INFO: Epoch #0 training
+[2025-09-16 21:50:25,404] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-16 21:50:25,419] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-16 21:51:41,127] INFO: Processed 199680 entries in total (avg. speed 2636.2 entries/s)
+[2025-09-16 21:51:41,128] INFO: Train AvgLoss: 0.06661, AvgMSE: 0.00000, AvgMAE: 0.00000
+[2025-09-16 21:51:41,182] INFO: Epoch #0 validating
+[2025-09-16 21:51:41,210] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-16 21:51:43,109] INFO: Processed 9984 entries in total (avg. speed 5182.8 entries/s)
+[2025-09-16 21:51:43,117] ERROR: Multioutput not supported in mean_tweedie_deviance
+[2025-09-16 21:51:43,119] INFO: Evaluation metrics: 
+    - mean_squared_error: 
+0.04656824469566345
+    - mean_absolute_error: 
+0.1785706877708435
+    - median_absolute_error: 
+0.16878142952919006
+    - mean_gamma_deviance: 
+None
+[2025-09-16 21:51:43,121] INFO: [1mEpoch #0: Current validation metric: 0.04657 (best: 0.04657)[0m
+[2025-09-16 21:51:43,122] INFO: --------------------------------------------------
+[2025-09-16 21:51:43,122] INFO: Epoch #1 training
+[2025-09-16 21:51:43,144] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-16 21:51:43,162] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-16 21:52:57,792] INFO: Processed 199680 entries in total (avg. speed 2674.2 entries/s)
+[2025-09-16 21:52:57,792] INFO: Train AvgLoss: 0.02604, AvgMSE: 0.00000, AvgMAE: 0.00000
+[2025-09-16 21:52:57,825] INFO: Epoch #1 validating
+[2025-09-16 21:52:57,846] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-16 21:52:59,546] INFO: Processed 9984 entries in total (avg. speed 5805.5 entries/s)
+[2025-09-16 21:52:59,549] ERROR: Multioutput not supported in mean_tweedie_deviance
+[2025-09-16 21:52:59,549] INFO: Evaluation metrics: 
+    - mean_squared_error: 
+0.006259307265281677
+    - mean_absolute_error: 
+0.0656248927116394
+    - median_absolute_error: 
+0.06182978302240372
+    - mean_gamma_deviance: 
+None
+[2025-09-16 21:52:59,553] INFO: [1mEpoch #1: Current validation metric: 0.00626 (best: 0.00626)[0m
+[2025-09-16 21:52:59,553] INFO: --------------------------------------------------
+[2025-09-16 21:52:59,553] INFO: Epoch #2 training
+[2025-09-16 21:52:59,574] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-16 21:52:59,583] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-16 21:54:12,348] INFO: Processed 199680 entries in total (avg. speed 2743.1 entries/s)
+[2025-09-16 21:54:12,349] INFO: Train AvgLoss: 0.02036, AvgMSE: 0.00000, AvgMAE: 0.00000
+[2025-09-16 21:54:12,382] INFO: Epoch #2 validating
+[2025-09-16 21:54:12,403] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-16 21:54:14,050] INFO: Processed 9984 entries in total (avg. speed 5986.7 entries/s)
+[2025-09-16 21:54:14,054] ERROR: Multioutput not supported in mean_tweedie_deviance
+[2025-09-16 21:54:14,054] INFO: Evaluation metrics: 
+    - mean_squared_error: 
+0.01979379914700985
+    - mean_absolute_error: 
+0.11649521440267563
+    - median_absolute_error: 
+0.11310122162103653
+    - mean_gamma_deviance: 
+None
+[2025-09-16 21:54:14,054] INFO: [1mEpoch #2: Current validation metric: 0.01979 (best: 0.00626)[0m
+[2025-09-16 21:54:14,054] INFO: --------------------------------------------------
+[2025-09-16 21:54:14,054] INFO: Epoch #3 training
+[2025-09-16 21:54:14,070] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-16 21:54:14,080] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-16 21:55:26,476] INFO: Processed 199680 entries in total (avg. speed 2757.2 entries/s)
+[2025-09-16 21:55:26,477] INFO: Train AvgLoss: 0.01803, AvgMSE: 0.00000, AvgMAE: 0.00000
+[2025-09-16 21:55:26,536] INFO: Epoch #3 validating
+[2025-09-16 21:55:26,556] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-16 21:55:28,162] INFO: Processed 9984 entries in total (avg. speed 6145.1 entries/s)
+[2025-09-16 21:55:28,165] ERROR: Multioutput not supported in mean_tweedie_deviance
+[2025-09-16 21:55:28,165] INFO: Evaluation metrics: 
+    - mean_squared_error: 
+0.01485733687877655
+    - mean_absolute_error: 
+0.10761693865060806
+    - median_absolute_error: 
+0.10657183825969696
+    - mean_gamma_deviance: 
+None
+[2025-09-16 21:55:28,165] INFO: [1mEpoch #3: Current validation metric: 0.01486 (best: 0.00626)[0m
+[2025-09-16 21:55:28,165] INFO: --------------------------------------------------
+[2025-09-16 21:55:28,165] INFO: Epoch #4 training
+[2025-09-16 21:55:28,181] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-16 21:55:28,190] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-16 21:56:41,000] INFO: Processed 199680 entries in total (avg. speed 2741.6 entries/s)
+[2025-09-16 21:56:41,000] INFO: Train AvgLoss: 0.01546, AvgMSE: 0.00000, AvgMAE: 0.00000
+[2025-09-16 21:56:41,040] INFO: Epoch #4 validating
+[2025-09-16 21:56:41,060] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-16 21:56:42,707] INFO: Processed 9984 entries in total (avg. speed 5989.2 entries/s)
+[2025-09-16 21:56:42,710] ERROR: Multioutput not supported in mean_tweedie_deviance
+[2025-09-16 21:56:42,710] INFO: Evaluation metrics: 
+    - mean_squared_error: 
+0.0070572467520833015
+    - mean_absolute_error: 
+0.07016173750162125
+    - median_absolute_error: 
+0.0677075907588005
+    - mean_gamma_deviance: 
+None
+[2025-09-16 21:56:42,711] INFO: [1mEpoch #4: Current validation metric: 0.00706 (best: 0.00626)[0m
+[2025-09-16 21:56:42,711] INFO: --------------------------------------------------
+[2025-09-16 21:56:42,711] INFO: Epoch #5 training
+[2025-09-16 21:56:42,728] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-16 21:56:42,739] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-16 21:57:55,560] INFO: Processed 199680 entries in total (avg. speed 2741.0 entries/s)
+[2025-09-16 21:57:55,560] INFO: Train AvgLoss: 0.01319, AvgMSE: 0.00000, AvgMAE: 0.00000
+[2025-09-16 21:57:55,594] INFO: Epoch #5 validating
+[2025-09-16 21:57:55,615] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-16 21:57:57,358] INFO: Processed 9984 entries in total (avg. speed 5660.7 entries/s)
+[2025-09-16 21:57:57,362] ERROR: Multioutput not supported in mean_tweedie_deviance
+[2025-09-16 21:57:57,362] INFO: Evaluation metrics: 
+    - mean_squared_error: 
+0.003188755363225937
+    - mean_absolute_error: 
+0.04075245186686516
+    - median_absolute_error: 
+0.03594142198562622
+    - mean_gamma_deviance: 
+None
+[2025-09-16 21:57:57,366] INFO: [1mEpoch #5: Current validation metric: 0.00319 (best: 0.00319)[0m
+[2025-09-16 21:57:57,366] INFO: --------------------------------------------------
+[2025-09-16 21:57:57,367] INFO: Epoch #6 training
+[2025-09-16 21:57:57,388] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-16 21:57:57,398] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-16 21:59:12,205] INFO: Processed 199680 entries in total (avg. speed 2668.2 entries/s)
+[2025-09-16 21:59:12,205] INFO: Train AvgLoss: 0.01058, AvgMSE: 0.00000, AvgMAE: 0.00000
+[2025-09-16 21:59:12,231] INFO: Epoch #6 validating
+[2025-09-16 21:59:12,252] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-16 21:59:13,863] INFO: Processed 9984 entries in total (avg. speed 6116.8 entries/s)
+[2025-09-16 21:59:13,867] ERROR: Multioutput not supported in mean_tweedie_deviance
+[2025-09-16 21:59:13,867] INFO: Evaluation metrics: 
+    - mean_squared_error: 
+0.005200354382395744
+    - mean_absolute_error: 
+0.06538542360067368
+    - median_absolute_error: 
+0.06412463635206223
+    - mean_gamma_deviance: 
+None
+[2025-09-16 21:59:13,868] INFO: [1mEpoch #6: Current validation metric: 0.00520 (best: 0.00319)[0m
+[2025-09-16 21:59:13,868] INFO: --------------------------------------------------
+[2025-09-16 21:59:13,868] INFO: Epoch #7 training
+[2025-09-16 21:59:13,885] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-16 21:59:13,895] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-16 22:00:27,013] INFO: Processed 199680 entries in total (avg. speed 2729.9 entries/s)
+[2025-09-16 22:00:27,013] INFO: Train AvgLoss: 0.00946, AvgMSE: 0.00000, AvgMAE: 0.00000
+[2025-09-16 22:00:27,043] INFO: Epoch #7 validating
+[2025-09-16 22:00:27,063] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-16 22:00:28,683] INFO: Processed 9984 entries in total (avg. speed 6089.0 entries/s)
+[2025-09-16 22:00:28,686] ERROR: Multioutput not supported in mean_tweedie_deviance
+[2025-09-16 22:00:28,687] INFO: Evaluation metrics: 
+    - mean_squared_error: 
+0.0049818167462944984
+    - mean_absolute_error: 
+0.05694784224033356
+    - median_absolute_error: 
+0.05545646697282791
+    - mean_gamma_deviance: 
+None
+[2025-09-16 22:00:28,687] INFO: [1mEpoch #7: Current validation metric: 0.00498 (best: 0.00319)[0m
+[2025-09-16 22:00:28,687] INFO: --------------------------------------------------
+[2025-09-16 22:00:28,687] INFO: Epoch #8 training
+[2025-09-16 22:00:28,704] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-16 22:00:28,714] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-16 22:01:41,556] INFO: Processed 199680 entries in total (avg. speed 2740.3 entries/s)
+[2025-09-16 22:01:41,557] INFO: Train AvgLoss: 0.00779, AvgMSE: 0.00000, AvgMAE: 0.00000
+[2025-09-16 22:01:41,594] INFO: Epoch #8 validating
+[2025-09-16 22:01:41,613] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-16 22:01:43,249] INFO: Processed 9984 entries in total (avg. speed 6034.2 entries/s)
+[2025-09-16 22:01:43,253] ERROR: Multioutput not supported in mean_tweedie_deviance
+[2025-09-16 22:01:43,253] INFO: Evaluation metrics: 
+    - mean_squared_error: 
+0.002342643216252327
+    - mean_absolute_error: 
+0.04027659073472023
+    - median_absolute_error: 
+0.039684660732746124
+    - mean_gamma_deviance: 
+None
+[2025-09-16 22:01:43,256] INFO: [1mEpoch #8: Current validation metric: 0.00234 (best: 0.00234)[0m
+[2025-09-16 22:01:43,256] INFO: --------------------------------------------------
+[2025-09-16 22:01:43,256] INFO: Epoch #9 training
+[2025-09-16 22:01:43,273] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-16 22:01:43,285] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-16 22:02:57,559] INFO: Processed 199680 entries in total (avg. speed 2687.4 entries/s)
+[2025-09-16 22:02:57,559] INFO: Train AvgLoss: 0.00649, AvgMSE: 0.00000, AvgMAE: 0.00000
+[2025-09-16 22:02:57,594] INFO: Epoch #9 validating
+[2025-09-16 22:02:57,613] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-16 22:02:59,245] INFO: Processed 9984 entries in total (avg. speed 6048.3 entries/s)
+[2025-09-16 22:02:59,249] ERROR: Multioutput not supported in mean_tweedie_deviance
+[2025-09-16 22:02:59,249] INFO: Evaluation metrics: 
+    - mean_squared_error: 
+0.0033888062462210655
+    - mean_absolute_error: 
+0.04696657136082649
+    - median_absolute_error: 
+0.04460462927818298
+    - mean_gamma_deviance: 
+None
+[2025-09-16 22:02:59,249] INFO: [1mEpoch #9: Current validation metric: 0.00339 (best: 0.00234)[0m
+[2025-09-16 22:02:59,249] INFO: --------------------------------------------------
+[2025-09-16 22:02:59,249] INFO: Epoch #10 training
+[2025-09-16 22:02:59,266] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-16 22:02:59,277] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-16 22:04:13,375] INFO: Processed 199680 entries in total (avg. speed 2693.8 entries/s)
+[2025-09-16 22:04:13,375] INFO: Train AvgLoss: 0.00533, AvgMSE: 0.00000, AvgMAE: 0.00000
+[2025-09-16 22:04:13,407] INFO: Epoch #10 validating
+[2025-09-16 22:04:13,425] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-16 22:04:15,042] INFO: Processed 9984 entries in total (avg. speed 6106.6 entries/s)
+[2025-09-16 22:04:15,046] ERROR: Multioutput not supported in mean_tweedie_deviance
+[2025-09-16 22:04:15,046] INFO: Evaluation metrics: 
+    - mean_squared_error: 
+0.001995239406824112
+    - mean_absolute_error: 
+0.03687390312552452
+    - median_absolute_error: 
+0.035711392760276794
+    - mean_gamma_deviance: 
+None
+[2025-09-16 22:04:15,049] INFO: [1mEpoch #10: Current validation metric: 0.00200 (best: 0.00200)[0m
+[2025-09-16 22:04:15,050] INFO: --------------------------------------------------
+[2025-09-16 22:04:15,050] INFO: Epoch #11 training
+[2025-09-16 22:04:15,069] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-16 22:04:15,080] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-16 22:05:29,524] INFO: Processed 199680 entries in total (avg. speed 2681.2 entries/s)
+[2025-09-16 22:05:29,524] INFO: Train AvgLoss: 0.00430, AvgMSE: 0.00000, AvgMAE: 0.00000
+[2025-09-16 22:05:29,552] INFO: Epoch #11 validating
+[2025-09-16 22:05:29,570] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-16 22:05:31,171] INFO: Processed 9984 entries in total (avg. speed 6167.0 entries/s)
+[2025-09-16 22:05:31,177] ERROR: Multioutput not supported in mean_tweedie_deviance
+[2025-09-16 22:05:31,177] INFO: Evaluation metrics: 
+    - mean_squared_error: 
+0.001926307799294591
+    - mean_absolute_error: 
+0.03506056219339371
+    - median_absolute_error: 
+0.03389044106006622
+    - mean_gamma_deviance: 
+None
+[2025-09-16 22:05:31,181] INFO: [1mEpoch #11: Current validation metric: 0.00193 (best: 0.00193)[0m
+[2025-09-16 22:05:31,181] INFO: --------------------------------------------------
+[2025-09-16 22:05:31,181] INFO: Epoch #12 training
+[2025-09-16 22:05:31,203] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-16 22:05:31,215] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-16 22:06:45,071] INFO: Processed 199680 entries in total (avg. speed 2702.4 entries/s)
+[2025-09-16 22:06:45,071] INFO: Train AvgLoss: 0.00330, AvgMSE: 0.00000, AvgMAE: 0.00000
+[2025-09-16 22:06:45,102] INFO: Epoch #12 validating
+[2025-09-16 22:06:45,121] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-16 22:06:46,786] INFO: Processed 9984 entries in total (avg. speed 5929.1 entries/s)
+[2025-09-16 22:06:46,790] ERROR: Multioutput not supported in mean_tweedie_deviance
+[2025-09-16 22:06:46,791] INFO: Evaluation metrics: 
+    - mean_squared_error: 
+0.0016711752396076918
+    - mean_absolute_error: 
+0.03221452608704567
+    - median_absolute_error: 
+0.029864219948649406
+    - mean_gamma_deviance: 
+None
+[2025-09-16 22:06:46,795] INFO: [1mEpoch #12: Current validation metric: 0.00167 (best: 0.00167)[0m
+[2025-09-16 22:06:46,795] INFO: --------------------------------------------------
+[2025-09-16 22:06:46,795] INFO: Epoch #13 training
+[2025-09-16 22:06:46,815] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-16 22:06:46,825] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-16 22:08:05,102] INFO: Processed 199680 entries in total (avg. speed 2550.0 entries/s)
+[2025-09-16 22:08:05,102] INFO: Train AvgLoss: 0.00254, AvgMSE: 0.00000, AvgMAE: 0.00000
+[2025-09-16 22:08:05,130] INFO: Epoch #13 validating
+[2025-09-16 22:08:05,150] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-16 22:08:06,813] INFO: Processed 9984 entries in total (avg. speed 5933.6 entries/s)
+[2025-09-16 22:08:06,817] ERROR: Multioutput not supported in mean_tweedie_deviance
+[2025-09-16 22:08:06,818] INFO: Evaluation metrics: 
+    - mean_squared_error: 
+0.0011773532023653388
+    - mean_absolute_error: 
+0.025789698585867882
+    - median_absolute_error: 
+0.02263975329697132
+    - mean_gamma_deviance: 
+None
+[2025-09-16 22:08:06,820] INFO: [1mEpoch #13: Current validation metric: 0.00118 (best: 0.00118)[0m
+[2025-09-16 22:08:06,821] INFO: --------------------------------------------------
+[2025-09-16 22:08:06,821] INFO: Epoch #14 training
+[2025-09-16 22:08:06,838] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-16 22:08:06,850] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-16 22:09:21,364] INFO: Processed 199680 entries in total (avg. speed 2678.7 entries/s)
+[2025-09-16 22:09:21,364] INFO: Train AvgLoss: 0.00173, AvgMSE: 0.00000, AvgMAE: 0.00000
+[2025-09-16 22:09:21,395] INFO: Epoch #14 validating
+[2025-09-16 22:09:21,414] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-16 22:09:23,075] INFO: Processed 9984 entries in total (avg. speed 5941.9 entries/s)
+[2025-09-16 22:09:23,079] ERROR: Multioutput not supported in mean_tweedie_deviance
+[2025-09-16 22:09:23,079] INFO: Evaluation metrics: 
+    - mean_squared_error: 
+0.0006815862143412232
+    - mean_absolute_error: 
+0.019042057916522026
+    - median_absolute_error: 
+0.01774381846189499
+    - mean_gamma_deviance: 
+None
+[2025-09-16 22:09:23,083] INFO: [1mEpoch #14: Current validation metric: 0.00068 (best: 0.00068)[0m
+[2025-09-16 22:09:23,083] INFO: --------------------------------------------------
+[2025-09-16 22:09:23,083] INFO: Epoch #15 training
+[2025-09-16 22:09:23,101] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-16 22:09:23,111] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-16 22:10:40,922] INFO: Processed 199680 entries in total (avg. speed 2565.3 entries/s)
+[2025-09-16 22:10:40,922] INFO: Train AvgLoss: 0.00136, AvgMSE: 0.00000, AvgMAE: 0.00000
+[2025-09-16 22:10:40,951] INFO: Epoch #15 validating
+[2025-09-16 22:10:40,969] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-16 22:10:42,603] INFO: Processed 9984 entries in total (avg. speed 6044.6 entries/s)
+[2025-09-16 22:10:42,608] ERROR: Multioutput not supported in mean_tweedie_deviance
+[2025-09-16 22:10:42,608] INFO: Evaluation metrics: 
+    - mean_squared_error: 
+0.00028086936799809337
+    - mean_absolute_error: 
+0.01255299337208271
+    - median_absolute_error: 
+0.010648362338542938
+    - mean_gamma_deviance: 
+None
+[2025-09-16 22:10:42,611] INFO: [1mEpoch #15: Current validation metric: 0.00028 (best: 0.00028)[0m
+[2025-09-16 22:10:42,611] INFO: --------------------------------------------------
+[2025-09-16 22:10:42,611] INFO: Epoch #16 training
+[2025-09-16 22:10:42,631] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-16 22:10:42,641] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-16 22:11:56,793] INFO: Processed 199680 entries in total (avg. speed 2691.8 entries/s)
+[2025-09-16 22:11:56,794] INFO: Train AvgLoss: 0.00119, AvgMSE: 0.00000, AvgMAE: 0.00000
+[2025-09-16 22:11:56,823] INFO: Epoch #16 validating
+[2025-09-16 22:11:56,843] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-16 22:11:58,557] INFO: Processed 9984 entries in total (avg. speed 5761.0 entries/s)
+[2025-09-16 22:11:58,562] ERROR: Multioutput not supported in mean_tweedie_deviance
+[2025-09-16 22:11:58,562] INFO: Evaluation metrics: 
+    - mean_squared_error: 
+0.00018088429351337254
+    - mean_absolute_error: 
+0.009887516498565674
+    - median_absolute_error: 
+0.008616256527602673
+    - mean_gamma_deviance: 
+None
+[2025-09-16 22:11:58,565] INFO: [1mEpoch #16: Current validation metric: 0.00018 (best: 0.00018)[0m
+[2025-09-16 22:11:58,566] INFO: --------------------------------------------------
+[2025-09-16 22:11:58,566] INFO: Epoch #17 training
+[2025-09-16 22:11:58,587] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-16 22:11:58,598] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-16 22:13:13,542] INFO: Processed 199680 entries in total (avg. speed 2663.3 entries/s)
+[2025-09-16 22:13:13,542] INFO: Train AvgLoss: 0.00110, AvgMSE: 0.00000, AvgMAE: 0.00000
+[2025-09-16 22:13:13,568] INFO: Epoch #17 validating
+[2025-09-16 22:13:13,586] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-16 22:13:15,244] INFO: Processed 9984 entries in total (avg. speed 5961.7 entries/s)
+[2025-09-16 22:13:15,247] ERROR: Multioutput not supported in mean_tweedie_deviance
+[2025-09-16 22:13:15,248] INFO: Evaluation metrics: 
+    - mean_squared_error: 
+9.674471220932901e-05
+    - mean_absolute_error: 
+0.0065567390993237495
+    - median_absolute_error: 
+0.00506326649338007
+    - mean_gamma_deviance: 
+None
+[2025-09-16 22:13:15,251] INFO: [1mEpoch #17: Current validation metric: 0.00010 (best: 0.00010)[0m
+[2025-09-16 22:13:15,251] INFO: --------------------------------------------------
+[2025-09-16 22:13:15,251] INFO: Epoch #18 training
+[2025-09-16 22:13:15,269] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-16 22:13:15,278] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-16 22:14:31,404] INFO: Processed 199680 entries in total (avg. speed 2622.1 entries/s)
+[2025-09-16 22:14:31,404] INFO: Train AvgLoss: 0.00104, AvgMSE: 0.00000, AvgMAE: 0.00000
+[2025-09-16 22:14:31,433] INFO: Epoch #18 validating
+[2025-09-16 22:14:31,452] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-16 22:14:33,082] INFO: Processed 9984 entries in total (avg. speed 6056.6 entries/s)
+[2025-09-16 22:14:33,086] ERROR: Multioutput not supported in mean_tweedie_deviance
+[2025-09-16 22:14:33,086] INFO: Evaluation metrics: 
+    - mean_squared_error: 
+9.416539978701621e-05
+    - mean_absolute_error: 
+0.006117706187069416
+    - median_absolute_error: 
+0.004398435354232788
+    - mean_gamma_deviance: 
+None
+[2025-09-16 22:14:33,090] INFO: [1mEpoch #18: Current validation metric: 0.00009 (best: 0.00009)[0m
+[2025-09-16 22:14:33,090] INFO: --------------------------------------------------
+[2025-09-16 22:14:33,090] INFO: Epoch #19 training
+[2025-09-16 22:14:33,108] INFO: Restarted DataIter train_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_01.root"
+  ]
+}
+[2025-09-16 22:14:33,120] INFO: Restarted DataIter train_worker1, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/train_02.root"
+  ]
+}
+[2025-09-16 22:15:47,702] INFO: Processed 199680 entries in total (avg. speed 2676.3 entries/s)
+[2025-09-16 22:15:47,702] INFO: Train AvgLoss: 0.00101, AvgMSE: 0.00000, AvgMAE: 0.00000
+[2025-09-16 22:15:47,729] INFO: Epoch #19 validating
+[2025-09-16 22:15:47,748] INFO: Restarted DataIter val_worker0, load_range=(0.0, 1.0), file_list:
+{
+  "_": [
+    "/home/tpyang/B-Reconstruction-2-FPGA/python/pure_B_plus_B_minus/gen_level_1B/with_eta_phi/../data/test.root"
+  ]
+}
+[2025-09-16 22:15:49,412] INFO: Processed 9984 entries in total (avg. speed 5934.1 entries/s)
+[2025-09-16 22:15:49,416] ERROR: Multioutput not supported in mean_tweedie_deviance
+[2025-09-16 22:15:49,416] INFO: Evaluation metrics: 
+    - mean_squared_error: 
+8.20245040813461e-05
+    - mean_absolute_error: 
+0.005810182075947523
+    - median_absolute_error: 
+0.004355084151029587
+    - mean_gamma_deviance: 
+None
+[2025-09-16 22:15:49,419] INFO: [1mEpoch #19: Current validation metric: 0.00008 (best: 0.00008)[0m

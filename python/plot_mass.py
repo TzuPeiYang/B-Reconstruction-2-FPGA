@@ -19,7 +19,7 @@ if __name__ == "__main__":
     # Path to the ROOT file
     sub_dir = sys.argv[1]
     if len(sys.argv) == 2:
-        root_files = glob.glob(sub_dir + "training_log/particlenet*.root")
+        root_files = glob.glob(sub_dir + "training_log/*.root")
     else:
         root_files = sys.argv[2:]
     root_files.sort()
@@ -28,6 +28,8 @@ if __name__ == "__main__":
 
     plt.figure(figsize=(8, 6), dpi=200)
     for file in root_files:
+        if file.endswith('mask.root'):
+            continue
     # Load the ROOT 
         name = file.replace(sub_dir + "training_log/particlenet_predict_", "")
         if name == file:

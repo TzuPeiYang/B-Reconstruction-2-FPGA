@@ -18,7 +18,7 @@ if __name__ == "__main__":
 
     mask = np.argmax(score, axis=-1)
     print(mask.shape)
-    print(np.sum(np.abs(mask - mask_truth)))
+    print(np.sum(np.abs(mask - mask_truth)) / len(mask))
 
     # Open existing file
     file = uproot.open(sub_dir + "data/" + file_name + ".root")

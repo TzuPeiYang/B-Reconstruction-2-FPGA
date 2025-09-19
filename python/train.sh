@@ -62,11 +62,11 @@ while true; do
 done
 
 PREFIX='particlenet'
-SUFFIX='$P_d=0.1$_add_linear'
+SUFFIX='complete'
 ROOT_DIR='/home/tpyang/B-Reconstruction-2-FPGA/python/'
-SUB_DIR='pure_B_plus_B_minus/gen_level_1B/with_partial_vertex/'
-MODEL_CONFIG='config/particlenet_pf.py'
-DATA_CONFIG='config/data_config.yaml'
+SUB_DIR='pure_B_plus_B_minus/gen_level_2B/with_vertex/'
+MODEL_CONFIG='config/'${PREFIX}'_'${SUFFIX}'.py'
+DATA_CONFIG='config/data_config_'${SUFFIX}'.yaml'
 
 SAMPLES_DIR='../data/'
 PATH_TO_LOG='training_log/'
@@ -88,7 +88,7 @@ if [ $c -eq 1 ]; then
 fi
 
 if [ $t -eq 1 ]; then
-    python /home/tpyang/weaver-core/weaver/train.py "${args[@]}"
+    weaver "${args[@]}"
 
     mv ${ROOT_DIR}${SUB_DIR}${PATH_TO_LOG}${PREFIX}_best_epoch_state.pt ${ROOT_DIR}${SUB_DIR}${PATH_TO_LOG}${PREFIX}_${SUFFIX}.pt
     rm ${ROOT_DIR}${SUB_DIR}${PATH_TO_LOG}${PREFIX}_epoch*.pt
@@ -106,7 +106,7 @@ if [ $r -eq 1 ]; then
     pred_args+=( --regression-mode ) 
 fi
 if [ $p -eq 1 ]; then
-    python /home/tpyang/weaver-core/weaver/train.py "${pred_args[@]}"
+    weaver "${pred_args[@]}"
 fi
 
 if [ $g -eq 1 ]; then
@@ -117,10 +117,11 @@ save_args=(
     --data-config ${ROOT_DIR}${SUB_DIR}${DATA_CONFIG} \
     --network-config ${ROOT_DIR}${SUB_DIR}${MODEL_CONFIG} \
     --model-prefix ${ROOT_DIR}${SUB_DIR}${PATH_TO_LOG}${PREFIX}_${SUFFIX}.pt \
+    --onnx-opset 12 \
     --export-onnx ${ROOT_DIR}${SUB_DIR}${PATH_TO_LOG}${PREFIX}_${SUFFIX}.onnx
      )
 
 if [ $s -eq 1 ]; then
-    python /home/tpyang/weaver-core/weaver/train.py "${save_args[@]}"
+    weaver "${save_args[@]}"
 fi
 
