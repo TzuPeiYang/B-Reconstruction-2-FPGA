@@ -17,22 +17,27 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
 set(SOURCES ${SRC_CXX})
 
 # Add executable
-add_executable(network_output ${SOURCES})
+add_executable(generate_sofie ${SOURCES})
 
 # Enable OpenMP
 option(OMP "Enable OpenMP support" OFF)
 if(OMP)
     find_package(OpenMP REQUIRED)
-    target_link_libraries(network_output PUBLIC OpenMP::OpenMP_CXX)
+    target_link_libraries(generate_sofie PUBLIC OpenMP::OpenMP_CXX)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DOMP")
 endif()
 
-find_package(ROOT REQUIRED)
-target_link_libraries(network_output PUBLIC ${ROOT_LIBRARIES})
+find_package(ROOT REQUIRED COMPONENTS TMVA ROOTDataFrame ROOTTMVASofie ROOTTMVASofieParser)
+# message(STATUS "The value of MY_VARIABLE is: ${ROOT_LIBRARIES}")
+target_link_libraries(generate_sofie PUBLIC ${ROOT_LIBRARIES})
 include_directories(${ROOT_INCLUDE_DIRS})
 
-target_link_libraries(network_output PUBLIC m)
-target_link_libraries(network_output PUBLIC yaml-cpp)
+
+target_link_libraries(generate_sofie PUBLIC /usr/local/lib/libprotobuf.so)
+include_directories(/usr/local/include)
+
+target_link_libraries(generate_sofie PUBLIC m)
+target_link_libraries(generate_sofie PUBLIC yaml-cpp)
 
 # Output directories
 file(MAKE_DIRECTORY ${CMAKE_SOURCE_DIR}/build)
