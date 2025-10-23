@@ -68,7 +68,7 @@ done
 PREFIX='particlenet'
 SUFFIX='complete'
 ROOT_DIR='/home/tpyang/B-Reconstruction-2-FPGA/python/'
-SUB_DIR='all_B/gen_level_1B/with_partial_vertex/'
+SUB_DIR='pure_B_plus_B_minus/gen_level_2B/with_vertex/'
 MODEL_CONFIG='config/'${PREFIX}'_'${SUFFIX}'.py'
 DATA_CONFIG='config/data_config_'${SUFFIX}'.yaml'
 
@@ -128,7 +128,7 @@ save_args=(
     --data-config ${ROOT_DIR}${SUB_DIR}${DATA_CONFIG} \
     --network-config ${ROOT_DIR}${SUB_DIR}${MODEL_CONFIG} \
     --model-prefix ${ROOT_DIR}${SUB_DIR}${PATH_TO_LOG}${PREFIX}_${SUFFIX}.pt \
-    --onnx-opset 12 \
+    --onnx-opset 15 \
     --export-onnx ${ROOT_DIR}${SUB_DIR}${PATH_TO_LOG}${PREFIX}_${SUFFIX}.onnx
      )
 

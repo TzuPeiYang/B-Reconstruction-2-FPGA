@@ -1,5 +1,5 @@
 new_variables:
-  # pf_mask: awkward.ones_like(Part_E)
+  pf_mask: awkward.ones_like(Part_E)
 
 preprocess:
   method: manual
@@ -28,7 +28,7 @@ inputs:
   pf_mask:
     length: 52
     vars:
-      - pred_mask
+      - pf_mask
 
 labels:
   type: simple
