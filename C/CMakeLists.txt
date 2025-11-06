@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.22)
 project(Treeeeee C CXX)
-# Set C standard
+# Set CXX standard
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -Wall -O2")
+set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -Wall -O3 -fsanitize=address -g")
 
 # Add directories
 include_directories(${CMAKE_SOURCE_DIR}/include)
-file(GLOB SRC_CXX src/*.c)
+file(GLOB SRC_CXX src/*.cpp)
 
 # Define output directory
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
