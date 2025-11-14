@@ -68,7 +68,7 @@ done
 PREFIX='particlenet'
 SUFFIX='complete'
 ROOT_DIR='/home/tpyang/B-Reconstruction-2-FPGA/python/'
-SUB_DIR='pure_B_plus_B_minus/gen_level_2B/with_vertex/'
+SUB_DIR='pure_B_plus_B_minus/gen_level_1B/with_vertex/'
 MODEL_CONFIG='config/'${PREFIX}'_'${SUFFIX}'.py'
 DATA_CONFIG='config/data_config_'${SUFFIX}'.yaml'
 

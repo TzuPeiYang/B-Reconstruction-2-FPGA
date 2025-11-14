@@ -68,7 +68,7 @@ def get_model(data_config, **kwargs):
         'input_names': list(data_config.input_names),
         'input_shapes': {k: ((1,) + s[1:]) for k, s in data_config.input_shapes.items()},
         'output_names': ['MSE'],
-        'dynamic_axes': {**{k: {0: 'N', 2: 'n_' + k.split('_')[0]} for k in data_config.input_names}, **{'MSE': {0: 'N'}}},
+        'dynamic_axes': None # {**{k: {0: 'N', 2: 'n_' + k.split('_')[0]} for k in data_config.input_names}, **{'MSE': {0: 'N'}}},
     }
     return model, model_info
     
