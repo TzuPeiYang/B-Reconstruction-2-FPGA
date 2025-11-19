@@ -149,9 +149,6 @@ def delete_upstream_chain(graph, start_tensor, producer_map, safe_tensors):
             pass
 
 
-############################################################
-#  MAIN PATCH FUNCTION
-############################################################
 def fix_expand_nodes(model):
     g = model.graph
     producer = build_producer_map(g)
@@ -211,9 +208,6 @@ def fix_expand_nodes(model):
     return model
 
 
-############################################################
-#  MAIN ENTRY POINT
-############################################################
 def main():
     import argparse
     ap = argparse.ArgumentParser()

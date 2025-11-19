@@ -73,7 +73,7 @@ if __name__ == "__main__":
     tensor_to_c_multidim_header(pf_points, name="pf_points", header_path="../../C/include/pf_points.h")
     tensor_to_c_multidim_header(pf_features, name="pf_features", header_path="../../C/include/pf_features.h")
 
-    edge_conv = EdgeConvBlock(8, 4, 10, 3, 4, [8], cpu_mode=True)
+    edge_conv = EdgeConvBlock(3, 4, [8], cpu_mode=True)
     edge_conv.load_state_dict(torch.load("edge_conv_test.pt"))
     edge_conv.eval()
     # torch.save(edge_conv.state_dict(), "edge_conv_test.pt")
@@ -87,7 +87,7 @@ if __name__ == "__main__":
     torch.onnx.export(
         edge_conv,
         (pf_points, pf_features),
-        "./test/edgeconv_test.onnx",
+        "./edgeconv_test.onnx",
         input_names=["pf_points", "pf_features"],
         output_names=["output"],
         do_constant_folding=True,
@@ -95,8 +95,8 @@ if __name__ == "__main__":
         export_params=True,
     )
 
-    model = onnx.load_model("./test/edgeconv_test.onnx")
+    model = onnx.load_model("./edgeconv_test.onnx")
     model = onnx.shape_inference.infer_shapes(model)
-    onnx.save(model, "./test/edgeconv_test.onnx")
+    onnx.save(model, "./edgeconv_test.onnx")
 
-    print("✅ Exported model to ./test/edgeconv_test.onnx")
+    print("✅ Exported model to ./edgeconv_test.onnx")
