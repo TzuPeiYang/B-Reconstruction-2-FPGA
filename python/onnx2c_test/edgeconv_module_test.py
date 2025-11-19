@@ -1,9 +1,10 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from weaver.nn.model.ParticleNet import ParticleNet, EdgeConvBlock
+from weaver.nn.model.ParticleNet import ParticleNet
 import numpy as np
 import onnx
+from .. import tensor_2_header
 
 
 def format_nested_array(arr, indent=4):

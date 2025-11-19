@@ -3,9 +3,7 @@ import onnx
 import numpy as np
 from onnx import helper, numpy_helper, shape_inference
 
-############################################################
-#  USER-SUPPLIED SHAPE OVERRIDE FUNCTION
-############################################################
+
 def manual_shape_override(node_name, shape_input_name):
     """
     Called when automatic shape inference fails.
@@ -16,16 +14,17 @@ def manual_shape_override(node_name, shape_input_name):
     """
 
     # Example:
-    if node_name == "/Expand":
-        return [8, 4, 10, 3]
+    if node_name == "/mod/edge_convs.0/Expand":
+        return [1, 4, 35, 16]
+    if node_name == "/mod/edge_convs.1/Expand":
+        return [1, 64, 35, 16]
+    if node_name == "/mod/edge_convs.2/Expand":
+        return [1, 128, 35, 16]
 
     # By default, no override:
     return None
 
 
-############################################################
-#  HELPERS
-############################################################
 def load_model(path):
     model = onnx.load(path)
     try:
@@ -208,6 +207,13 @@ def fix_expand_nodes(model):
     return model
 
 
+def fix_training_mode(model):
+    for node in model.graph.node:
+        new_attr = [a for a in node.attribute if a.name != "training_mode"]
+        del node.attribute[:]
+        node.attribute.extend(new_attr)
+    return model
+
 def main():
     import argparse
     ap = argparse.ArgumentParser()
@@ -217,6 +223,7 @@ def main():
 
     model = load_model(args.model)
     model = fix_expand_nodes(model)
+    model = fix_training_mode(model)
     model = onnx.shape_inference.infer_shapes(model)
     onnx.save(model, args.out)
 
