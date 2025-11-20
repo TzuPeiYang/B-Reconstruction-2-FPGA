@@ -2,7 +2,7 @@
 #include <stddef.h>
 #include <iostream>
 
-#include "network.h"
+#include "particlenet_complete.h"
 #include "pf_points.h"
 #include "pf_features.h"
 #include "pf_mask.h"
