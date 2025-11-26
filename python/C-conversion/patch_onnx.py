@@ -1,213 +1,136 @@
 #!/usr/bin/env python3
 import onnx
 import numpy as np
-from onnx import helper, numpy_helper, shape_inference
+from onnx import helper, numpy_helper, shape_inference, TensorProto
 
 
-"""
-Patches expand shape input and remove training_mode attribute from all nodes
-"""
-
-def manual_shape_override(node_name, shape_input_name):
-    """
-    Called when automatic shape inference fails.
-
-    Return:
-        - A list of ints for static shape, e.g. [32,64,10,1]
-        - Or None if you do not want to override
-    """
-
-    # Example:
-    if node_name == "/mod/edge_convs.0/Expand":
-        return [1, 4, 35, 16]
-    if node_name == "/mod/edge_convs.1/Expand":
-        return [1, 64, 35, 16]
-    if node_name == "/mod/edge_convs.2/Expand":
-        return [1, 128, 35, 16]
-
-    # By default, no override:
-    return None
+def get_shape(vi):
+    t = vi.type.tensor_type
+    if not t.HasField("shape"):
+        return None
+    out = []
+    for d in t.shape.dim:
+        if d.HasField("dim_value"):
+            out.append(d.dim_value)
+        else:
+            out.append(None)
+    return out
 
 
-def load_model(path):
-    model = onnx.load(path)
-    try:
-        model = shape_inference.infer_shapes(model)
-    except Exception as e:
-        print("[WARN] ONNX shape inference failed:", e)
-    return model
-
-
-def get_tensor_shape_from_value_info(model, name):
-    """
-    Returns:
-        - list[int] = valid static shape
-        - None = dynamic, unknown, or bogus ONNX rank-only inference
-
-    Adds detection for ONNX "rank-only" junk shape inference, e.g. [4].
-    """
-
-    # search value_info, inputs, outputs
-    for vi in list(model.graph.value_info) + list(model.graph.input) + list(model.graph.output):
-        if vi.name != name:
-            continue
-
-        shp = vi.type.tensor_type.shape
-
-        dims = []
-        has_valid_dim = False
-        has_any_dim_value = False
-
-        for d in shp.dim:
-            if d.HasField("dim_value"):
-                has_any_dim_value = True
-                if d.dim_value > 1:
-                    has_valid_dim = True
-                dims.append(int(d.dim_value))
-            else:
-                # dynamic
-                dims.append(None)
-
-        # -------------------------
-        # Detect ONNX bogus "shape = [rank]"
-        # -------------------------
-
-        # case 1: ONNX gave only a single number equal to rank
-        if len(dims) == 1:
-            return None    # invalid, skip
-
-        # case 2: all dim_values are tiny (<=1) → almost always bogus
-        if has_any_dim_value and not has_valid_dim:
-            return None
-
-        # case 4: all dims are None or symbolic
-        if all(d is None for d in dims):
-            return None
-
-        # If any real dimensions exist, return only the real dims.
-        # Replace None with 1 (safe broadcast anchor)
-        final = [d if d is not None else 1 for d in dims]
-
-        return final
-
-    return None
+def build_shape_map(graph):
+    sm = {}
+    for vi in list(graph.input) + list(graph.value_info) + list(graph.output):
+        sh = get_shape(vi)
+        if sh is not None:
+            sm[vi.name] = sh
+    return sm
 
 
 def build_producer_map(graph):
-    """Map tensor -> node that produces it"""
-    producer = {}
+    pm = {}
     for node in graph.node:
-        for out in node.output:
-            producer[out] = node
-    return producer
+        for o in node.output:
+            pm[o] = node
+    return pm
 
 
-def delete_upstream_chain(graph, start_tensor, producer_map, safe_tensors):
+def build_node_map(graph):
+    nm = {}
+    for node in graph.node:
+        for i in node.input:
+            nm.setdefault(i, []).append(node)
+    return nm
+
+
+def get_node_id(node):
+    if node.name:
+        return node.name
+    return "NODE_" + "_".join(node.output)
+
+
+def delete_upstream_chain(graph, start_tensor_name, producer_map):
     """
-    Delete all nodes producing 'start_tensor' unless their outputs
-    are used elsewhere or are protected.
+    Deletes all upstream nodes feeding start_tensor_name.
+    Actually removes nodes from graph.node.
     """
-    if start_tensor not in producer_map:
-        return
-
-    stack = [start_tensor]
-    to_delete = {}   # id(node) -> node
+    to_delete = set()
+    stack = [start_tensor_name]
 
     while stack:
-        t = stack.pop()
-        if t not in producer_map:
+        tname = stack.pop()
+        if tname not in producer_map:
             continue
-
-        node = producer_map[t]
-        nid = id(node)
-
-        if nid in to_delete:
+        node = producer_map[tname]
+        if get_node_id(node) in to_delete:
             continue
-
-        # Check if this tensor is consumed anywhere else
-        used_elsewhere = False
-        for consumer in graph.node:
-            if consumer is node:
-                continue
-            if t in consumer.input:
-                used_elsewhere = True
-                break
-
-        # Do not delete if used elsewhere or protected
-        if used_elsewhere or t in safe_tensors:
-            continue
-
-        # Mark node for deletion
-        to_delete[nid] = node
-
-        # Traverse its inputs
+        to_delete.add(get_node_id(node))
+        # Push all inputs to stack
         for inp in node.input:
             stack.append(inp)
 
-    # Apply deletion
-    for node in to_delete.values():
-        try:
-            graph.node.remove(node)
-        except ValueError:
-            pass
+    # Remove nodes physically
+    new_nodes = [n for n in graph.node if get_node_id(n) not in to_delete]
+
+    # Clear existing repeated field and extend
+    graph.ClearField("node")
+    graph.node.extend(new_nodes)
 
 
-def fix_expand_nodes(model):
-    g = model.graph
-    producer = build_producer_map(g)
+def fix_expand_transpose_sub(model):
+    graph = model.graph
+    shape_map = build_shape_map(graph)
+    producer_map = build_producer_map(graph)
+    node_map = build_node_map(graph)
 
-    init_names = {init.name for init in g.initializer}
-    fixed = 0
+    # Step 1: collect all Expand nodes first (static copy)
+    expand_nodes = [n for n in graph.node if n.op_type == "Expand"]
+    for i in range(len(expand_nodes)):
+        node = expand_nodes[i]
+        expand_out = node.output[0]
 
-    for node in list(g.node):
-        if node.op_type != "Expand":
+        # Step 2: find Sub consumer
+        consumers = node_map.get(expand_out, [])
+        sub_node = next((c for c in consumers if c.op_type == "Sub"), None)
+        if sub_node is None:
             continue
 
-        shape_input = node.input[1]
-
-        # Skip if already constant
-        if shape_input in init_names:
+        # Step 3: find Transpose input of Sub
+        other_input = next((i for i in sub_node.input if i != expand_out), None)
+        if other_input is None:
             continue
 
-        # Try automatic inference
-        inferred_shape = get_tensor_shape_from_value_info(model, shape_input)
+        trans_node = producer_map.get(other_input)
+        if trans_node is None or trans_node.op_type != "Transpose":
+            continue
 
-        if inferred_shape is None:
-            # Try user-supplied override
-            override = manual_shape_override(node.name or "<no_name>", shape_input)
+        # Step 4: get static shape from Transpose
+        trans_shape = shape_map.get(trans_node.output[0])
+        if trans_shape is None or None in trans_shape:
+            print(f"[WARN] Transpose output shape not static for Expand {node.name}")
+            continue
 
-            if override is None:
-                print(f"[SKIP] Expand {node.name}: dynamic shape, no inference, no override")
-                continue
-            else:
-                print(f"[OVERRIDE] Expand {node.name}: using manual shape {override}")
-                inferred_shape = override
+        print(f"[INFO] Patching Expand '{node.name}' shape to {trans_shape}")
 
-        else:
-            print(f"[PATCH] Expand {node.name}: inferred static shape {inferred_shape}")
-
-        # Make constant initializer for new shape
-        const_name = f"{shape_input}_static"
-        arr = np.array(inferred_shape, dtype=np.int64)
-
-        g.initializer.append(
-            numpy_helper.from_array(arr, name=const_name)
+        # Step 5: create Constant for Expand shape
+        const_name = node.name + "_shape_const"
+        const_tensor = numpy_helper.from_array(
+            np.array(trans_shape, dtype=np.int64), name=const_name
         )
+        graph.initializer.append(const_tensor)
 
-        # Patch Expand node
+        # Step 6: replace Expand shape input
+        original_shape_input = node.input[1]
         node.input[1] = const_name
 
-        # Delete upstream dynamic shape chain
-        delete_upstream_chain(
-            g,
-            shape_input,
-            producer,
-            safe_tensors=set(init_names)
-        )
+        # Step 7: delete upstream nodes that produced original shape
+        delete_upstream_chain(graph, original_shape_input, producer_map)
 
-        fixed += 1
+        # Step 8: rebuild maps after deletion to be safe
+        shape_map = build_shape_map(graph)
+        producer_map = build_producer_map(graph)
+        node_map = build_node_map(graph)
+        expand_nodes = [n for n in graph.node if n.op_type == "Expand"]
 
-    print(f"[INFO] Patched {fixed} Expand nodes.\n")
     return model
 
 
@@ -218,21 +141,20 @@ def fix_training_mode(model):
         node.attribute.extend(new_attr)
     return model
 
-def main():
+
+if __name__ == "__main__":
     import argparse
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", required=True)
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
 
-    model = load_model(args.model)
-    model = fix_expand_nodes(model)
+    model = onnx.load_model(args.model)
     model = fix_training_mode(model)
+    onnx.checker.check_model(model)
+    model = fix_expand_transpose_sub(model)
+    onnx.checker.check_model(model)
     model = onnx.shape_inference.infer_shapes(model)
     onnx.save(model, args.out)
 
     print(f"[DONE] Saved patched model to {args.out}")
-
-
-if __name__ == "__main__":
-    main()
