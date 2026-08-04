@@ -142,6 +142,153 @@ def fix_training_mode(model):
     return model
 
 
+def patch_expand_shape_by_eval(model):
+    graph = model.graph
+
+    # Build producer map
+    producer_map = {}
+    for node in graph.node:
+        for out in node.output:
+            producer_map[out] = node
+
+    # Map initializers
+    initializer_map = {init.name: numpy_helper.to_array(init)
+                       for init in graph.initializer}
+
+    expand_nodes = [n for n in graph.node if n.op_type == "Expand"]
+
+    for expand in expand_nodes:
+
+        shape_input = expand.input[1]
+
+        try:
+            shape_value = evaluate_tensor(
+                shape_input,
+                producer_map,
+                initializer_map
+            )
+        except Exception:
+            continue
+
+        if shape_value is None:
+            continue
+
+        print(f"[INFO] Patching {expand.name} with shape {shape_value}")
+
+        const_name = expand.name + "_static_shape"
+        const_tensor = numpy_helper.from_array(
+            shape_value.astype(np.int64),
+            name=const_name
+        )
+        graph.initializer.append(const_tensor)
+
+        expand.input[1] = const_name
+
+    return model
+
+
+def evaluate_tensor(tensor_name, producer_map, initializer_map):
+    """
+    Recursively evaluate tensor if it is constant-only subgraph.
+    """
+
+    # If initializer → return directly
+    if tensor_name in initializer_map:
+        return initializer_map[tensor_name]
+
+    node = producer_map.get(tensor_name)
+    if node is None:
+        return None
+
+    # Recursively evaluate inputs
+    inputs = []
+    for inp in node.input:
+        val = evaluate_tensor(inp, producer_map, initializer_map)
+        if val is None:
+            return None
+        inputs.append(val)
+
+    # Evaluate supported ops
+    if node.op_type == "Constant":
+        for attr in node.attribute:
+            if attr.name == "value":
+                return numpy_helper.to_array(attr.t)
+
+    if node.op_type == "ConstantOfShape":
+        shape = inputs[0]
+        value = 0
+        for attr in node.attribute:
+            if attr.name == "value":
+                value = numpy_helper.to_array(attr.t).item()
+        return np.full(shape.astype(int), value)
+
+    if node.op_type == "Mul":
+        return inputs[0] * inputs[1]
+
+    if node.op_type == "Equal":
+        return inputs[0] == inputs[1]
+
+    if node.op_type == "Where":
+        return np.where(inputs[0], inputs[1], inputs[2])
+
+    return None
+
+
+def prune_disconnected_graph(model):
+    graph = model.graph
+
+    # Build producer map
+    producer_map = {}
+    for node in graph.node:
+        for out in node.output:
+            producer_map[out] = node
+
+    # Start from graph outputs
+    required_nodes = set()
+    stack = [o.name for o in graph.output]
+
+    while stack:
+        tensor = stack.pop()
+        node = producer_map.get(tensor)
+        if node is None:
+            continue
+
+        node_id = id(node)
+        if node_id in required_nodes:
+            continue
+
+        required_nodes.add(node_id)
+
+        # Traverse inputs
+        for inp in node.input:
+            stack.append(inp)
+
+    # Keep only required nodes
+    new_nodes = [
+        n for n in graph.node
+        if id(n) in required_nodes
+    ]
+
+    graph.ClearField("node")
+    graph.node.extend(new_nodes)
+
+    # Remove unused initializers
+    used_inputs = set()
+    for node in graph.node:
+        for inp in node.input:
+            used_inputs.add(inp)
+
+    new_inits = [
+        init for init in graph.initializer
+        if init.name in used_inputs
+    ]
+
+    graph.ClearField("initializer")
+    graph.initializer.extend(new_inits)
+
+    return model
+
+
 if __name__ == "__main__":
     import argparse
     ap = argparse.ArgumentParser()
@@ -153,6 +300,10 @@ if __name__ == "__main__":
     model = fix_training_mode(model)
     onnx.checker.check_model(model)
     model = fix_expand_transpose_sub(model)
+    onnx.checker.check_model(model)
+    model = patch_expand_shape_by_eval(model)
+    onnx.checker.check_model(model)
+    model = prune_disconnected_graph(model)
     onnx.checker.check_model(model)
     model = onnx.shape_inference.infer_shapes(model)
     onnx.save(model, args.out)

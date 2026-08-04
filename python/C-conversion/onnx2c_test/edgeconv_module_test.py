@@ -1,10 +1,9 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from weaver.nn.model.ParticleNet import ParticleNet
+from weaver.nn.model.ParticleNet import ParticleNet, EdgeConvBlock
 import numpy as np
 import onnx
-from .. import tensor_2_header
 
 
 def format_nested_array(arr, indent=4):
@@ -68,20 +67,20 @@ def tensor_to_c_multidim_header(tensor: torch.Tensor, name: str, header_path: st
 
 
 if __name__ == "__main__":
-    pf_points = torch.randn(8, 3, 10)
-    pf_features = torch.randn(8, 4, 10)
+    pf_points = torch.ones(1, 3, 16)
+    pf_features = torch.ones(1, 4, 16)
 
-    tensor_to_c_multidim_header(pf_points, name="pf_points", header_path="../../C/include/pf_points.h")
-    tensor_to_c_multidim_header(pf_features, name="pf_features", header_path="../../C/include/pf_features.h")
+    tensor_to_c_multidim_header(pf_points, name="pf_points", header_path="pf_points.h")
+    tensor_to_c_multidim_header(pf_features, name="pf_features", header_path="pf_features.h")
 
-    edge_conv = EdgeConvBlock(3, 4, [8], cpu_mode=True)
+    edge_conv = EdgeConvBlock(4, 4, [8], cpu_mode=True)
     edge_conv.load_state_dict(torch.load("edge_conv_test.pt"))
     edge_conv.eval()
     # torch.save(edge_conv.state_dict(), "edge_conv_test.pt")
     output = edge_conv(pf_points, pf_features)
-    for i in range(8):
+    for i in range(1):
         for j in range(8):
-            for k in range(10):
+            for k in range(16):
                 print(output[i][j][k].item())
     
     # export_program = torch.export.export(edge_conv, (pf_points, pf_features))

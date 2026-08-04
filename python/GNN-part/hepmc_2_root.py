@@ -77,8 +77,8 @@ if __name__ == "__main__":
                     decay_products.append(p.pid) 
                 
                 ''' ===========        complete B+B-          =========== '''
-                b_ancestor = get_b_ancestor(p)
-                select = b_ancestor != 300553
+                # b_ancestor = get_b_ancestor(p)
+                # select = b_ancestor != 300553 and p.momentum.e > 0.2
 
                 ''' ===========       incomplete B+B-         =========== '''
                 # b_ancestor = get_b_ancestor(p)
@@ -89,12 +89,12 @@ if __name__ == "__main__":
                 # select =  b_ancestor != 300553 and ((b_ancestor == -521 and np.random.rand() > 0.1 and abs(p.pid) not in [12, 14, 16]) or (b_ancestor == 521))
 
                 ''' ===========         complete B+ (B0)           =========== '''
-                # b_ancestor = get_b_ancestor(p)
-                # select = b_ancestor not in [300553, -511, -521]
+                b_ancestor = get_b_ancestor(p)
+                select = b_ancestor not in [300553, -511, -521]
 
                 ''' ===========        incomplete B+          =========== '''
                 # b_ancestor = get_b_ancestor(p)
-                # select = b_ancestor not in [-511, -521, 300553] and np.random.rand() > 0.1 and abs(p.pid) not in [12, 14, 16]
+                # select = b_ancestor not in [-511, -521, 300553] and np.random.rand() > 0.00 and abs(p.pid) not in [12, 14, 16]
 
                 if abs(p.pid) in [12, 14, 16]:
                     ev_n_nu += 1

@@ -1,0 +1,52 @@
+ENTRY  tensor_pf_points: float → ap_fixed<16,5>
+ENTRY  tensor_pf_features: float → ap_fixed<16,5>
+ENTRY  tensor_pf_mask: float → ap_fixed<16,4>
+ENTRY  tensor_MSE: float → ap_fixed<16,4>
+PARAM  node__mod_Mul[A]: float → ap_fixed<16,5>  (arg: tensor_pf_points)
+PARAM  node__mod_Mul[B]: float → ap_fixed<16,4>  (arg: tensor_pf_mask)
+PARAM  node__mod_Mul_1[A]: float → ap_fixed<16,5>  (arg: tensor_pf_features)
+PARAM  node__mod_Mul_1[B]: float → ap_fixed<16,4>  (arg: tensor_pf_mask)
+PARAM  node__mod_Equal[A]: float → ap_fixed<16,4>  (arg: tensor_pf_mask)
+PARAM  node__mod_Cast_1[input]: float → ap_fixed<16,4>  (arg: tensor_pf_mask)
+PARAM  node__fc_out_fc_out_0_Gemm[Y]: float → ap_fixed<16,4>  (arg: tensor_MSE)
+PTR_CAST  (float*) → (fixed*)
+PTR_CAST  (float*) → (fixed*)
+PTR_CAST  (float*) → (fixed*)
+PTR_CAST  (float*) → (fixed*)
+PTR_CAST  (float*) → (fixed*)
+PTR_CAST  (float*) → (fixed*)
+PTR_CAST  (float*) → (fixed*)
+PTR_CAST  (float*) → (fixed*)
+PTR_CAST  (float*) → (fixed*)
+PTR_CAST  (float*) → (fixed*)
+PTR_CAST  (float*) → (fixed*)
+PTR_CAST  (float*) → (fixed*)
+PTR_CAST  (float*) → (fixed*)
+PTR_CAST  (float*) → (fixed*)
+PTR_CAST  (float*) → (fixed*)
+PTR_CAST  (float*) → (fixed*)
+PTR_CAST  (float*) → (fixed*)
+PTR_CAST  (float*) → (fixed*)
+PTR_CAST  (float*) → (fixed*)
+PTR_CAST  (float*) → (fixed*)
+MAX  fixed redundant self-compare + cast both to output type
+WEIGHT node__mod_bn_fts_BatchNormalization[var]: float → ap_fixed<16,7>
+WEIGHT node__mod_bn_fts_BatchNormalization[scale]: float → ap_fixed<16,7>
+WEIGHT node__mod_bn_fts_BatchNormalization[bias]: float → ap_fixed<16,7>
+WEIGHT node__mod_bn_fts_BatchNormalization[mean]: float → ap_fixed<16,7>
+WEIGHT node__mod_edge_convs_0_output_bn_BatchNormalization[var]: float → ap_fixed<16,7>
+WEIGHT node__mod_edge_convs_0_output_bn_BatchNormalization[scale]: float → ap_fixed<16,7>
+WEIGHT node__mod_edge_convs_0_output_bn_BatchNormalization[bias]: float → ap_fixed<16,7>
+WEIGHT node__mod_edge_convs_0_output_bn_BatchNormalization[mean]: float → ap_fixed<16,7>
+WEIGHT node__mod_edge_convs_1_output_bn_BatchNormalization[var]: float → ap_fixed<16,7>
+WEIGHT node__mod_edge_convs_1_output_bn_BatchNormalization[scale]: float → ap_fixed<16,7>
+WEIGHT node__mod_edge_convs_1_output_bn_BatchNormalization[bias]: float → ap_fixed<16,7>
+WEIGHT node__mod_edge_convs_1_output_bn_BatchNormalization[mean]: float → ap_fixed<16,7>
+WEIGHT node__mod_edge_convs_2_output_bn_BatchNormalization[var]: float → ap_fixed<16,7>
+WEIGHT node__mod_edge_convs_2_output_bn_BatchNormalization[scale]: float → ap_fixed<16,7>
+WEIGHT node__mod_edge_convs_2_output_bn_BatchNormalization[bias]: float → ap_fixed<16,7>
+WEIGHT node__mod_edge_convs_2_output_bn_BatchNormalization[mean]: float → ap_fixed<16,7>
+WEIGHT node__mod_fc_fc_0_fc_0_0_Gemm[B]: float → ap_fixed<16,7>
+WEIGHT node__mod_fc_fc_0_fc_0_0_Gemm[C]: float → ap_fixed<16,7>
+WEIGHT node__fc_out_fc_out_0_Gemm[B]: float → ap_fixed<16,7>
+WEIGHT node__fc_out_fc_out_0_Gemm[C]: float → ap_fixed<16,7>

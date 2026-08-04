@@ -66,8 +66,8 @@ while true; do
 done
 
 PREFIX='particlenet'
-SUFFIX='complete'
-ROOT_DIR='/home/tpyang/B-Reconstruction-2-FPGA/python/GNN-part'
+SUFFIX='complete,2EC'
+ROOT_DIR='/home/tpyang/B-Reconstruction-2-FPGA/python/GNN-part/'
 SUB_DIR='pure_B_plus_B_minus/gen_level_1B/with_vertex/'
 MODEL_CONFIG='config/'${PREFIX}'_'${SUFFIX}'.py'
 DATA_CONFIG='config/data_config_'${SUFFIX}'.yaml'
@@ -81,7 +81,7 @@ args=( --data-train ${ROOT_DIR}${SUB_DIR}${SAMPLES_DIR}'train_0*.root' \
     --data-config ${ROOT_DIR}${SUB_DIR}${DATA_CONFIG} \
     --network-config ${ROOT_DIR}${SUB_DIR}${MODEL_CONFIG} \
     --model-prefix ${ROOT_DIR}${SUB_DIR}${PATH_TO_LOG}${PREFIX} \
-    --gpus 0 --batch-size 256 --start-lr 5e-3 --num-epochs 200 --optimizer ranger \
+    --gpus 0 --batch-size 256 --start-lr 5e-5 --num-epochs 30 --optimizer ranger \
     --log ${ROOT_DIR}${SUB_DIR}${PATH_TO_LOG}${PREFIX}.train.log \
     --tensorboard ${PREFIX} )
 if [ $r -eq 1 ]; then 
